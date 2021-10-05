@@ -7,17 +7,16 @@ const App = () => {
   useEffect(() => {
     axios
       .get('http://localhost:3001/api/hello')
-      .then(response => {
-        console.log('promise fulfilled');
+      .then((response) => {
         setNotification(response.data);
-      })
-  }, [])
+      });
+  }, []);
 
   return (
     <div className="App">
       {notification}
     </div>
   );
-}
+};
 
 export default App;
