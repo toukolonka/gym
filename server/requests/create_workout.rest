@@ -1,0 +1,14 @@
+POST http://localhost:3001/api/workouts
+Content-Type: application/json
+
+{
+    "template": true,
+    "sets": [
+        {
+            "weight": 20,
+            "repetitions": 10,
+            "exercise": "61646579c865e67d3c4cc8c6"
+        }
+    ],
+    "userId": "61646dc181b417d0a1258bfc"
+}

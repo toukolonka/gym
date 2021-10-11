@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/exercises
+Content-Type: application/json
+
+{
+    "name": "Squat",
+    "description": "Deeper!",
+    "user": "616468d051675242aeaf719c"
+}
