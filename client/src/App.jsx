@@ -4,6 +4,9 @@ import axios from 'axios';
 const App = () => {
   const [notification, setNotification] = useState('');
 
+  // eslint-disable-next-line no-console
+  console.log('Hello');
+
   useEffect(() => {
     axios
       .get('http://localhost:3001/api/hello')
