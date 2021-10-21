@@ -9,6 +9,8 @@ const Exercise = require('./models/exercise');
 const User = require('./models/user');
 const Workout = require('./models/workout');
 
+const loginRouter = require('./controllers/login');
+
 const app = express();
 app.use(express.static('build'));
 app.use(cors());
@@ -34,6 +36,7 @@ const requestLogger = (request, response, next) => {
 };
 
 app.use(requestLogger);
+app.use('/api/login', loginRouter);
 
 app.get('/api/hello', (_, response) => {
   response.send('Hello from server!');
