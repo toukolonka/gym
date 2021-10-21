@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 const Exercise = require('./models/exercise');
 const User = require('./models/user');
@@ -33,6 +34,26 @@ const requestLogger = (request, response, next) => {
   console.log('Body:  ', request.body);
   console.log('---');
   next();
+};
+
+/*
+  Extracts and validates the token.
+  If token is invalid or does exists, function returns null.
+  If token is valid, function returns the User it belongs to.
+*/
+const authorizeUser = async (request) => {
+  const authorization = request.get('authorization'); // Extract token from request
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    // Test if token is exists and is valid
+    const token = authorization.substring(7);
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    if (!token || !decodedToken.id) {
+      return null;
+    }
+    const user = await User.findById(decodedToken.id);
+    return user;
+  }
+  return null;
 };
 
 app.use(requestLogger);
@@ -92,8 +113,15 @@ app.post('/api/users', async (request, response) => {
 
 app.post('/api/workouts', async (request, response) => {
   const { body } = request;
+  const user = await authorizeUser(request);
 
-  const user = await User.findById(body.userId);
+  console.log(user);
+
+  if (user === null) {
+    return response.status(401).json({
+      error: 'User not authorized',
+    });
+  }
 
   const workout = new Workout({
     date: new Date(),
@@ -107,7 +135,7 @@ app.post('/api/workouts', async (request, response) => {
   user.workouts = user.workouts.concat(savedWorkout._id);
   await user.save();
 
-  response.json(savedWorkout);
+  return response.json(savedWorkout);
 });
 
 app.listen(PORT, () => {
