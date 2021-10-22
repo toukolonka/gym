@@ -80,8 +80,8 @@ app.get('/api/users', (_, response) => {
   });
 });
 
-app.get('/api/workouts', (request, response) => {
-  const user = authorizeUser(request);
+app.get('/api/workouts', async (request, response) => {
+  const user = await authorizeUser(request);
 
   if (user === null) {
     return response.status(401).json({
@@ -89,8 +89,7 @@ app.get('/api/workouts', (request, response) => {
     });
   }
 
-  const workouts = Workout.find({});
-  console.log(workouts);
+  const workouts = await Workout.find({ user: user._id });
   return response.json(workouts);
 });
 
