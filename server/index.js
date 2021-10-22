@@ -42,7 +42,7 @@ const requestLogger = (request, response, next) => {
   If token is valid, function returns the User it belongs to.
 */
 const authorizeUser = async (request) => {
-  const authorization = request.get('authorization'); // Extract token from request
+  const authorization = request.get('authorization'); // Extract auth header from request and test that it starts with "bearer "
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     // Extract token
     const token = authorization.substring(7);
@@ -80,10 +80,18 @@ app.get('/api/users', (_, response) => {
   });
 });
 
-app.get('/api/workouts', (_, response) => {
-  Workout.find({}).then((workouts) => {
-    response.json(workouts);
-  });
+app.get('/api/workouts', (request, response) => {
+  const user = authorizeUser(request);
+
+  if (user === null) {
+    return response.status(401).json({
+      error: 'User not authorized',
+    });
+  }
+
+  const workouts = Workout.find({});
+  console.log(workouts);
+  return response.json(workouts);
 });
 
 app.post('/api/exercises', async (request, response) => {
