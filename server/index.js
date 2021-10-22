@@ -127,8 +127,6 @@ app.post('/api/workouts', async (request, response) => {
   const { body } = request;
   const user = await authorizeUser(request);
 
-  console.log(user);
-
   if (user === null) {
     return response.status(401).json({
       error: 'User not authorized',
