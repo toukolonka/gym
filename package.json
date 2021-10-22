@@ -19,7 +19,6 @@
     "express": "^4.17.1",
     "mongoose": "^6.0.9",
     "jsonwebtoken": "^8.5.1"
-
   },
   "devDependencies": {
     "eslint": "^7.32.0",
