@@ -4,10 +4,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 const Exercise = require('./models/exercise');
 const User = require('./models/user');
 const Workout = require('./models/workout');
+
+const loginRouter = require('./controllers/login');
 
 const app = express();
 app.use(express.static('build'));
@@ -33,7 +36,33 @@ const requestLogger = (request, response, next) => {
   next();
 };
 
+/*
+  Extracts and validates the token.
+  If token is invalid or does exists, function returns null.
+  If token is valid, function returns the User it belongs to.
+*/
+const authorizeUser = async (request) => {
+  const authorization = request.get('authorization'); // Extract auth header from request and test that it starts with "bearer "
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    // Extract token
+    const token = authorization.substring(7);
+    // If jwt.verify or something else fails, just return null
+    try {
+      const decodedToken = jwt.verify(token, process.env.SECRET);
+      if (!token || !decodedToken.id) {
+        return null;
+      }
+      const user = await User.findById(decodedToken.id);
+      return user;
+    } catch {
+      return null;
+    }
+  }
+  return null;
+};
+
 app.use(requestLogger);
+app.use('/api/login', loginRouter);
 
 app.get('/api/hello', (_, response) => {
   response.send('Hello from server!');
@@ -51,10 +80,17 @@ app.get('/api/users', (_, response) => {
   });
 });
 
-app.get('/api/workouts', (_, response) => {
-  Workout.find({}).then((workouts) => {
-    response.json(workouts);
-  });
+app.get('/api/workouts', async (request, response) => {
+  const user = await authorizeUser(request);
+
+  if (user === null) {
+    return response.status(401).json({
+      error: 'User not authorized',
+    });
+  }
+
+  const workouts = await Workout.find({ user: user._id });
+  return response.json(workouts);
 });
 
 app.post('/api/exercises', async (request, response) => {
@@ -89,8 +125,13 @@ app.post('/api/users', async (request, response) => {
 
 app.post('/api/workouts', async (request, response) => {
   const { body } = request;
+  const user = await authorizeUser(request);
 
-  const user = await User.findById(body.userId);
+  if (user === null) {
+    return response.status(401).json({
+      error: 'User not authorized',
+    });
+  }
 
   const workout = new Workout({
     date: new Date(),
@@ -104,7 +145,7 @@ app.post('/api/workouts', async (request, response) => {
   user.workouts = user.workouts.concat(savedWorkout._id);
   await user.save();
 
-  response.json(savedWorkout);
+  return response.json(savedWorkout);
 });
 
 app.listen(PORT, () => {
