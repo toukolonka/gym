@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign */
 
 const { model, Schema } = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = new Schema({
   username: {
@@ -17,8 +16,6 @@ const userSchema = new Schema({
     },
   ],
 });
-
-userSchema.plugin(uniqueValidator);
 
 userSchema.set('toJSON', {
   transform: (_, returnedObject) => {

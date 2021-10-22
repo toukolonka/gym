@@ -44,14 +44,19 @@ const requestLogger = (request, response, next) => {
 const authorizeUser = async (request) => {
   const authorization = request.get('authorization'); // Extract token from request
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    // Test if token is exists and is valid
+    // Extract token
     const token = authorization.substring(7);
-    const decodedToken = jwt.verify(token, process.env.SECRET);
-    if (!token || !decodedToken.id) {
+    // If jwt.verify or something else fails, just return null
+    try {
+      const decodedToken = jwt.verify(token, process.env.SECRET);
+      if (!token || !decodedToken.id) {
+        return null;
+      }
+      const user = await User.findById(decodedToken.id);
+      return user;
+    } catch {
       return null;
     }
-    const user = await User.findById(decodedToken.id);
-    return user;
   }
   return null;
 };
