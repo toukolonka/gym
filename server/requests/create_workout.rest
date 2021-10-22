@@ -1,14 +1,14 @@
 POST http://localhost:3001/api/workouts
 Content-Type: application/json
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvcmlzMiIsImlkIjoiNjE3MjZkNzkzOGU3Mjg2MzFmMWNjNmIwIiwiaWF0IjoxNjM0ODkwNzE2fQ.uZ_n2Arb-Op6ualC7ZCg4xlZjePjdr2On4mjIw5khyU
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjYxNzJhNGIwMTdmYTQxZTcxZjgyNDA1ZCIsImlhdCI6MTYzNDkwMzI2Mn0.UmNKCYU8vJI6kXg7zmsoHe5FW_hS9-bl5ljVbOCAqU8
 
 {
     "template": true,
     "sets": [
         {
-            "weight": 54,
-            "repetitions": 2,
-            "exercise": "61646579c865e67d3c4cc8c6"
+            "weight": 50,
+            "repetitions": 10,
+            "exercise": "6172a5430c53ebb7e0da9873"
         }
     ]
 }
