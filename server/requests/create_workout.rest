@@ -3,7 +3,7 @@ Content-Type: application/json
 authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6IjYxNzJhNGIwMTdmYTQxZTcxZjgyNDA1ZCIsImlhdCI6MTYzNDkwMzI2Mn0.UmNKCYU8vJI6kXg7zmsoHe5FW_hS9-bl5ljVbOCAqU8
 
 {
-    "template": true,
+    "template": false,
     "sets": [
         {
             "weight": 50,
