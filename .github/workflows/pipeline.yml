@@ -3,6 +3,7 @@ name: Deployment pipeline
 on:
   push:
     branches:
+      - CI-CD
       - main
   pull_request:
     branches: [main]
@@ -12,13 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12
+      - uses: actions/setup-node@v1
         with:
-            node-version: '14.x'
-        - name: npm install
-          run: npm --prefix ./client/ install
-        - name: build
-          run: npm --prefix ./client/ run build
+          node-version: '14.x'
+      - name: npm install
+        run: npm --prefix ./client/ install
+      - name: build
+        run: npm --prefix ./client/ run build
+      - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "www-design-gym"
