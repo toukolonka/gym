@@ -3,7 +3,6 @@ name: Deployment pipeline
 on:
   push:
     branches:
-      - CI-CD
       - main
   pull_request:
     branches: [main]
@@ -17,9 +16,11 @@ jobs:
         with:
           node-version: '14'
       - name: npm install
-        run: npm --prefix ./client/ install
+        working-directory: ./client
+        run: npm install
       - name: npm build
-        run: npm --prefix ./client/ run build
+        working-directory: ./client
+        run: npm run build
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
