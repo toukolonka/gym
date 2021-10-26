@@ -4,17 +4,22 @@ const wokoutsRouter = require('express').Router();
 const Workout = require('../models/workout');
 const authorizeUser = require('../services/authorizationService');
 
-wokoutsRouter.get('/', async (request, response) => {
-  const user = await authorizeUser(request);
+/*
+  Return the workouts of the user based on token
+*/
 
-  if (user === null) {
-    return response.status(401).json({
-      error: 'User not authorized',
-    });
+// eslint-disable-next-line consistent-return
+wokoutsRouter.get('/', async (request, response, next) => {
+  try {
+    // Get the user based on token
+    const user = await authorizeUser(request);
+
+    // Return the workouts based on user_id
+    const workouts = await Workout.find({ user: user._id });
+    return response.json(workouts);
+  } catch (err) {
+    next(err);
   }
-
-  const workouts = await Workout.find({ user: user._id });
-  return response.json(workouts);
 });
 
 wokoutsRouter.post('/', async (request, response) => {

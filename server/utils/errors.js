@@ -12,19 +12,9 @@ class CustomError extends Error {
   }
 }
 
-class AuthorizationHeaderError extends CustomError {
-  constructor(message, header) {
-    super(message);
-    this.header = header;
-  }
-}
+class AuthorizationHeaderError extends CustomError {}
 
-class InvalidTokenError extends CustomError {
-  constructor(message, header) {
-    super(message);
-    this.header = header;
-  }
-}
+class InvalidTokenError extends CustomError {}
 
 module.exports = {
   AuthorizationHeaderError,
