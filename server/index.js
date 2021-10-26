@@ -35,7 +35,7 @@ app.use('/api/exercises', exercisesRouter);
 app.use('/api/templates', templatesRouter);
 
 app.get('/api/health', (_, response) => {
-  response.send('Hello world!');
+  response.send('Health check ok!');
 });
 
 app.use(middleware.unknownEndpoint);
