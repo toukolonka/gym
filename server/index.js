@@ -12,6 +12,7 @@ const loginRouter = require('./controllers/login');
 const wokoutsRouter = require('./controllers/workouts');
 const exercisesRouter = require('./controllers/exercises');
 const usersRouter = require('./controllers/users');
+const templatesRouter = require('./controllers/templates');
 
 app.use(express.static('build'));
 app.use(cors());
@@ -31,6 +32,7 @@ app.use('/api/login', loginRouter);
 app.use('/api/workouts', wokoutsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/exercises', exercisesRouter);
+app.use('/api/templates', templatesRouter);
 
 app.get('/api/health', (_, response) => {
   response.send('Hello world!');
