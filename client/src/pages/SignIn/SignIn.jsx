@@ -1,10 +1,10 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
+import SignInForm from '../../components/SignInForm/SignInForm';
 
 const SignIn = () => (
-  <Typography variant="h3" component="h3">
-    Sign In Page
-  </Typography>
+  <>
+    <SignInForm />
+  </>
 );
 
 export default SignIn;
