@@ -31,6 +31,12 @@ const authorizeUser = async (request) => {
 
     // Find the user based on id and return
     const user = await User.findById(decodedToken.id);
+
+    // User is null, if the JWT token has not expired but the actual user has been deleted
+    if (user === null) {
+      throw new Errors.UserNotFoundError('User has been deleted from the database');
+    }
+
     return user;
   } catch (err) {
     if (err instanceof jwt.JsonWebTokenError) {

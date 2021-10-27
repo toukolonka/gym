@@ -3,28 +3,45 @@
 const usersRouter = require('express').Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const Errors = require('../utils/errors');
 
-usersRouter.get('/', (_, response) => {
-  User.find({}).then((users) => {
-    response.json(users);
-  });
+usersRouter.get('/', (_, response, next) => {
+  try {
+    User.find({}).then((users) => {
+      response.json(users);
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
-usersRouter.post('/', async (request, response) => {
-  const { body } = request;
+usersRouter.post('/', async (request, response, next) => {
+  try {
+    const { body } = request;
 
-  const saltRounds = 10;
-  const passwordHash = await bcrypt.hash(body.password, saltRounds);
+    if (body.username === undefined || body.password === undefined) {
+      throw new Errors.MissingParametersError('Username or password was not provided');
+    }
 
-  const user = new User({
-    username: body.username,
-    passwordHash,
-    workouts: [],
-  });
+    if (body.username.length < 5 || body.password.length < 5) {
+      throw new Errors.InvalidUserParametersError('Username or password provided is not long enough');
+    }
 
-  const savedUser = await user.save();
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(body.password, saltRounds);
 
-  response.json(savedUser);
+    const user = new User({
+      username: body.username,
+      passwordHash,
+      workouts: [],
+    });
+
+    const savedUser = await user.save();
+
+    response.json(savedUser);
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = usersRouter;
