@@ -1,4 +1,5 @@
 const logger = require('./logger');
+const Errors = require('./errors');
 
 const requestLogger = (request, _, next) => {
   logger.info('Method:', request.method);
@@ -20,10 +21,16 @@ const errorHandler = (error, _, response, next) => {
     return response.status(400).send({ error: 'malformatted id' });
   } if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message });
-  } if (error.name === 'JsonWebTokenError') {
-    return response.status(401).json({
-      error: 'invalid token',
-    });
+  } if (error instanceof Errors.InvalidTokenError) {
+    return response.status(401).json({ error: error.message });
+  } if (error instanceof Errors.AuthorizationHeaderError) {
+    return response.status(401).json({ error: error.message });
+  } if (error instanceof Errors.UserNotFoundError) {
+    return response.status(400).json({ error: error.message });
+  } if (error instanceof Errors.InvalidParametersError) {
+    return response.status(400).json({ error: error.message });
+  } if (error instanceof Errors.InvalidLoginError) {
+    return response.status(401).json({ error: error.message });
   }
 
   next(error);
