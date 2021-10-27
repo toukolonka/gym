@@ -18,14 +18,14 @@ class InvalidTokenError extends CustomError {}
 
 class UserNotFoundError extends CustomError {}
 
-class InvalidUserParametersError extends CustomError {}
+class InvalidParametersError extends CustomError {}
 
-class MissingParametersError extends CustomError {}
+class InvalidLoginError extends CustomError {}
 
 module.exports = {
   AuthorizationHeaderError,
   InvalidTokenError,
   UserNotFoundError,
-  InvalidUserParametersError,
-  MissingParametersError,
+  InvalidParametersError,
+  InvalidLoginError,
 };

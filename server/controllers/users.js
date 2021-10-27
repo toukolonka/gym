@@ -20,11 +20,11 @@ usersRouter.post('/', async (request, response, next) => {
     const { body } = request;
 
     if (body.username === undefined || body.password === undefined) {
-      throw new Errors.MissingParametersError('Username or password was not provided');
+      throw new Errors.InvalidParametersError('Username or password was not provided');
     }
 
     if (body.username.length < 5 || body.password.length < 5) {
-      throw new Errors.InvalidUserParametersError('Username or password provided is not long enough');
+      throw new Errors.InvalidParametersError('Username or password provided is not long enough');
     }
 
     const saltRounds = 10;

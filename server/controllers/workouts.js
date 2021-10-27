@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable consistent-return */
 
 const wokoutsRouter = require('express').Router();
 const Workout = require('../models/workout');

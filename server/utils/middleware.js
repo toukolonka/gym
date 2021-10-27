@@ -27,10 +27,10 @@ const errorHandler = (error, _, response, next) => {
     return response.status(401).json({ error: error.message });
   } if (error instanceof Errors.UserNotFoundError) {
     return response.status(400).json({ error: error.message });
-  } if (error instanceof Errors.InvalidUserParametersError) {
+  } if (error instanceof Errors.InvalidParametersError) {
     return response.status(400).json({ error: error.message });
-  } if (error instanceof Errors.MissingParametersError) {
-    return response.status(400).json({ error: error.message });
+  } if (error instanceof Errors.InvalidLoginError) {
+    return response.status(401).json({ error: error.message });
   }
 
   next(error);
