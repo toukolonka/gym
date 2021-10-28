@@ -12,15 +12,21 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-const SignInForm = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      username: data.get('username'),
-      password: data.get('password'),
-    });
+import PropTypes from 'prop-types';
+
+const SignInForm = ({
+  username,
+  password,
+  setUsername,
+  setPassword,
+  handleSubmit,
+}) => {
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
   };
 
   return (
@@ -47,8 +53,9 @@ const SignInForm = () => {
             name="username"
             label="Username"
             id="username"
-            autoComplete="username"
             color="primary"
+            onChange={handleUsernameChange}
+            value={username}
           />
           <TextField
             margin="normal"
@@ -57,8 +64,9 @@ const SignInForm = () => {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
             color="primary"
+            onChange={handlePasswordChange}
+            value={password}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -83,6 +91,14 @@ const SignInForm = () => {
       </Box>
     </Container>
   );
+};
+
+SignInForm.propTypes = {
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  setPassword: PropTypes.func.isRequired,
+  setUsername: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default SignInForm;
