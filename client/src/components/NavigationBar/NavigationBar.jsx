@@ -7,10 +7,10 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
 const NavigationBar = () => (
-  <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static">
+  <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+    <AppBar position="static" enableColorOnDark color="primary">
       <Toolbar>
-        <Typography variant="h5" component="h5" sx={{ flexGrow: 1 }}>
+        <Typography variant="h5" component="h5" sx={{ flexGrow: 1 }} color="inherit">
           Gym App
         </Typography>
         <Button color="inherit" component={Link} to="/">Home</Button>

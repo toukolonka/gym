@@ -10,10 +10,12 @@ import Exercises from './pages/Exercises/Exercises';
 import Templates from './pages/Templates/Templates';
 import Profile from './pages/Profile/Profile';
 import NavigationBar from './components/NavigationBar/NavigationBar';
+import NavigationBarMobile from './components/NavigationBar/NavigationBarMobile';
 
 const App = () => (
   <div className="App">
     <NavigationBar />
+    <NavigationBarMobile />
     <Container maxWidth="lg">
       <Switch>
         <Route exact path="/sign-in" component={SignIn} />

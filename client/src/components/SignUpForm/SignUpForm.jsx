@@ -48,7 +48,6 @@ const SignUpForm = () => {
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
             color="secondary"
           />
           <TextField
