@@ -40,7 +40,7 @@ app.get('/api/health', (_, response) => {
 });
 
 app.get('/*', (_, response) => {
-  response.sendFile(path.join(__dirname, 'build', 'index.html'));
+  response.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
 });
 
 app.use(middleware.unknownEndpoint);
