@@ -14,7 +14,7 @@ const exercisesRouter = require('./controllers/exercises');
 const usersRouter = require('./controllers/users');
 const templatesRouter = require('./controllers/templates');
 
-app.use(express.static('./client/build'));
+app.use(express.static('build'));
 app.use(cors());
 app.use(express.json());
 app.use(middleware.requestLogger);
