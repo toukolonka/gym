@@ -36,6 +36,18 @@ const Exercises = () => {
       });
   };
 
+  const handleNameChange = (event) => {
+    setNewExerciseName(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setNewExerciseDescription(event.target.value);
+  };
+
+  const handleCategoryChange = (event) => {
+    setNewExerciseCategory(event.target.value);
+  };
+
   return (
     <Container maxWidth="xs">
       <Box
@@ -56,9 +68,9 @@ const Exercises = () => {
             newExerciseName={newExerciseName}
             newExerciseDescription={newExerciseDescription}
             newExerciseCategory={newExerciseCategory}
-            setNewExerciseName={setNewExerciseName}
-            setNewExerciseDescription={setNewExerciseDescription}
-            setNewExerciseCategory={setNewExerciseCategory}
+            handleNameChange={handleNameChange}
+            handleDescriptionChange={handleDescriptionChange}
+            handleCategoryChange={handleCategoryChange}
             handleSubmit={handleSubmit}
             setShowForm={setShowForm}
           />
