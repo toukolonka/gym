@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -36,6 +37,10 @@ app.use('/api/templates', templatesRouter);
 
 app.get('/api/health', (_, response) => {
   response.send('Health check ok!');
+});
+
+app.get('/*', (_, response) => {
+  response.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.use(middleware.unknownEndpoint);
