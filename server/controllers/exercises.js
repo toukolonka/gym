@@ -6,7 +6,7 @@ const Errors = require('../utils/errors');
 
 exercisesRouter.get('/', (_, response, next) => {
   try {
-    Exercise.find({}).then((exercises) => {
+    Exercise.find({}).sort({ name: 'asc' }).then((exercises) => {
       response.json(exercises);
     });
   } catch (err) {
@@ -25,11 +25,14 @@ exercisesRouter.post('/', async (request, response, next) => {
     const exercise = new Exercise({
       name: body.name,
       description: body.description,
+      category: body.category,
     });
 
-    const savedExercise = await exercise.save();
+    await exercise.save();
 
-    response.json(savedExercise);
+    Exercise.find({}).sort({ name: 'asc' }).then((exercises) => {
+      response.json(exercises);
+    });
   } catch (err) {
     next(err);
   }

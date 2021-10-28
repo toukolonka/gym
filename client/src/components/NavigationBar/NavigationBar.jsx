@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const NavigationBar = () => (
   <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-    <AppBar position="static" enableColorOnDark color="primary">
+    <AppBar enableColorOnDark color="primary">
       <Toolbar>
         <Typography variant="h5" sx={{ flexGrow: 1 }} color="inherit">
           Gym App
@@ -20,6 +20,7 @@ const NavigationBar = () => (
         <Button color="inherit" component={Link} to="/profile">Profile</Button>
       </Toolbar>
     </AppBar>
+    <Toolbar />
   </Box>
 );
 

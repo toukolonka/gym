@@ -49,7 +49,6 @@ const SignInForm = () => {
             id="username"
             autoComplete="username"
             color="primary"
-            sx={{ borderColor: '#000' }}
           />
           <TextField
             margin="normal"

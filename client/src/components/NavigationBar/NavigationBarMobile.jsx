@@ -12,7 +12,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 
 const NavigationBarMobile = () => (
   <Box sx={{ flexGrow: 1, display: { xs: 'block', sm: 'none' } }}>
-    <AppBar position="static" enableColorOnDark color="primary">
+    <AppBar enableColorOnDark color="primary">
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <Button color="inherit" component={Link} to="/templates" sx={{ flexDirection: 'column', fontSize: 12 }}>
           <AssignmentIcon fontSize="large" />
@@ -36,6 +36,7 @@ const NavigationBarMobile = () => (
         </Button>
       </Toolbar>
     </AppBar>
+    <Toolbar />
   </Box>
 );
 

@@ -42,6 +42,7 @@ const initTestData = async () => {
   const exercise = new Exercise({
     name: 'Bench press',
     description: 'A lift or exercise in which a weight is raised by extending the arms upward while lying on a bench',
+    category: 'Core',
   });
 
   const savedExercise = await exercise.save();
