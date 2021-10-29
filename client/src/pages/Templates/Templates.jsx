@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Typography,
-  Grid,
+  Box,
   Container,
   Card,
   CardContent,
@@ -9,58 +9,16 @@ import {
   Button,
 } from '@mui/material';
 
-const sets = [
-  {
-    weight: 80,
-    repetitions: 10,
-    exercise: {
-      id: 'Bench_press_id',
-    },
-  },
-  {
-    weight: 80,
-    repetitions: 10,
-    exercise: {
-      id: 'Bench_press_id',
-    },
-  },
-  {
-    weight: 80,
-    repetitions: 10,
-    exercise: {
-      id: 'Bench_press_id',
-    },
-  },
-  {
-    weight: 50,
-    repetitions: 10,
-    exercise: {
-      id: 'Incline_Bench_press_id',
-    },
-  },
-  {
-    weight: 50,
-    repetitions: 10,
-    exercise: {
-      id: 'Incline_Bench_press_id',
-    },
-  },
-  {
-    weight: 50,
-    repetitions: 10,
-    exercise: {
-      id: 'Incline_Bench_press_id',
-    },
-  },
-];
-
 const Templates = () => (
-  <Container>
-    <Typography gutterBottom variant="h3" component="h3">
-      Templates Page
+  <Container maxWidth="sm">
+    <Typography variant="h3" align="center" margin={2}>
+      Templates
     </Typography>
-    <Grid container spacing={1}>
-      <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Box container spacing={1}>
+      <Card sx={{
+        height: '100%', marginTop: 2, display: 'flex', flexDirection: 'column',
+      }}
+      >
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h4" component="h2">
             Workout Name
@@ -68,14 +26,36 @@ const Templates = () => (
           <Typography variant="h5">
             26.10.2021
           </Typography>
-          {sets.map((set) => <Typography>{set.exercise.id}</Typography>)}
+          <div>Exercise 1</div>
+          <div>Exercise 2</div>
+          <div>Exercise 3</div>
         </CardContent>
         <CardActions>
-          <Button size="medium">View</Button>
-          <Button size="medium">Edit</Button>
+          <Button fullWidth variant="contained" xs={6}>View</Button>
+          <Button fullWidth variant="contained" color="secondary" xs={6}>Edit</Button>
         </CardActions>
       </Card>
-    </Grid>
+      <Card sx={{
+        height: '100%', marginTop: 2, display: 'flex', flexDirection: 'column',
+      }}
+      >
+        <CardContent sx={{ flexGrow: 1 }}>
+          <Typography gutterBottom variant="h4" component="h2">
+            Workout Name
+          </Typography>
+          <Typography variant="h5">
+            26.10.2021
+          </Typography>
+          <div>Exercise 1</div>
+          <div>Exercise 2</div>
+          <div>Exercise 3</div>
+        </CardContent>
+        <CardActions>
+          <Button fullWidth variant="contained" xs={6}>View</Button>
+          <Button fullWidth variant="contained" color="secondary" xs={6}>Edit</Button>
+        </CardActions>
+      </Card>
+    </Box>
   </Container>
 );
 
