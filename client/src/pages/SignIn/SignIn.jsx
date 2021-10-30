@@ -1,8 +1,8 @@
 import { Alert } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import SignInForm from '../../components/SignInForm/SignInForm';
-import loginService from '../../services/loginService';
+import authService from '../../services/authService';
 
 const SignIn = () => {
   // States
@@ -10,20 +10,16 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  useEffect(() => {
-    setTimeout(() => setErrorMessage(''), 3000);
-  }, [errorMessage]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setErrorMessage('');
     const credentials = { username, password };
-    const user = await loginService.login(credentials, setErrorMessage);
+    const user = await authService.login(credentials, setErrorMessage);
     if (user) {
       window.localStorage.setItem(
         'gymuser', JSON.stringify(user),
       );
     }
-    setUsername('');
     setPassword('');
   };
 

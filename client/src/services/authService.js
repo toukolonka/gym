@@ -12,6 +12,11 @@ const login = async (credentials, defineError) => {
   }
 };
 
+const logout = () => {
+  window.localStorage.removeItem('gymuser');
+};
+
 export default {
   login,
+  logout,
 };

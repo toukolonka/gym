@@ -18,6 +18,8 @@ const NavigationBar = () => (
         <Button color="inherit" component={Link} to="/">Home</Button>
         <Button color="inherit" component={Link} to="/exercises">Exercises</Button>
         <Button color="inherit" component={Link} to="/profile">Profile</Button>
+        { !window.localStorage.getItem('gymuser')
+          && <Button color="inherit" component={Link} to="/sign-in">Sign In</Button> }
       </Toolbar>
     </AppBar>
     <Toolbar />
