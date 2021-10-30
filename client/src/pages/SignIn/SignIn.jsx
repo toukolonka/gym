@@ -1,5 +1,6 @@
 import { Alert } from '@mui/material';
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import SignInForm from '../../components/SignInForm/SignInForm';
 import loginService from '../../services/loginService';
 
@@ -22,7 +23,11 @@ const SignIn = () => {
         'gymuser', JSON.stringify(user),
       );
     }
+    setUsername('');
+    setPassword('');
   };
+
+  if (window.localStorage.getItem('gymuser')) return <Redirect to="/" />;
 
   return (
     <>
