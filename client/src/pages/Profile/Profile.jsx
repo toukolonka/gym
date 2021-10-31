@@ -6,8 +6,6 @@ import { AuthContext } from '../../context/auth';
 const Profile = () => {
   const { user, logout } = useContext(AuthContext);
 
-  console.log(user);
-
   return (
     <>
       <Typography variant="h3" component="h3">

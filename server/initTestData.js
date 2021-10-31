@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const logger = require('./utils/logger');
 require('dotenv').config();
 
@@ -32,9 +33,14 @@ const initTestData = async () => {
       logger.info('Deleted all workouts');
     });
 
+  const password = 'user123';
+  const saltRounds = 10;
+  const passwordHash = await bcrypt.hash(password, saltRounds);
+
   const user = new User({
-    username: 'user',
-    password: 'user',
+    username: 'user123',
+    passwordHash,
+    workouts: [],
   });
 
   const savedUser = await user.save();
