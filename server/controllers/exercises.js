@@ -14,6 +14,16 @@ exercisesRouter.get('/', (_, response, next) => {
   }
 });
 
+exercisesRouter.get('/:id', (request, response, next) => {
+  try {
+    Exercise.findById(request.params.id).then((exercise) => {
+      response.json(exercise);
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 exercisesRouter.post('/', async (request, response, next) => {
   try {
     const { body } = request;
@@ -36,6 +46,14 @@ exercisesRouter.post('/', async (request, response, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+exercisesRouter.delete('/:id', (request, response, next) => {
+  Exercise.findByIdAndRemove(request.params.id)
+    .then(() => {
+      response.status(204).end();
+    })
+    .catch((err) => next(err));
 });
 
 module.exports = exercisesRouter;

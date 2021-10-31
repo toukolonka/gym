@@ -5,6 +5,7 @@ import {
 import exerciseService from '../../services/exerciseService';
 import ExerciseList from '../../components/Exercise/ExerciseList';
 import ExerciseForm from '../../components/Exercise/ExerciseForm';
+import Loading from '../../components/Loading/Loading';
 
 const Exercises = () => {
   const [exercises, setExercises] = useState([]);
@@ -12,12 +13,16 @@ const Exercises = () => {
   const [newExerciseDescription, setNewExerciseDescription] = useState('');
   const [newExerciseCategory, setNewExerciseCategory] = useState('Core');
   const [showForm, setShowForm] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
+  const [searchCategory, setSearchCategory] = useState('All');
 
   useEffect(() => {
     exerciseService
       .getAll()
       .then((data) => {
         setExercises(data);
+        setLoading(false);
       });
   }, []);
 
@@ -47,6 +52,22 @@ const Exercises = () => {
   const handleCategoryChange = (event) => {
     setNewExerciseCategory(event.target.value);
   };
+
+  const handleSearchTextChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const handleSearchCategoryChange = (event) => {
+    setSearchCategory(event.target.value);
+  };
+
+  const exercisesAfterSearch = exercises.filter(
+    (exercise) => exercise.name.toLowerCase().includes(searchText.toLowerCase()),
+  );
+
+  const filteredExercises = exercisesAfterSearch.filter(
+    (exercise) => searchCategory === 'All' || exercise.category === searchCategory,
+  );
 
   return (
     <Container maxWidth="xs">
@@ -86,7 +107,17 @@ const Exercises = () => {
             Create exercise
           </Button>
         )}
-      <ExerciseList exercises={exercises} />
+      {loading
+        ? <Loading />
+        : (
+          <ExerciseList
+            exercises={filteredExercises}
+            searchText={searchText}
+            searchCategory={searchCategory}
+            handleSearchTextChange={handleSearchTextChange}
+            handleSearchCategoryChange={handleSearchCategoryChange}
+          />
+        )}
     </Container>
   );
 };
