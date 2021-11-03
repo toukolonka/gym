@@ -1,51 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Typography,
   Box,
   Container,
-  Card,
-  CardContent,
-  CardActions,
   Button,
 } from '@mui/material';
+import TemplateList from '../../components/Template/TemplateList';
+import templateService from '../../services/templateService';
 
-const populator = ['1', '2', '3', '4', '5'];
+const Templates = () => {
+  const [templates, setTemplates] = useState([]);
 
-const Template = () => (
-  <Card sx={{
-    height: '100%',
-    marginTop: 2,
-    display: 'flex',
-    flexDirection: 'column',
-  }}
-  >
-    <CardContent sx={{ flexGrow: 1 }}>
-      <Typography gutterBottom variant="h4" component="h2">
-        Workout Name
+  useEffect(() => {
+    templateService
+      .getAll()
+      .then((data) => {
+        setTemplates(data);
+      });
+  }, []);
+
+  return (
+    <Container maxWidth="sm">
+      <Typography variant="h3" align="center" margin={2}>
+        Templates
       </Typography>
-      <Typography variant="h5">
-        26.10.2021
-      </Typography>
-      <div>Exercise 1</div>
-      <div>Exercise 2</div>
-      <div>Exercise 3</div>
-    </CardContent>
-    <CardActions>
-      <Button fullWidth variant="contained" xs={6}>View</Button>
-      <Button fullWidth variant="contained" color="secondary" xs={6}>Edit</Button>
-    </CardActions>
-  </Card>
-);
-
-const Templates = () => (
-  <Container maxWidth="sm">
-    <Typography variant="h3" align="center" margin={2}>
-      Templates
-    </Typography>
-    <Box container spacing={1}>
-      {populator.map((id) => <div key={id}><Template /></div>)}
-    </Box>
-  </Container>
-);
+      <Button fullWidth size="large" variant="contained">Create a template</Button>
+      <Box container spacing={1}>
+        <TemplateList templates={templates} />
+      </Box>
+    </Container>
+  );
+};
 
 export default Templates;
