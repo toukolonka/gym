@@ -6,10 +6,12 @@ import {
   Button,
 } from '@mui/material';
 import TemplateList from '../../components/Template/TemplateList';
+import TemplateForm from '../../components/Template/TemplateForm';
 import templateService from '../../services/templateService';
 
 const Templates = () => {
   const [templates, setTemplates] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     templateService
@@ -24,7 +26,18 @@ const Templates = () => {
       <Typography variant="h3" align="center" margin={2}>
         Templates
       </Typography>
-      <Button fullWidth size="large" variant="contained">Create a template</Button>
+      {showForm
+        ? <TemplateForm setShowForm={setShowForm} />
+        : (
+          <Button
+            fullWidth
+            size="large"
+            variant="contained"
+            onClick={() => setShowForm(true)}
+          >
+            Create a template
+          </Button>
+        )}
       <Box container spacing={1}>
         <TemplateList templates={templates} />
       </Box>
