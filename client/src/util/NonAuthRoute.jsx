@@ -5,13 +5,19 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { AuthContext } from '../context/auth';
 
-function NonAuthRoute({ component: Component, ...rest }) {
+function NonAuthRoute({
+  component: Component,
+  path: Path,
+  exact: Exact,
+  ...rest
+}) {
   const { user } = useContext(AuthContext);
 
   return (
     <Route
-      {...rest}
-      render={(props) => (user ? <Redirect to="/" /> : <Component {...props} />)}
+      exact={Exact}
+      path={Path}
+      render={() => (user ? <Redirect to="/" /> : <Component {...rest} />)}
     />
   );
 }
