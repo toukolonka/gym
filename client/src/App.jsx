@@ -1,11 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 
 import { AuthProvider } from './context/auth';
 import AuthRoute from './util/AuthRoute';
+import NonAuthRoute from './util/NonAuthRoute';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import Home from './pages/Home/Home';
@@ -27,14 +28,16 @@ const App = () => (
           <NavigationBar />
           <NavigationBarMobile />
           <Container maxWidth="lg">
-            <Route exact path="/sign-in" component={SignIn} />
-            <Route exact path="/sign-up" component={SignUp} />
-            <AuthRoute exact path="/" component={Home} />
-            <AuthRoute exact path="/workouts" component={Workouts} />
-            <AuthRoute exact path="/exercises" component={Exercises} />
-            <AuthRoute exact path="/exercises/:id" component={Exercise} />
-            <AuthRoute exact path="/templates" component={Templates} />
-            <AuthRoute exact path="/profile" component={Profile} />
+            <Switch>
+              <NonAuthRoute exact path="/sign-in" component={SignIn} />
+              <NonAuthRoute exact path="/sign-up" component={SignUp} />
+              <AuthRoute exact path="/" component={Home} />
+              <AuthRoute exact path="/workouts" component={Workouts} />
+              <AuthRoute exact path="/exercises" component={Exercises} />
+              <AuthRoute exact path="/exercises/:id" component={Exercise} />
+              <AuthRoute exact path="/templates" component={Templates} />
+              <AuthRoute exact path="/profile" component={Profile} />
+            </Switch>
           </Container>
         </div>
       </ThemeProvider>
