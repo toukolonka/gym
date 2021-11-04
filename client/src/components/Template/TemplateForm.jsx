@@ -5,17 +5,20 @@ import {
   Card, CardContent, CardActions, Button, Typography,
 } from '@mui/material';
 
-const TemplateForm = ({ setShowForm }) => (
-  <Card sx={{
-    height: '100%',
-    marginTop: 2,
-    display: 'flex',
-    flexDirection: 'column',
-  }}
+const TemplateForm = ({ setShowForm, handleSubmit }) => (
+  <Card
+    sx={{
+      height: '100%',
+      marginTop: 2,
+      display: 'flex',
+      flexDirection: 'column',
+    }}
+    component="form"
+    onSubmit={handleSubmit}
   >
     <CardContent sx={{ flexGrow: 1 }}>
       <Typography>
-        Placeholder
+        This card includes mock template data that can be submitted by pressing SAVE
       </Typography>
     </CardContent>
     <CardActions>
@@ -28,13 +31,21 @@ const TemplateForm = ({ setShowForm }) => (
       >
         Cancel
       </Button>
-      <Button fullWidth variant="outlined" xs={6}>Save</Button>
+      <Button
+        fullWidth
+        variant="outlined"
+        xs={6}
+        type="submit"
+      >
+        Save
+      </Button>
     </CardActions>
   </Card>
 );
 
 TemplateForm.propTypes = {
   setShowForm: propTypes.func.isRequired,
+  handleSubmit: propTypes.func.isRequired,
 };
 
 export default TemplateForm;
