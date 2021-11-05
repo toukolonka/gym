@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { AuthProvider } from './context/auth';
 import AuthRoute from './util/AuthRoute';
@@ -28,6 +30,7 @@ const App = () => (
           <NavigationBar />
           <NavigationBarMobile />
           <Container maxWidth="lg">
+            <ToastContainer />
             <Switch>
               <NonAuthRoute exact path="/sign-in" component={SignIn} />
               <NonAuthRoute exact path="/sign-up" component={SignUp} />
