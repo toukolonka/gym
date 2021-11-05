@@ -25,7 +25,7 @@ const TemplateForm = ({ setShowForm, handleSubmit }) => (
       <Button
         fullWidth
         variant="outlined"
-        color="secondary"
+        color="warning"
         xs={6}
         onClick={() => setShowForm(false)}
       >
@@ -33,7 +33,8 @@ const TemplateForm = ({ setShowForm, handleSubmit }) => (
       </Button>
       <Button
         fullWidth
-        variant="outlined"
+        variant="contained"
+        color="success"
         xs={6}
         type="submit"
       >

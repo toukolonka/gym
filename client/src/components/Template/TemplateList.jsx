@@ -9,7 +9,7 @@ import {
   Grid,
 } from '@mui/material';
 
-const TemplateList = ({ templates }) => (
+const TemplateList = ({ templates, handleDelete }) => (
   templates.map((template) => (
     <div key={template.id}>
       <Card sx={{
@@ -20,13 +20,22 @@ const TemplateList = ({ templates }) => (
       }}
       >
         <CardContent sx={{ flexGrow: 1 }}>
-          <Typography gutterBottom variant="h4" component="h2">
-            Template Name
-          </Typography>
-          <Typography variant="h5">
-            {template.date}
-          </Typography>
           <Grid container>
+            <Grid item xs={10}>
+              <Typography gutterBottom variant="h4" component="h2">
+                Template Name
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Button variant="contained" color="error" onClick={() => handleDelete(template.id)}>
+                Delete
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h5">
+                {new Date(template.date).toLocaleDateString()}
+              </Typography>
+            </Grid>
             <Grid item xs={8}>
               Set
             </Grid>
@@ -76,6 +85,7 @@ TemplateList.propTypes = {
     template: propTypes.bool.isRequired,
     user: propTypes.string.isRequired,
   })),
+  handleDelete: propTypes.func.isRequired,
 };
 
 export default TemplateList;
