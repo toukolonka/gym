@@ -4,6 +4,7 @@
 const { model, Schema } = require('mongoose');
 
 const workoutSchema = new Schema({
+  name: String,
   date: Date,
   template: Boolean,
   user: {

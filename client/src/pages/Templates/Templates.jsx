@@ -12,6 +12,7 @@ import templateService from '../../services/templateService';
 const Templates = () => {
   const [templates, setTemplates] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [refreshList, setRefreshList] = useState(false);
 
   // mock data for creating a template
   const sets = [
@@ -38,7 +39,15 @@ const Templates = () => {
       .then((data) => {
         setTemplates(data);
       });
-  }, []);
+  }, [refreshList]);
+
+  const handleRefreshList = () => {
+    if (refreshList) {
+      setRefreshList(false);
+    } else {
+      setRefreshList(true);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -49,8 +58,15 @@ const Templates = () => {
       })
       .then(() => {
         setShowForm(false);
+        handleRefreshList();
         // @TODO clear text fields
       });
+  };
+
+  const handleDelete = (id) => {
+    templateService
+      .remove(id)
+      .then(() => handleRefreshList());
   };
 
   return (
@@ -71,7 +87,7 @@ const Templates = () => {
           </Button>
         )}
       <Box container spacing={1}>
-        <TemplateList templates={templates} />
+        <TemplateList templates={templates} handleDelete={handleDelete} />
       </Box>
     </Container>
   );
