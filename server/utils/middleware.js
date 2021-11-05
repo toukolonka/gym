@@ -25,6 +25,8 @@ const errorHandler = (error, _, response, next) => {
     return response.status(401).json({ error: error.message });
   } if (error instanceof Errors.AuthorizationHeaderError) {
     return response.status(401).json({ error: error.message });
+  } if (error instanceof Errors.AuthorizationError) {
+    return response.status(401).json({ error: error.message });
   } if (error instanceof Errors.UserNotFoundError) {
     return response.status(400).json({ error: error.message });
   } if (error instanceof Errors.InvalidParametersError) {

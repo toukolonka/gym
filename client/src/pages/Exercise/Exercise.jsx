@@ -35,6 +35,9 @@ const Exercise = () => {
       .remove(id)
       .then(() => {
         history.push('/exercises');
+      })
+      .catch(() => {
+        setOpen(false);
       });
   };
 

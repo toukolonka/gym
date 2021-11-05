@@ -79,6 +79,7 @@ ExerciseList.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
+    user: PropTypes.string,
   })).isRequired,
   handleSearchTextChange: PropTypes.func.isRequired,
   searchText: PropTypes.string.isRequired,

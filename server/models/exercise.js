@@ -7,6 +7,10 @@ const exerciseSchema = new Schema({
   name: String,
   description: String,
   category: String,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 exerciseSchema.set('toJSON', {

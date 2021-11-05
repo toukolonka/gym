@@ -3,10 +3,13 @@
 const exercisesRouter = require('express').Router();
 const Exercise = require('../models/exercise');
 const Errors = require('../utils/errors');
+const authorizeUser = require('../services/authorizationService');
 
-exercisesRouter.get('/', (_, response, next) => {
+exercisesRouter.get('/', async (request, response, next) => {
+  const user = await authorizeUser(request);
+
   try {
-    Exercise.find({}).sort({ name: 'asc' }).then((exercises) => {
+    Exercise.find({ $or: [{ user: null }, { user: user._id }] }).sort({ name: 'asc' }).then((exercises) => {
       response.json(exercises);
     });
   } catch (err) {
@@ -14,11 +17,18 @@ exercisesRouter.get('/', (_, response, next) => {
   }
 });
 
-exercisesRouter.get('/:id', (request, response, next) => {
+exercisesRouter.get('/:id', async (request, response, next) => {
   try {
-    Exercise.findById(request.params.id).then((exercise) => {
-      response.json(exercise);
-    });
+    const user = await authorizeUser(request);
+
+    const exercise = await Exercise.findById(request.params.id);
+
+    if (exercise.user === null
+      || exercise.user.toString() === user._id.toString()) {
+      return response.json(exercise);
+    }
+
+    throw new Errors.AuthorizationError('Not authorized');
   } catch (err) {
     next(err);
   }
@@ -26,6 +36,8 @@ exercisesRouter.get('/:id', (request, response, next) => {
 
 exercisesRouter.post('/', async (request, response, next) => {
   try {
+    const user = await authorizeUser(request);
+
     const { body } = request;
 
     if (body.name === undefined || body.description === undefined) {
@@ -36,6 +48,7 @@ exercisesRouter.post('/', async (request, response, next) => {
       name: body.name,
       description: body.description,
       category: body.category,
+      user: user._id,
     });
 
     await exercise.save();
@@ -48,12 +61,22 @@ exercisesRouter.post('/', async (request, response, next) => {
   }
 });
 
-exercisesRouter.delete('/:id', (request, response, next) => {
-  Exercise.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end();
-    })
-    .catch((err) => next(err));
+exercisesRouter.delete('/:id', async (request, response, next) => {
+  try {
+    const user = await authorizeUser(request);
+
+    const exerciseToBeDeleted = await Exercise.findById(request.params.id);
+
+    if (exerciseToBeDeleted.user !== null
+      && exerciseToBeDeleted.user.toString() === user._id.toString()) {
+      await Exercise.findByIdAndRemove(request.params.id);
+      return response.status(204).end();
+    }
+
+    throw new Errors.AuthorizationError('Not authorized');
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = exercisesRouter;

@@ -14,6 +14,8 @@ class CustomError extends Error {
 
 class AuthorizationHeaderError extends CustomError {}
 
+class AuthorizationError extends CustomError {}
+
 class InvalidTokenError extends CustomError {}
 
 class UserNotFoundError extends CustomError {}
@@ -24,6 +26,7 @@ class InvalidLoginError extends CustomError {}
 
 module.exports = {
   AuthorizationHeaderError,
+  AuthorizationError,
   InvalidTokenError,
   UserNotFoundError,
   InvalidParametersError,
