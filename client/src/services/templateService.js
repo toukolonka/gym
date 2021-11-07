@@ -2,7 +2,6 @@ import axios from 'axios';
 
 // Use gymToken directly from local storage instead of information from context/auth.jsx
 const baseUrl = '/api/templates';
-axios.defaults.headers.common.Authorization = `bearer ${localStorage.getItem('gymToken')}`;
 
 const getAll = async () => {
   const response = await axios.get(baseUrl);

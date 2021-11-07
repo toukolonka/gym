@@ -2,8 +2,6 @@ import axios from 'axios';
 
 const baseUrl = '/api/exercises';
 
-axios.defaults.headers.common.Authorization = `bearer ${localStorage.getItem('gymToken')}`;
-
 const getOne = async (id) => {
   const response = await axios.get(`${baseUrl}/${id}`);
   return response.data;
