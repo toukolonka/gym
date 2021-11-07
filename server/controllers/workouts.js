@@ -11,11 +11,20 @@ const authorizeUser = require('../services/authorizationService');
 
 wokoutsRouter.get('/', async (request, response, next) => {
   try {
-    // Get the user based on token
     const user = await authorizeUser(request);
 
-    // Return the workouts based on user_id
-    const workouts = await Workout.find({ user: user._id });
+    const workouts = await Workout
+      .find({ user: user._id, template: false })
+      .populate({
+        path: 'sets',
+        type: Array,
+        populate: {
+          path: 'exercise',
+          model: 'Exercise',
+          select: 'name',
+        },
+      });
+
     return response.json(workouts);
   } catch (err) {
     next(err);
