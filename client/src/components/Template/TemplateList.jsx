@@ -81,6 +81,7 @@ TemplateList.propTypes = {
       repetitions: propTypes.number.isRequired,
       exercise: propTypes.object.isRequired,
       id: propTypes.string.isRequired,
+      workout: propTypes.string.isRequired,
     })).isRequired,
     template: propTypes.bool.isRequired,
     user: propTypes.string.isRequired,

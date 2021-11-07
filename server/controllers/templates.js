@@ -31,23 +31,27 @@ templatesRouter.post('/', async (request, response, next) => {
     // const { body } = request;
     const user = await authorizeUser(request);
 
+    const workout = new Workout({
+      date: new Date(),
+      template: true,
+      user: user._id,
+      sets: [],
+    });
+
+    const savedWorkout = await workout.save();
+
     // FOR TESTING
     const set = new Set({
       weight: 60,
       repetitions: 8,
       exercise: '6187ba2190623f830b6605ce',
+      workout: savedWorkout._id,
     });
 
     const savedSet = await set.save();
+    workout.sets = workout.sets.concat(savedSet._id);
+    await workout.save();
 
-    const workout = new Workout({
-      date: new Date(),
-      template: true,
-      user: user._id,
-      sets: [savedSet._id],
-    });
-
-    const savedWorkout = await workout.save();
     user.workouts = user.workouts.concat(savedWorkout._id);
     await user.save();
 
