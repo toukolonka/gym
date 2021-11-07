@@ -53,7 +53,9 @@ const Workout = () => {
           Workout
         </Typography>
         <Typography component="p" variant="p">
-          {workout.date}
+          {new Date(workout.date).toLocaleDateString(undefined, {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+          })}
         </Typography>
       </Box>
       <Autocomplete
