@@ -19,17 +19,17 @@ const Templates = () => {
     {
       weight: 60,
       repetitions: 8,
-      exercise: '6172a5430c53ebb7e0da9873',
+      exercise: '6184da3f36830a8d9b24f49b',
     },
     {
       weight: 60,
       repetitions: 8,
-      exercise: '6172a5430c53ebb7e0da9873',
+      exercise: '6184da3f36830a8d9b24f49b',
     },
     {
       weight: 60,
       repetitions: 8,
-      exercise: '6172a5430c53ebb7e0da9873',
+      exercise: '6184da3f36830a8d9b24f49b',
     },
   ];
 

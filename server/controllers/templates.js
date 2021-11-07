@@ -8,8 +8,16 @@ templatesRouter.get('/', async (request, response, next) => {
     const user = await authorizeUser(request);
 
     const templates = await Workout
-      .find({ user: user._id, template: true });
-      // @ TODO .populate('sets');
+      .find({ user: user._id, template: true })
+      .populate({
+        path: 'sets',
+        type: Array,
+        populate: {
+          path: 'exercise',
+          model: 'Exercise',
+          select: 'name',
+        },
+      });
 
     return response.json(templates);
   } catch (err) {

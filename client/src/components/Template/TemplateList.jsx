@@ -51,7 +51,7 @@ const TemplateList = ({ templates, handleDelete }) => (
             <div key={set._id}>
               <Grid container>
                 <Grid item xs={8}>
-                  {set.exercise}
+                  {set.exercise.name}
                 </Grid>
                 <Grid item xs={2}>
                   {set.weight}
@@ -79,7 +79,7 @@ TemplateList.propTypes = {
     sets: propTypes.arrayOf(propTypes.exact({
       weight: propTypes.number.isRequired,
       repetitions: propTypes.number.isRequired,
-      exercise: propTypes.string.isRequired,
+      exercise: propTypes.object.isRequired,
       _id: propTypes.string.isRequired,
     })).isRequired,
     template: propTypes.bool.isRequired,
