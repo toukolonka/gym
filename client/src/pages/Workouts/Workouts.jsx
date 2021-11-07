@@ -21,7 +21,7 @@ const Workouts = () => {
   }, []);
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="xs">
       <Box
         sx={{
           marginTop: 2,
