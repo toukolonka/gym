@@ -1,10 +1,48 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
+import {
+  Box, Typography, Button, Container,
+} from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
-const Home = () => (
-  <Typography variant="h3" component="h3">
-    Home Page
-  </Typography>
-);
+import workoutService from '../../services/workoutService';
+
+const Home = () => {
+  const history = useHistory();
+
+  const handleStartWorkout = (event) => {
+    event.preventDefault();
+    workoutService
+      .create()
+      .then((createdWorkout) => {
+        history.push(`/workouts/${createdWorkout.id}`);
+      });
+  };
+
+  return (
+    <Container maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h3" variant="h3">
+          Home
+        </Typography>
+      </Box>
+      <Button
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3 }}
+        color="primary"
+        onClick={handleStartWorkout}
+      >
+        Start an empty workout
+      </Button>
+    </Container>
+  );
+};
 
 export default Home;

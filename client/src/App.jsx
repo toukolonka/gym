@@ -11,6 +11,7 @@ import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import Home from './pages/Home/Home';
 import Workouts from './pages/Workouts/Workouts';
+import Workout from './pages/Workout/Workout';
 import Exercises from './pages/Exercises/Exercises';
 import Exercise from './pages/Exercise/Exercise';
 import Templates from './pages/Templates/Templates';
@@ -33,6 +34,7 @@ const App = () => (
               <NonAuthRoute exact path="/sign-up" component={SignUp} />
               <AuthRoute exact path="/" component={Home} />
               <AuthRoute exact path="/workouts" component={Workouts} />
+              <AuthRoute exact path="/workouts/:id" component={Workout} />
               <AuthRoute exact path="/exercises" component={Exercises} />
               <AuthRoute exact path="/exercises/:id" component={Exercise} />
               <AuthRoute exact path="/templates" component={Templates} />

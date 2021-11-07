@@ -2,6 +2,7 @@
 
 const wokoutsRouter = require('express').Router();
 const Workout = require('../models/workout');
+const Errors = require('../utils/errors');
 const authorizeUser = require('../services/authorizationService');
 
 /*
@@ -21,21 +22,36 @@ wokoutsRouter.get('/', async (request, response, next) => {
   }
 });
 
+wokoutsRouter.get('/:id', async (request, response, next) => {
+  try {
+    const user = await authorizeUser(request);
+
+    const workout = await Workout.findById(request.params.id);
+
+    if (workout.user === null
+      || workout.user.toString() === user._id.toString()) {
+      return response.json(workout);
+    }
+
+    throw new Errors.AuthorizationError('Not authorized');
+  } catch (err) {
+    next(err);
+  }
+});
+
 /*
   Create a new workout
 */
 wokoutsRouter.post('/', async (request, response, next) => {
   try {
-    // Extract request body and get user based on token
-    const { body } = request;
     const user = await authorizeUser(request);
 
     // Create new workout
     const workout = new Workout({
       date: new Date(),
-      template: body.template,
+      template: false,
       user: user._id,
-      sets: body.sets,
+      sets: [],
     });
 
     // Save the workout
