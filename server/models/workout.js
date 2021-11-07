@@ -14,7 +14,7 @@ const workoutSchema = new Schema({
   sets: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Set',
+      ref: 'GymSet',
     },
   ],
 });

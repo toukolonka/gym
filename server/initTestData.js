@@ -7,7 +7,7 @@ require('dotenv').config();
 const Exercise = require('./models/exercise');
 const User = require('./models/user');
 const Workout = require('./models/workout');
-const Set = require('./models/set');
+const GymSet = require('./models/set');
 
 mongoose
   .connect(process.env.DEV_MONGODB_URI)
@@ -67,7 +67,7 @@ const initTestData = async () => {
   user.workouts = user.workouts.concat(savedWorkout._id);
   await user.save();
 
-  const set = new Set({
+  const set = new GymSet({
     weight: 50,
     repetitions: 10,
     exercise: savedExercise._id,

@@ -35,7 +35,17 @@ wokoutsRouter.get('/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
 
-    const workout = await Workout.findById(request.params.id);
+    const workout = await Workout
+      .findById(request.params.id)
+      .populate({
+        path: 'sets',
+        type: Array,
+        populate: {
+          path: 'exercise',
+          model: 'Exercise',
+          select: 'name',
+        },
+      });
 
     if (workout.user === null
       || workout.user.toString() === user._id.toString()) {

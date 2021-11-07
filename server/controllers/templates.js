@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const templatesRouter = require('express').Router();
 const Workout = require('../models/workout');
-const Set = require('../models/set'); // FOR TESTING
+const GymSet = require('../models/set'); // FOR TESTING
 const authorizeUser = require('../services/authorizationService');
 
 templatesRouter.get('/', async (request, response, next) => {
@@ -41,10 +41,10 @@ templatesRouter.post('/', async (request, response, next) => {
     const savedWorkout = await workout.save();
 
     // FOR TESTING
-    const set = new Set({
+    const set = new GymSet({
       weight: 60,
       repetitions: 8,
-      exercise: '6187ba2190623f830b6605ce',
+      exercise: '6187f598bc4399311fa08773',
       workout: savedWorkout._id,
     });
 

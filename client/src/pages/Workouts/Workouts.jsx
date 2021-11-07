@@ -10,7 +10,6 @@ import Loading from '../../components/Loading/Loading';
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     workoutService
       .getAll()

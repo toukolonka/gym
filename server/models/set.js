@@ -24,4 +24,4 @@ setSchema.set('toJSON', {
   },
 });
 
-module.exports = model('Set', setSchema);
+module.exports = model('GymSet', setSchema);

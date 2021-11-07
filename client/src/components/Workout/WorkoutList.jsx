@@ -20,7 +20,7 @@ const WorkoutList = ({ workouts }) => (
         borderColor: 'primary.dark',
       }}
       >
-        <CardActionArea>
+        <CardActionArea href={`workouts/${workout.id}`}>
           <CardContent sx={{ flexGrow: 1 }}>
             <Grid container>
               <Grid item xs={10}>
