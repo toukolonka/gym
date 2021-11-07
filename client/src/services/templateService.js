@@ -8,8 +8,8 @@ const getAll = async () => {
   return response.data;
 };
 
-const create = async (template) => {
-  const response = await axios.post(baseUrl, template);
+const create = async () => {
+  const response = await axios.post(baseUrl);
   return response.data;
 };
 

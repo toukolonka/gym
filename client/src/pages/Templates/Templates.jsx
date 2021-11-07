@@ -14,25 +14,6 @@ const Templates = () => {
   const [showForm, setShowForm] = useState(false);
   const [refreshList, setRefreshList] = useState(false);
 
-  // mock data for creating a template
-  const sets = [
-    {
-      weight: 60,
-      repetitions: 8,
-      exercise: '6184da3f36830a8d9b24f49b',
-    },
-    {
-      weight: 60,
-      repetitions: 8,
-      exercise: '6184da3f36830a8d9b24f49b',
-    },
-    {
-      weight: 60,
-      repetitions: 8,
-      exercise: '6184da3f36830a8d9b24f49b',
-    },
-  ];
-
   useEffect(() => {
     templateService
       .getAll()
@@ -52,10 +33,7 @@ const Templates = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     templateService
-      .create({
-        sets,
-        // @TODO use real data
-      })
+      .create()
       .then(() => {
         setShowForm(false);
         handleRefreshList();

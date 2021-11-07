@@ -48,7 +48,7 @@ const TemplateList = ({ templates, handleDelete }) => (
           </Grid>
           {template.sets.map((set) => (
             // eslint-disable-next-line no-underscore-dangle
-            <div key={set._id}>
+            <div key={set.id}>
               <Grid container>
                 <Grid item xs={8}>
                   {set.exercise.name}
@@ -80,7 +80,7 @@ TemplateList.propTypes = {
       weight: propTypes.number.isRequired,
       repetitions: propTypes.number.isRequired,
       exercise: propTypes.object.isRequired,
-      _id: propTypes.string.isRequired,
+      id: propTypes.string.isRequired,
     })).isRequired,
     template: propTypes.bool.isRequired,
     user: propTypes.string.isRequired,
