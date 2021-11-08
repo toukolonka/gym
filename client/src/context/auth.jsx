@@ -1,5 +1,6 @@
 import React, { useReducer, createContext } from 'react';
 import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 
 const initialState = {
   user: null,
@@ -52,6 +53,7 @@ function AuthProvider(props) {
 
   function logout() {
     localStorage.removeItem('gymToken');
+    axios.defaults.headers.common.Authorization = null;
     dispatch({ type: 'LOGOUT' });
   }
 

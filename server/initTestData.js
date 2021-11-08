@@ -7,6 +7,7 @@ require('dotenv').config();
 const Exercise = require('./models/exercise');
 const User = require('./models/user');
 const Workout = require('./models/workout');
+const GymSet = require('./models/set');
 
 mongoose
   .connect(process.env.DEV_MONGODB_URI)
@@ -48,7 +49,8 @@ const initTestData = async () => {
   const exercise = new Exercise({
     name: 'Bench press',
     description: 'A lift or exercise in which a weight is raised by extending the arms upward while lying on a bench',
-    category: 'Core',
+    category: 'Upper',
+    user: null,
   });
 
   const savedExercise = await exercise.save();
@@ -57,17 +59,25 @@ const initTestData = async () => {
     date: new Date(),
     template: false,
     user: savedUser._id,
-    sets: {
-      weight: 50,
-      repetitions: 10,
-      exercise: savedExercise._id,
-    },
+    sets: [],
   });
 
   const savedWorkout = await workout.save();
 
   user.workouts = user.workouts.concat(savedWorkout._id);
   await user.save();
+
+  const set = new GymSet({
+    weight: 50,
+    repetitions: 10,
+    exercise: savedExercise._id,
+    workout: savedWorkout._id,
+  });
+
+  const savedSet = await set.save();
+
+  workout.sets = workout.sets.concat(savedSet._id);
+  await workout.save();
 };
 
 initTestData()

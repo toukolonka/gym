@@ -3,23 +3,20 @@
 
 const { model, Schema } = require('mongoose');
 
-const workoutSchema = new Schema({
-  name: String,
-  date: Date,
-  template: Boolean,
-  user: {
+const setSchema = new Schema({
+  weight: Number,
+  repetitions: Number,
+  exercise: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Exercise',
   },
-  sets: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'GymSet',
-    },
-  ],
+  workout: {
+    type: Schema.Types.ObjectId,
+    ref: 'Workout',
+  },
 });
 
-workoutSchema.set('toJSON', {
+setSchema.set('toJSON', {
   transform: (_, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -27,4 +24,4 @@ workoutSchema.set('toJSON', {
   },
 });
 
-module.exports = model('Workout', workoutSchema);
+module.exports = model('GymSet', setSchema);

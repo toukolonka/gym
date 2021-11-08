@@ -2,6 +2,7 @@
 
 const wokoutsRouter = require('express').Router();
 const Workout = require('../models/workout');
+const Errors = require('../utils/errors');
 const authorizeUser = require('../services/authorizationService');
 
 /*
@@ -10,12 +11,48 @@ const authorizeUser = require('../services/authorizationService');
 
 wokoutsRouter.get('/', async (request, response, next) => {
   try {
-    // Get the user based on token
     const user = await authorizeUser(request);
 
-    // Return the workouts based on user_id
-    const workouts = await Workout.find({ user: user._id });
+    const workouts = await Workout
+      .find({ user: user._id, template: false })
+      .populate({
+        path: 'sets',
+        type: Array,
+        populate: {
+          path: 'exercise',
+          model: 'Exercise',
+          select: 'name',
+        },
+      });
+
     return response.json(workouts);
+  } catch (err) {
+    next(err);
+  }
+});
+
+wokoutsRouter.get('/:id', async (request, response, next) => {
+  try {
+    const user = await authorizeUser(request);
+
+    const workout = await Workout
+      .findById(request.params.id)
+      .populate({
+        path: 'sets',
+        type: Array,
+        populate: {
+          path: 'exercise',
+          model: 'Exercise',
+          select: 'name',
+        },
+      });
+
+    if (workout.user === null
+      || workout.user.toString() === user._id.toString()) {
+      return response.json(workout);
+    }
+
+    throw new Errors.AuthorizationError('Not authorized');
   } catch (err) {
     next(err);
   }
@@ -26,16 +63,14 @@ wokoutsRouter.get('/', async (request, response, next) => {
 */
 wokoutsRouter.post('/', async (request, response, next) => {
   try {
-    // Extract request body and get user based on token
-    const { body } = request;
     const user = await authorizeUser(request);
 
     // Create new workout
     const workout = new Workout({
       date: new Date(),
-      template: body.template,
+      template: false,
       user: user._id,
-      sets: body.sets,
+      sets: [],
     });
 
     // Save the workout
