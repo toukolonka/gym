@@ -29,6 +29,11 @@ const initTestData = async () => {
       logger.info('Deleted all users');
     });
 
+  await GymSet.deleteMany({})
+    .then(() => {
+      logger.info('Deleted all sets');
+    });
+
   await Workout.deleteMany({})
     .then(() => {
       logger.info('Deleted all workouts');
@@ -70,6 +75,7 @@ const initTestData = async () => {
   const set = new GymSet({
     weight: 50,
     repetitions: 10,
+    completed: false,
     exercise: savedExercise._id,
     workout: savedWorkout._id,
   });

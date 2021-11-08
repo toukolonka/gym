@@ -79,6 +79,7 @@ TemplateList.propTypes = {
     sets: propTypes.arrayOf(propTypes.exact({
       weight: propTypes.number.isRequired,
       repetitions: propTypes.number.isRequired,
+      completed: propTypes.bool.isRequired,
       exercise: propTypes.object.isRequired,
       id: propTypes.string.isRequired,
       workout: propTypes.string.isRequired,

@@ -48,6 +48,7 @@ templatesRouter.post('/', async (request, response, next) => {
     const set = new GymSet({
       weight: 60,
       repetitions: 8,
+      completed: false,
       exercise: exercise._id,
       workout: savedWorkout._id,
     });

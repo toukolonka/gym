@@ -13,6 +13,8 @@ import {
   IconButton,
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useParams } from 'react-router-dom';
 
 import workoutService from '../../services/workoutService';
@@ -48,6 +50,17 @@ const Workout = () => {
   const handleAddSet = (set) => {
     setService
       .create(set)
+      .then((updatedWorkout) => {
+        setWorkout(updatedWorkout);
+      });
+  };
+
+  const handleUpdateSet = (set) => {
+    setService
+      .update({
+        ...set,
+        completed: !set.completed,
+      }, set.id)
       .then((updatedWorkout) => {
         setWorkout(updatedWorkout);
       });
@@ -115,32 +128,43 @@ const Workout = () => {
               </Typography>
 
               <Grid container>
-                <Grid item xs={6}>
+                <Grid item xs={2}>
                   Set
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                   Weight
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                   Reps
+                </Grid>
+                <Grid item xs={2}>
+                  Done
                 </Grid>
                 <Grid item xs={2}>
                   Remove
                 </Grid>
               </Grid>
-              {workout.sets.map((set) => (
+              {workout.sets.map((set, index) => (
                 set.exercise.id === exercise.id
                 && (
                 <div key={set.id}>
                   <Grid container>
-                    <Grid item xs={6}>
-                      {set.exercise.name}
-                    </Grid>
                     <Grid item xs={2}>
+                      {index}
+                    </Grid>
+                    <Grid item xs={3}>
                       {set.weight}
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                       {set.repetitions}
+                    </Grid>
+                    <Grid item xs={2}>
+                      <IconButton
+                        color="success"
+                        onClick={() => handleUpdateSet(set)}
+                      >
+                        {set.completed ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
+                      </IconButton>
                     </Grid>
                     <Grid item xs={2}>
                       <IconButton

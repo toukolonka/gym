@@ -11,6 +11,7 @@ setsRouter.post('/', async (request, response, next) => {
     const set = new GymSet({
       weight: body.weight,
       repetitions: body.repetitions,
+      completed: false,
       exercise: body.exerciseId,
       workout: body.workoutId,
     });
@@ -34,6 +35,35 @@ setsRouter.post('/', async (request, response, next) => {
         },
       });
     return response.json(updatedWorkout);
+  } catch (err) {
+    next(err);
+  }
+});
+
+setsRouter.put('/:id', async (request, response, next) => {
+  try {
+    const { body } = request;
+
+    const set = {
+      weight: body.weight,
+      repetitions: body.repetitions,
+      completed: body.completed,
+    };
+
+    await GymSet.findByIdAndUpdate(request.params.id, set, { new: true });
+
+    const workout = await Workout
+      .findById(body.workout)
+      .populate({
+        path: 'sets',
+        type: Array,
+        populate: {
+          path: 'exercise',
+          model: 'Exercise',
+          select: 'name',
+        },
+      });
+    return response.json(workout);
   } catch (err) {
     next(err);
   }

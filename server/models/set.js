@@ -6,6 +6,7 @@ const { model, Schema } = require('mongoose');
 const setSchema = new Schema({
   weight: Number,
   repetitions: Number,
+  completed: Boolean,
   exercise: {
     type: Schema.Types.ObjectId,
     ref: 'Exercise',
