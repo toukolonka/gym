@@ -33,8 +33,10 @@ const SignIn = ({
       setInfoMessage('Login Successful');
       context.login(userData);
       history.push('/');
+    } else {
+      setPassword('');
+      setErrorMessage('Username or password incorrect');
     }
-    setPassword('');
   };
 
   return (

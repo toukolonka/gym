@@ -36,7 +36,7 @@ const SignUp = ({
       username,
       password,
       email,
-    }, setErrorMessage);
+    });
 
     if (userdata) {
       // If registration was successful, login
@@ -44,11 +44,13 @@ const SignUp = ({
       const logindata = await loginService.login({
         username,
         password,
-      }, setErrorMessage);
+      });
       if (logindata) {
         context.login(logindata);
         history.push('/');
       }
+    } else {
+      setErrorMessage('Registration failed');
     }
   };
 
