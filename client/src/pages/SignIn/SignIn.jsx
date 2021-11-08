@@ -27,7 +27,7 @@ const SignIn = ({
     const userData = await loginService.login({
       username,
       password,
-    }, setErrorMessage);
+    });
     // If login with backend was succesfully completed
     if (userData) {
       setInfoMessage('Login Successful');
