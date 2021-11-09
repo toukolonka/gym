@@ -4,6 +4,7 @@ const usersRouter = require('express').Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const Errors = require('../utils/errors');
+const authorizeUser = require('../services/authorizationService');
 
 usersRouter.get('/', (_, response, next) => {
   try {
@@ -39,6 +40,36 @@ usersRouter.post('/', async (request, response, next) => {
     const savedUser = await user.save();
 
     response.json(savedUser);
+  } catch (err) {
+    next(err);
+  }
+});
+
+usersRouter.put('/', async (request, response, next) => {
+  try {
+    const { body } = request;
+    const user = await authorizeUser(request);
+
+    if (body.email === undefined && body.password === undefined) {
+      throw new Errors.InvalidParametersError('New email or new password was not provided');
+    }
+
+    if (body.password) {
+      if (body.password.length < 5) {
+        throw new Errors.InvalidParametersError('New password provided is not long enough');
+      }
+      const saltRounds = 10;
+      const passwordHash = await bcrypt.hash(body.password, saltRounds);
+
+      user.passwordHash = passwordHash;
+    }
+
+    if (body.email) {
+      user.email = body.email;
+    }
+
+    const updatedUser = await user.save();
+    response.json(updatedUser);
   } catch (err) {
     next(err);
   }
