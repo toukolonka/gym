@@ -41,11 +41,11 @@ const Templates = () => {
       });
   };
 
-  const handleDelete = (id) => {
+  /* const handleDelete = (id) => {
     templateService
       .remove(id)
       .then(() => handleRefreshList());
-  };
+  }; */
 
   return (
     <Container maxWidth="sm">
@@ -65,7 +65,7 @@ const Templates = () => {
           </Button>
         )}
       <Box container spacing={1}>
-        <TemplateList templates={templates} handleDelete={handleDelete} />
+        <TemplateList templates={templates} />
       </Box>
     </Container>
   );
