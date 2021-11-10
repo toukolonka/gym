@@ -7,6 +7,7 @@ import {
   CardActions,
   Button,
   Grid,
+  CardActionArea,
 } from '@mui/material';
 
 const TemplateList = ({ templates, handleDelete }) => (
@@ -17,52 +18,56 @@ const TemplateList = ({ templates, handleDelete }) => (
         marginTop: 2,
         display: 'flex',
         flexDirection: 'column',
+        border: 2,
+        borderColor: 'primary.dark',
       }}
       >
-        <CardContent sx={{ flexGrow: 1 }}>
-          <Grid container>
-            <Grid item xs={10}>
-              <Typography gutterBottom variant="h4" component="h2">
-                Template Name
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button variant="contained" color="error" onClick={() => handleDelete(template.id)}>
-                Delete
-              </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h5">
-                {new Date(template.date).toLocaleDateString()}
-              </Typography>
-            </Grid>
-            <Grid item xs={8}>
-              Set
-            </Grid>
-            <Grid item xs={2}>
-              Weight
-            </Grid>
-            <Grid item xs={2}>
-              Repetitions
-            </Grid>
-          </Grid>
-          {template.sets.map((set) => (
-            // eslint-disable-next-line no-underscore-dangle
-            <div key={set.id}>
-              <Grid container>
-                <Grid item xs={8}>
-                  {set.exercise.name}
-                </Grid>
-                <Grid item xs={2}>
-                  {set.weight}
-                </Grid>
-                <Grid item xs={2}>
-                  {set.repetitions}
-                </Grid>
+        <CardActionArea href={`workouts/${template.id}`}>
+          <CardContent sx={{ flexGrow: 1 }}>
+            <Grid container>
+              <Grid item xs={10}>
+                <Typography gutterBottom variant="h4" component="h2">
+                  Template Name
+                </Typography>
               </Grid>
-            </div>
-          ))}
-        </CardContent>
+              <Grid item xs={2}>
+                <Button variant="contained" color="error" onClick={() => handleDelete(template.id)}>
+                  Delete
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h5">
+                  {new Date(template.date).toLocaleDateString()}
+                </Typography>
+              </Grid>
+              <Grid item xs={8}>
+                Set
+              </Grid>
+              <Grid item xs={2}>
+                Weight
+              </Grid>
+              <Grid item xs={2}>
+                Repetitions
+              </Grid>
+            </Grid>
+            {template.sets.map((set) => (
+            // eslint-disable-next-line no-underscore-dangle
+              <div key={set.id}>
+                <Grid container>
+                  <Grid item xs={8}>
+                    {set.exercise.name}
+                  </Grid>
+                  <Grid item xs={2}>
+                    {set.weight}
+                  </Grid>
+                  <Grid item xs={2}>
+                    {set.repetitions}
+                  </Grid>
+                </Grid>
+              </div>
+            ))}
+          </CardContent>
+        </CardActionArea>
         <CardActions>
           <Button fullWidth variant="contained" color="secondary" xs={6}>Edit</Button>
           <Button fullWidth variant="contained" xs={6}>Start workout</Button>
