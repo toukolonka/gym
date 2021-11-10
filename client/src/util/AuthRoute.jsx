@@ -5,13 +5,19 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { AuthContext } from '../context/auth';
 
-function AuthRoute({ component: Component, ...rest }) {
+function AuthRoute({
+  component: Component,
+  path: Path,
+  exact: Exact,
+  ...rest
+}) {
   const { user } = useContext(AuthContext);
 
   return (
     <Route
-      {...rest}
-      render={(props) => (user ? <Component {...props} /> : <Redirect to="/sign-in" />)}
+      exact={Exact}
+      path={Path}
+      render={() => (user ? <Component {...rest} /> : <Redirect to="/sign-in" />)}
     />
   );
 }

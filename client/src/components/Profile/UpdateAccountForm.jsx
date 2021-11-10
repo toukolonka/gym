@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -13,9 +12,18 @@ const UpdateAccountForm = ({
   setPassword,
   handleSubmit,
 }) => (
-  <Container maxWidth="lg">
-    <Box component="form" onSubmit={handleSubmit}>
-      <Typography variant="h4" component="h5">
+  <>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        m: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Typography variant="h5" component="h5">
         Update Account Information
       </Typography>
       <TextField
@@ -45,12 +53,12 @@ const UpdateAccountForm = ({
         type="submit"
         fullWidth
         variant="contained"
-        sx={{ mt: 3, mb: 2 }}
+        sx={{ mt: 3 }}
       >
         Update Account Information
       </Button>
     </Box>
-  </Container>
+  </>
 );
 
 UpdateAccountForm.propTypes = {

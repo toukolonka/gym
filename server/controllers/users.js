@@ -50,16 +50,16 @@ usersRouter.put('/', async (request, response, next) => {
     const { body } = request;
     const user = await authorizeUser(request);
 
-    if (body.email === undefined && body.password === undefined) {
+    if (body.email === undefined && body.newPassword === undefined) {
       throw new Errors.InvalidParametersError('New email or new password was not provided');
     }
 
-    if (body.password) {
-      if (body.password.length < 5) {
+    if (body.newPassword) {
+      if (body.newPassword.length < 5) {
         throw new Errors.InvalidParametersError('New password provided is not long enough');
       }
       const saltRounds = 10;
-      const passwordHash = await bcrypt.hash(body.password, saltRounds);
+      const passwordHash = await bcrypt.hash(body.newPassword, saltRounds);
 
       user.passwordHash = passwordHash;
     }

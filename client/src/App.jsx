@@ -59,7 +59,7 @@ const App = () => {
                 <AuthRoute exact path="/exercises" component={Exercises} />
                 <AuthRoute exact path="/exercises/:id" component={Exercise} />
                 <AuthRoute exact path="/templates" component={Templates} />
-                <AuthRoute exact path="/profile" component={Profile} />
+                <AuthRoute exact path="/profile" setErrorMessage={setErrorMessage} setInfoMessage={setInfoMessage} component={Profile} />
               </Switch>
             </Container>
           </div>

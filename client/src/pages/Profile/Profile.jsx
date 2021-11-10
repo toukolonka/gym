@@ -1,13 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
-  Box, Typography, Container, Button,
+  Box, Typography, Container,
 } from '@mui/material';
 import UpdateAccountForm from '../../components/Profile/UpdateAccountForm';
+import AccountInformation from '../../components/Profile/AccountInformation';
+import registrationService from '../../services/registrationService';
 
-import { AuthContext } from '../../context/auth';
-
-const Profile = () => {
-  const { user, logout } = useContext(AuthContext);
+const Profile = ({
+  setErrorMessage,
+  setInfoMessage,
+}) => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
@@ -19,16 +22,22 @@ const Profile = () => {
     setNewPassword(event.target.value);
   };
 
-  const handleAccountUpdate = (event) => {
+  const handleAccountUpdate = async (event) => {
     event.preventDefault();
-    console.log({
+    const updatedUser = await registrationService.update({
       email,
       newPassword,
     });
+    if (updatedUser) {
+      console.log(updatedUser);
+      setInfoMessage('Account information updated successfully');
+    } else {
+      setErrorMessage('Account information update failed');
+    }
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <Box
         sx={{
           mt: 2,
@@ -40,28 +49,23 @@ const Profile = () => {
         <Typography component="h3" variant="h3">
           Profile
         </Typography>
-        <Typography component="p" variant="p">
-          {user.username}
-        </Typography>
+        <AccountInformation />
+        <UpdateAccountForm
+          email={email}
+          setEmail={handleEmailChange}
+          password={newPassword}
+          setPassword={handlePasswordChange}
+          handleSubmit={handleAccountUpdate}
+        />
+
       </Box>
-      <UpdateAccountForm
-        email={email}
-        setEmail={handleEmailChange}
-        password={newPassword}
-        setPassword={handlePasswordChange}
-        handleSubmit={handleAccountUpdate}
-      />
-      <Button
-        variant="outlined"
-        fullWidth
-        color="error"
-        onClick={logout}
-        sx={{ mt: 2 }}
-      >
-        Sign out
-      </Button>
     </Container>
   );
+};
+
+Profile.propTypes = {
+  setErrorMessage: PropTypes.func.isRequired,
+  setInfoMessage: PropTypes.func.isRequired,
 };
 
 export default Profile;
