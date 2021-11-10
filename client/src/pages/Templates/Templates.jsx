@@ -48,7 +48,7 @@ const Templates = () => {
   }; */
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="xs">
       <Typography variant="h3" align="center" margin={2}>
         Templates
       </Typography>
