@@ -30,6 +30,8 @@ const Workout = () => {
   const { id } = useParams();
   const history = useHistory();
 
+  const workoutText = workout.template ? 'Template' : 'Workout';
+
   useEffect(() => {
     workoutService
       .getOne(id)
@@ -132,7 +134,7 @@ const Workout = () => {
         }}
       >
         <Typography component="h3" variant="h3">
-          Workout
+          {workoutText}
         </Typography>
         <Typography component="p" variant="p">
           {new Date(workout.date).toLocaleDateString(undefined, {
@@ -186,7 +188,9 @@ const Workout = () => {
         color="error"
         onClick={handleOpenDialog}
       >
-        Delete Workout
+        Delete
+        {' '}
+        {workoutText}
       </Button>
       <Dialog
         open={open}
@@ -194,11 +198,16 @@ const Workout = () => {
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          Delete workout
+          Delete
+          {' '}
+          {workoutText}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete the workout?
+            Are you sure you want to delete the
+            {' '}
+            {workoutText}
+            ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

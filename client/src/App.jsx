@@ -59,6 +59,7 @@ const App = () => {
                 <AuthRoute exact path="/exercises" component={Exercises} />
                 <AuthRoute exact path="/exercises/:id" component={Exercise} />
                 <AuthRoute exact path="/templates" component={Templates} />
+                <AuthRoute exact path="/templates/:id" component={Workout} />
                 <AuthRoute exact path="/profile" component={Profile} />
               </Switch>
             </Container>

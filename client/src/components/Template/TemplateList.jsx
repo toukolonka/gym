@@ -34,7 +34,7 @@ const TemplateList = ({ templates }) => {
           borderColor: 'primary.dark',
         }}
         >
-          <CardActionArea href={`workouts/${template.id}`}>
+          <CardActionArea href={`templates/${template.id}`}>
             <CardContent sx={{ flexGrow: 1 }}>
               <Grid container>
                 <Grid item xs={10}>
