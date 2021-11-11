@@ -30,8 +30,6 @@ const Workout = () => {
   const { id } = useParams();
   const history = useHistory();
 
-  const workoutText = workout.template ? 'Template' : 'Workout';
-
   useEffect(() => {
     workoutService
       .getOne(id)
@@ -107,6 +105,8 @@ const Workout = () => {
       <Loading />
     );
   }
+
+  const workoutText = workout.template ? 'Template' : 'Workout';
 
   const exercises = Array.from(new Set(workout.sets.map((set) => set.exercise.id)))
     .map((exerciseId) => ({
