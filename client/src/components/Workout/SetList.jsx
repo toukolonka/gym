@@ -11,11 +11,11 @@ import {
 
 import SetRow from './SetRow';
 
-const WorkoutExercise = ({
+const SetList = ({
   exercise,
   sets,
-  handleUpdateSet,
   handleDeleteSet,
+  handleUpdateSet,
   handleAddSet,
 }) => (
   <Card
@@ -50,9 +50,10 @@ const WorkoutExercise = ({
       </Grid>
       {sets.map((set, index) => (
         <SetRow
-          key={set.id}
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
           set={set}
-          index={index}
+          index={index + 1}
           handleUpdateSet={handleUpdateSet}
           handleDeleteSet={handleDeleteSet}
         />
@@ -65,11 +66,7 @@ const WorkoutExercise = ({
         variant="outlined"
         xs={6}
         onClick={() => {
-          handleAddSet({
-            weight: 0,
-            repetitions: 0,
-            exerciseId: exercise.id,
-          });
+          handleAddSet(exercise);
         }}
       >
         Add set
@@ -78,7 +75,7 @@ const WorkoutExercise = ({
   </Card>
 );
 
-WorkoutExercise.propTypes = {
+SetList.propTypes = {
   exercise: PropTypes.exact({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -91,12 +88,10 @@ WorkoutExercise.propTypes = {
     repetitions: PropTypes.number.isRequired,
     completed: PropTypes.bool.isRequired,
     exercise: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired,
-    workout: PropTypes.string.isRequired,
   })).isRequired,
-  handleUpdateSet: PropTypes.func.isRequired,
   handleDeleteSet: PropTypes.func.isRequired,
   handleAddSet: PropTypes.func.isRequired,
+  handleUpdateSet: PropTypes.func.isRequired,
 };
 
-export default WorkoutExercise;
+export default SetList;

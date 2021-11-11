@@ -13,8 +13,13 @@ const workoutSchema = new Schema({
   },
   sets: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'GymSet',
+      weight: Number,
+      repetitions: Number,
+      completed: Boolean,
+      exercise: {
+        type: Schema.Types.ObjectId,
+        ref: 'Exercise',
+      },
     },
   ],
 });
@@ -24,6 +29,12 @@ workoutSchema.set('toJSON', {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;
+    if (returnedObject.sets.length > 0) {
+      returnedObject.sets.forEach((s) => {
+        delete s._id;
+        delete s.__v;
+      });
+    }
   },
 });
 

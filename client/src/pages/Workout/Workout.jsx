@@ -16,14 +16,14 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import workoutService from '../../services/workoutService';
 import exerciseService from '../../services/exerciseService';
-import setService from '../../services/setService';
 import Loading from '../../components/Loading/Loading';
-import WorkoutExercise from '../../components/Workout/WorkoutExercise';
+import SetList from '../../components/Workout/SetList';
 
 const Workout = () => {
   const [workout, setWorkout] = useState(null);
   const [exerciseOptions, setExerciseOptions] = useState(null);
   const [selectedExercise, setSelectedExercise] = useState(null);
+  const [initiationFinished, setInitiationFinished] = useState(null);
   const [open, setOpen] = useState(false);
   const [loadingW, setLoadingW] = useState(true);
   const [loadingE, setLoadingE] = useState(true);
@@ -36,6 +36,7 @@ const Workout = () => {
       .then((data) => {
         setWorkout(data);
         setLoadingW(false);
+        setInitiationFinished(true);
       });
   }, []);
 
@@ -48,8 +49,20 @@ const Workout = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (workout && initiationFinished !== null) {
+      console.log('here');
+      workoutService
+        .update(id, workout);
+    }
+  }, [workout]);
+
   const handleFinishAndSave = () => {
-    history.push('/workouts');
+    workoutService
+      .update(id, workout)
+      .then(() => {
+        history.push('/workouts');
+      });
   };
 
   const handleDeleteWorkout = () => {
@@ -71,33 +84,36 @@ const Workout = () => {
     setOpen(false);
   };
 
-  const handleAddSet = (set) => {
-    setService
-      .create({ ...set, workoutId: workout.id })
-      .then((updatedWorkout) => {
-        setWorkout(updatedWorkout);
-      });
+  const handleAddSet = (exercise) => {
+    setWorkout({
+      ...workout,
+      sets: workout.sets.concat({
+        weight: 0,
+        repetitions: 0,
+        completed: false,
+        exercise,
+      }),
+    });
   };
 
-  const handleUpdateSet = (set, weight, repetitions) => {
-    setService
-      .update({
-        ...set,
-        weight,
-        repetitions,
-        completed: !set.completed,
-      }, set.id)
-      .then((updatedWorkout) => {
-        setWorkout(updatedWorkout);
-      });
+  const handleUpdateSet = (set, values) => {
+    setWorkout({
+      ...workout,
+      sets: workout.sets.map((s) => (
+        s === set ? {
+          ...s,
+          weight: Number(values.weight),
+          repetitions: Number(values.repetitions),
+          completed: values.completed,
+        } : s)),
+    });
   };
 
-  const handleDeleteSet = (setId) => {
-    setService
-      .remove(setId)
-      .then((updatedWorkout) => {
-        setWorkout(updatedWorkout);
-      });
+  const handleDeleteSet = (set) => {
+    setWorkout({
+      ...workout,
+      sets: workout.sets.filter((s) => s !== set),
+    });
   };
 
   if (loadingW || loadingE) {
@@ -152,7 +168,7 @@ const Workout = () => {
         Finish and save
       </Button>
       {exercises.map((exercise) => (
-        <WorkoutExercise
+        <SetList
           key={exercise.id}
           exercise={exercise}
           sets={workout.sets.filter((s) => s.exercise.id === exercise.id)}
@@ -172,11 +188,7 @@ const Workout = () => {
         onChange={(_, exercise) => {
           setSelectedExercise(exercise);
           if (exercise !== null) {
-            handleAddSet({
-              weight: 0,
-              repetitions: 0,
-              exerciseId: exercise.id,
-            });
+            handleAddSet(exercise);
             setSelectedExercise(null);
           }
         }}

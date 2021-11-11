@@ -7,7 +7,6 @@ require('dotenv').config();
 const Exercise = require('./models/exercise');
 const User = require('./models/user');
 const Workout = require('./models/workout');
-const GymSet = require('./models/set');
 
 mongoose
   .connect(process.env.DEV_MONGODB_URI)
@@ -27,11 +26,6 @@ const initTestData = async () => {
   await User.deleteMany({})
     .then(() => {
       logger.info('Deleted all users');
-    });
-
-  await GymSet.deleteMany({})
-    .then(() => {
-      logger.info('Deleted all sets');
     });
 
   await Workout.deleteMany({})
@@ -64,26 +58,43 @@ const initTestData = async () => {
     date: new Date(),
     template: false,
     user: savedUser._id,
-    sets: [],
+    sets: [
+      {
+        weight: 10,
+        repetitions: 20,
+        completed: false,
+        exercise: savedExercise._id,
+      },
+    ],
   });
 
   const savedWorkout = await workout.save();
 
-  user.workouts = user.workouts.concat(savedWorkout._id);
-  await user.save();
-
-  const set = new GymSet({
-    weight: 50,
-    repetitions: 10,
-    completed: false,
-    exercise: savedExercise._id,
-    workout: savedWorkout._id,
+  const workout2 = new Workout({
+    date: new Date(),
+    template: true,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 10,
+        repetitions: 20,
+        completed: false,
+        exercise: savedExercise._id,
+      },
+      {
+        weight: 10,
+        repetitions: 20,
+        completed: false,
+        exercise: savedExercise._id,
+      },
+    ],
   });
 
-  const savedSet = await set.save();
+  const savedWorkout2 = await workout2.save();
 
-  workout.sets = workout.sets.concat(savedSet._id);
-  await workout.save();
+  user.workouts = user.workouts.concat(savedWorkout._id);
+  user.workouts = user.workouts.concat(savedWorkout2._id);
+  await user.save();
 };
 
 initTestData()

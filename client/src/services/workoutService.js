@@ -17,6 +17,11 @@ const create = async () => {
   return response.data;
 };
 
+const update = async (id, workout) => {
+  const response = await axios.put(`${baseUrl}/${id}`, workout);
+  return response.data;
+};
+
 const remove = async (id) => {
   const response = await axios.delete(`${baseUrl}/${id}`);
   return response.data;
@@ -26,5 +31,6 @@ export default {
   getOne,
   getAll,
   create,
+  update,
   remove,
 };

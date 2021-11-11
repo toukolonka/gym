@@ -12,16 +12,22 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 const SetRow = ({
   set,
   index,
-  handleUpdateSet,
   handleDeleteSet,
+  handleUpdateSet,
 }) => {
   const [weight, setWeight] = useState('');
-  const [reps, setReps] = useState('');
+  const [repetitions, setRepetitions] = useState('');
+  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     if (set.weight > 0) setWeight(set.weight);
-    if (set.repetitions > 0) setReps(set.repetitions);
+    if (set.repetitions > 0) setRepetitions(set.repetitions);
+    setCompleted(set.completed);
   }, []);
+
+  useEffect(() => {
+    handleUpdateSet(set, { weight, repetitions, completed });
+  }, [weight, repetitions, completed]);
 
   return (
     <Grid container alignItems="center" justifyContent="center">
@@ -52,8 +58,8 @@ const SetRow = ({
           label="reps"
           id="reps"
           color="primary"
-          onChange={(event) => setReps(event.target.value)}
-          value={reps}
+          onChange={(event) => setRepetitions(event.target.value)}
+          value={repetitions}
           inputProps={{ inputMode: 'numeric' }}
           size="small"
           type="number"
@@ -65,16 +71,17 @@ const SetRow = ({
       <Grid item xs={2}>
         <IconButton
           color="success"
-          disabled={weight <= 0 || reps <= 0}
-          onClick={() => handleUpdateSet(set, weight, reps)}
+          onClick={() => {
+            setCompleted(!completed);
+          }}
         >
-          {set.completed ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
+          {completed ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
         </IconButton>
       </Grid>
       <Grid item xs={2}>
         <IconButton
           color="error"
-          onClick={() => handleDeleteSet(set.id)}
+          onClick={() => handleDeleteSet(set)}
         >
           <DeleteForeverIcon />
         </IconButton>
@@ -89,12 +96,10 @@ SetRow.propTypes = {
     repetitions: PropTypes.number.isRequired,
     completed: PropTypes.bool.isRequired,
     exercise: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired,
-    workout: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
-  handleUpdateSet: PropTypes.func.isRequired,
   handleDeleteSet: PropTypes.func.isRequired,
+  handleUpdateSet: PropTypes.func.isRequired,
 };
 
 export default SetRow;
