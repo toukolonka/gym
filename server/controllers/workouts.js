@@ -2,6 +2,7 @@
 
 const wokoutsRouter = require('express').Router();
 const Workout = require('../models/workout');
+const GymSet = require('../models/set');
 const Errors = require('../utils/errors');
 const authorizeUser = require('../services/authorizationService');
 
@@ -91,21 +92,15 @@ wokoutsRouter.delete('/:id', async (request, response, next) => {
     const user = await authorizeUser(request);
     const workout = await Workout.findById(request.params.id);
 
-    if (!workout) {
-      // @TODO throw error in the backend
-      return response.status(400).end();
-    }
-
     if (user.id === workout.user.toString()) {
+      await GymSet.deleteMany({ workout: workout._id });
       const removedWorkout = await Workout.findByIdAndRemove(request.params.id);
       user.workouts = user.workouts.filter((w) => w._id !== removedWorkout._id);
-      // @TODO Remove all sets of the workout
       await user.save();
       return response.status(204).end();
     }
 
-    // @TODO throw error in the backend
-    return response.status(401).end();
+    throw new Errors.AuthorizationError('Not authorized');
   } catch (err) {
     next(err);
   }
