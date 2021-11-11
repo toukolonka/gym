@@ -8,64 +8,71 @@ import {
   CardActionArea,
 } from '@mui/material';
 
-const WorkoutList = ({ workouts }) => (
-  workouts.map((workout) => (
-    <div key={workout.id}>
-      <Card sx={{
-        height: '100%',
-        marginTop: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        border: 2,
-        borderColor: 'primary.dark',
-      }}
-      >
-        <CardActionArea href={`workouts/${workout.id}`}>
-          <CardContent sx={{ flexGrow: 1 }}>
-            <Grid container>
-              <Grid item xs={10}>
-                <Typography gutterBottom variant="h5" component="h5">
-                  Workout Name
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="subtitle1">
-                  {new Date(workout.date).toLocaleDateString(undefined, {
-                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-                  })}
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <strong>Set</strong>
-              </Grid>
-              <Grid item xs={3}>
-                <strong>Weight</strong>
-              </Grid>
-              <Grid item xs={3}>
-                <strong>Reps</strong>
-              </Grid>
-            </Grid>
-            {workout.sets.map((set) => (
-              <div key={set.id}>
-                <Grid container>
-                  <Grid item xs={6}>
-                    {set.exercise.name}
-                  </Grid>
-                  <Grid item xs={3}>
-                    {set.weight}
-                  </Grid>
-                  <Grid item xs={3}>
-                    {set.repetitions}
-                  </Grid>
+const WorkoutList = ({ workouts }) => {
+  const extractExercises = (sets) => {
+    const uniqueExercises = Array.from(new Set(sets.map((set) => set.exercise.name)));
+    const exercises = uniqueExercises.map((exercise) => (
+      {
+        name: exercise,
+        setCount: sets.filter((set) => set.exercise.name === exercise).length,
+      }
+    ));
+    return exercises;
+  };
+
+  return (
+    workouts.map((workout) => (
+      <div key={workout.id}>
+        <Card sx={{
+          height: '100%',
+          marginTop: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          border: 2,
+          borderColor: 'primary.dark',
+        }}
+        >
+          <CardActionArea href={`workouts/${workout.id}`}>
+            <CardContent sx={{ flexGrow: 1 }}>
+              <Grid container>
+                <Grid item xs={10}>
+                  <Typography gutterBottom variant="h5" component="h5">
+                    Workout Name
+                  </Typography>
                 </Grid>
-              </div>
-            ))}
-          </CardContent>
-        </CardActionArea>
-      </Card>
-    </div>
-  ))
-);
+                <Grid item xs={12}>
+                  <Typography variant="subtitle1">
+                    {new Date(workout.date).toLocaleDateString(undefined, {
+                      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                    })}
+                  </Typography>
+                </Grid>
+                <Grid item xs={8}>
+                  <strong>Exercise</strong>
+                </Grid>
+                <Grid item xs={4}>
+                  <strong>Sets</strong>
+                </Grid>
+              </Grid>
+              {extractExercises(workout.sets).map((exercise) => (
+                <div key={exercise.name}>
+                  <Grid container>
+                    <Grid item xs={8}>
+                      {exercise.name}
+                    </Grid>
+                    <Grid item xs={4}>
+                      {exercise.setCount}
+                    </Grid>
+                  </Grid>
+                </div>
+              ))}
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </div>
+    ))
+  );
+};
 
 WorkoutList.propTypes = {
   workouts: propTypes.arrayOf(propTypes.exact({
