@@ -51,7 +51,6 @@ const Workout = () => {
 
   useEffect(() => {
     if (workout && initiationFinished !== null) {
-      console.log('here');
       workoutService
         .update(id, workout);
     }
