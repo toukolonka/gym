@@ -10,7 +10,7 @@ import {
   CardActionArea,
 } from '@mui/material';
 
-const TemplateList = ({ templates }) => {
+const TemplateList = ({ templates, handleCreateWorkout }) => {
   const extractExercises = (sets) => {
     const uniqueExercises = Array.from(new Set(sets.map((set) => set.exercise.name)));
     const exercises = uniqueExercises.map((exercise) => (
@@ -71,7 +71,13 @@ const TemplateList = ({ templates }) => {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button fullWidth variant="contained">Start workout</Button>
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={() => handleCreateWorkout(template.id)}
+            >
+              Start workout
+            </Button>
           </CardActions>
         </Card>
       </div>
@@ -92,6 +98,7 @@ TemplateList.propTypes = {
     template: propTypes.bool.isRequired,
     user: propTypes.string.isRequired,
   })),
+  handleCreateWorkout: propTypes.func.isRequired,
 };
 
 export default TemplateList;

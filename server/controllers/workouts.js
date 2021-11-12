@@ -74,6 +74,29 @@ wokoutsRouter.post('/', async (request, response, next) => {
   }
 });
 
+wokoutsRouter.post('/template/:id', async (request, response, next) => {
+  try {
+    const user = await authorizeUser(request);
+
+    const template = await Workout.findById(request.params.id);
+
+    const workout = new Workout({
+      date: new Date(),
+      template: false,
+      user: user._id,
+      sets: template.sets,
+    });
+
+    const savedWorkout = await workout.save();
+    user.workouts = user.workouts.concat(savedWorkout._id);
+    await user.save();
+
+    return response.json(savedWorkout);
+  } catch (err) {
+    next(err);
+  }
+});
+
 wokoutsRouter.put('/:id', async (request, response, next) => {
   try {
     await authorizeUser(request);

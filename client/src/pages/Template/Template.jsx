@@ -19,8 +19,8 @@ import exerciseService from '../../services/exerciseService';
 import Loading from '../../components/Loading/Loading';
 import SetList from '../../components/Sets/SetList';
 
-const Workout = () => {
-  const [workout, setWorkout] = useState(null);
+const Template = () => {
+  const [template, setTemplate] = useState(null);
   const [exerciseOptions, setExerciseOptions] = useState(null);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [initiationFinished, setInitiationFinished] = useState(null);
@@ -34,7 +34,7 @@ const Workout = () => {
     workoutService
       .getOne(id)
       .then((data) => {
-        setWorkout(data);
+        setTemplate(data);
         setLoadingW(false);
         setInitiationFinished(true);
       });
@@ -50,25 +50,25 @@ const Workout = () => {
   }, []);
 
   useEffect(() => {
-    if (workout && initiationFinished !== null) {
+    if (template && initiationFinished !== null) {
       workoutService
-        .update(id, workout);
+        .update(id, template);
     }
-  }, [workout]);
+  }, [template]);
 
   const handleFinishAndSave = () => {
     workoutService
-      .update(id, workout)
+      .update(id, template)
       .then(() => {
-        history.push('/workouts');
+        history.push('/templates');
       });
   };
 
-  const handleDeleteWorkout = () => {
+  const handleDeleteTemplate = () => {
     workoutService
       .remove(id)
       .then(() => {
-        history.push('/workouts');
+        history.push('/templates');
       })
       .catch(() => {
         setOpen(false);
@@ -84,9 +84,9 @@ const Workout = () => {
   };
 
   const handleAddSet = (exercise) => {
-    setWorkout({
-      ...workout,
-      sets: workout.sets.concat({
+    setTemplate({
+      ...template,
+      sets: template.sets.concat({
         weight: 0,
         repetitions: 0,
         completed: false,
@@ -96,9 +96,9 @@ const Workout = () => {
   };
 
   const handleUpdateSet = (set, values) => {
-    setWorkout({
-      ...workout,
-      sets: workout.sets.map((s) => (
+    setTemplate({
+      ...template,
+      sets: template.sets.map((s) => (
         s === set ? {
           ...s,
           weight: Number(values.weight),
@@ -109,9 +109,9 @@ const Workout = () => {
   };
 
   const handleDeleteSet = (set) => {
-    setWorkout({
-      ...workout,
-      sets: workout.sets.filter((s) => s !== set),
+    setTemplate({
+      ...template,
+      sets: template.sets.filter((s) => s !== set),
     });
   };
 
@@ -121,15 +121,15 @@ const Workout = () => {
     );
   }
 
-  const workoutText = 'Workout';
+  const templateText = 'Template';
 
-  const exercises = Array.from(new Set(workout.sets.map((set) => set.exercise.id)))
+  const exercises = Array.from(new Set(template.sets.map((set) => set.exercise.id)))
     .map((exerciseId) => ({
       id: exerciseId,
-      name: workout.sets.find((s) => s.exercise.id === exerciseId).exercise.name,
-      description: workout.sets.find((s) => s.exercise.id === exerciseId).exercise.description,
-      category: workout.sets.find((s) => s.exercise.id === exerciseId).exercise.category,
-      user: workout.sets.find((s) => s.exercise.id === exerciseId).exercise.user,
+      name: template.sets.find((s) => s.exercise.id === exerciseId).exercise.name,
+      description: template.sets.find((s) => s.exercise.id === exerciseId).exercise.description,
+      category: template.sets.find((s) => s.exercise.id === exerciseId).exercise.category,
+      user: template.sets.find((s) => s.exercise.id === exerciseId).exercise.user,
     }));
 
   return (
@@ -143,10 +143,10 @@ const Workout = () => {
         }}
       >
         <Typography component="h3" variant="h3">
-          {workoutText}
+          {templateText}
         </Typography>
         <Typography component="p" variant="p">
-          {new Date(workout.date).toLocaleDateString(undefined, {
+          {new Date(template.date).toLocaleDateString(undefined, {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
           })}
         </Typography>
@@ -164,11 +164,11 @@ const Workout = () => {
         <SetList
           key={exercise.id}
           exercise={exercise}
-          sets={workout.sets.filter((s) => s.exercise.id === exercise.id)}
+          sets={template.sets.filter((s) => s.exercise.id === exercise.id)}
           handleAddSet={handleAddSet}
           handleUpdateSet={handleUpdateSet}
           handleDeleteSet={handleDeleteSet}
-          isTemplate={workout.template}
+          isTemplate={template.template}
         />
       ))}
       <Autocomplete
@@ -196,7 +196,7 @@ const Workout = () => {
       >
         Delete
         {' '}
-        {workoutText}
+        {templateText}
       </Button>
       <Dialog
         open={open}
@@ -206,13 +206,13 @@ const Workout = () => {
         <DialogTitle id="responsive-dialog-title">
           Delete
           {' '}
-          {workoutText}
+          {templateText}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
             Are you sure you want to delete the
             {' '}
-            {workoutText}
+            {templateText}
             ?
           </DialogContentText>
         </DialogContent>
@@ -220,7 +220,7 @@ const Workout = () => {
           <Button autoFocus onClick={handleCancel}>
             Cancel
           </Button>
-          <Button onClick={handleDeleteWorkout} autoFocus>
+          <Button onClick={handleDeleteTemplate} autoFocus>
             Delete
           </Button>
         </DialogActions>
@@ -229,4 +229,4 @@ const Workout = () => {
   );
 };
 
-export default Workout;
+export default Template;

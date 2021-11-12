@@ -14,6 +14,7 @@ const SetRow = ({
   index,
   handleDeleteSet,
   handleUpdateSet,
+  isTemplate,
 }) => {
   const [weight, setWeight] = useState('');
   const [repetitions, setRepetitions] = useState('');
@@ -71,6 +72,7 @@ const SetRow = ({
       <Grid item xs={2}>
         <IconButton
           color="success"
+          disabled={isTemplate}
           onClick={() => {
             setCompleted(!completed);
           }}
@@ -100,6 +102,7 @@ SetRow.propTypes = {
   index: PropTypes.number.isRequired,
   handleDeleteSet: PropTypes.func.isRequired,
   handleUpdateSet: PropTypes.func.isRequired,
+  isTemplate: PropTypes.bool.isRequired,
 };
 
 export default SetRow;

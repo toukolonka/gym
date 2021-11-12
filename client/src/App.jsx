@@ -16,6 +16,7 @@ import Workout from './pages/Workout/Workout';
 import Exercises from './pages/Exercises/Exercises';
 import Exercise from './pages/Exercise/Exercise';
 import Templates from './pages/Templates/Templates';
+import Template from './pages/Template/Template';
 import Profile from './pages/Profile/Profile';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import NavigationBarMobile from './components/NavigationBar/NavigationBarMobile';
@@ -59,7 +60,7 @@ const App = () => {
                 <AuthRoute exact path="/exercises" component={Exercises} />
                 <AuthRoute exact path="/exercises/:id" component={Exercise} />
                 <AuthRoute exact path="/templates" component={Templates} />
-                <AuthRoute exact path="/templates/:id" component={Workout} />
+                <AuthRoute exact path="/templates/:id" component={Template} />
                 <AuthRoute exact path="/profile" component={Profile} />
               </Switch>
             </Container>

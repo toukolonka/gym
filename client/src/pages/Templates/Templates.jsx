@@ -5,68 +5,71 @@ import {
   Container,
   Button,
 } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 import TemplateList from '../../components/Template/TemplateList';
-import TemplateForm from '../../components/Template/TemplateForm';
 import templateService from '../../services/templateService';
+import workoutService from '../../services/workoutService';
+import Loading from '../../components/Loading/Loading';
 
 const Templates = () => {
   const [templates, setTemplates] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [refreshList, setRefreshList] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const history = useHistory();
 
   useEffect(() => {
     templateService
       .getAll()
       .then((data) => {
         setTemplates(data);
+        setLoading(false);
       });
-  }, [refreshList]);
+  }, []);
 
-  const handleRefreshList = () => {
-    if (refreshList) {
-      setRefreshList(false);
-    } else {
-      setRefreshList(true);
-    }
-  };
-
-  const handleSubmit = (event) => {
+  const handleCreateTemplate = (event) => {
     event.preventDefault();
     templateService
       .create()
-      .then(() => {
-        setShowForm(false);
-        handleRefreshList();
-        // @TODO clear text fields
+      .then((createdTemplate) => {
+        history.push(`/templates/${createdTemplate.id}`);
       });
   };
 
-  /* const handleDelete = (id) => {
-    templateService
-      .remove(id)
-      .then(() => handleRefreshList());
-  }; */
+  const handleCreateWorkout = (id) => {
+    workoutService
+      .createFromTemplate(id)
+      .then((createdWorkout) => {
+        history.push(`/workouts/${createdWorkout.id}`);
+      });
+  };
 
   return (
     <Container maxWidth="xs">
-      <Typography variant="h3" align="center" margin={2}>
-        Templates
-      </Typography>
-      {showForm
-        ? <TemplateForm setShowForm={setShowForm} handleSubmit={handleSubmit} />
-        : (
-          <Button
-            fullWidth
-            size="large"
-            variant="contained"
-            onClick={() => setShowForm(true)}
-          >
-            Create a template
-          </Button>
-        )}
-      <Box container spacing={1}>
-        <TemplateList templates={templates} />
+      <Box
+        sx={{
+          marginTop: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          mb: 2,
+        }}
+      >
+        <Typography component="h3" variant="h3">
+          Templates
+        </Typography>
       </Box>
+      <Button
+        fullWidth
+        size="large"
+        variant="contained"
+        onClick={handleCreateTemplate}
+      >
+        Create a template
+      </Button>
+      {loading
+        ? <Loading />
+        : (
+          <TemplateList templates={templates} handleCreateWorkout={handleCreateWorkout} />
+        )}
     </Container>
   );
 };

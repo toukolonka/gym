@@ -17,6 +17,11 @@ const create = async () => {
   return response.data;
 };
 
+const createFromTemplate = async (id) => {
+  const response = await axios.post(`${baseUrl}/template/${id}`);
+  return response.data;
+};
+
 const update = async (id, workout) => {
   const response = await axios.put(`${baseUrl}/${id}`, workout);
   return response.data;
@@ -31,6 +36,7 @@ export default {
   getOne,
   getAll,
   create,
+  createFromTemplate,
   update,
   remove,
 };

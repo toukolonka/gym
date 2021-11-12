@@ -17,6 +17,7 @@ const SetList = ({
   handleDeleteSet,
   handleUpdateSet,
   handleAddSet,
+  isTemplate,
 }) => (
   <Card
     sx={{
@@ -56,6 +57,7 @@ const SetList = ({
           index={index + 1}
           handleUpdateSet={handleUpdateSet}
           handleDeleteSet={handleDeleteSet}
+          isTemplate={isTemplate}
         />
       ))}
     </CardContent>
@@ -92,6 +94,7 @@ SetList.propTypes = {
   handleDeleteSet: PropTypes.func.isRequired,
   handleAddSet: PropTypes.func.isRequired,
   handleUpdateSet: PropTypes.func.isRequired,
+  isTemplate: PropTypes.bool.isRequired,
 };
 
 export default SetList;

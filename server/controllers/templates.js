@@ -26,7 +26,6 @@ templatesRouter.get('/', async (request, response, next) => {
 
 templatesRouter.post('/', async (request, response, next) => {
   try {
-    // const { body } = request;
     const user = await authorizeUser(request);
 
     const workout = new Workout({
