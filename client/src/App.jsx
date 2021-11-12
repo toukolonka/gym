@@ -48,7 +48,7 @@ const App = () => {
           <div className="App">
             <NavigationBar />
             <NavigationBarMobile />
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" sx={{ mb: 5 }}>
               { errorMessage && <Alert severity="error">{ errorMessage }</Alert> }
               { infoMessage && <Alert severity="success">{ infoMessage }</Alert> }
               <Switch>

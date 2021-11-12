@@ -45,14 +45,54 @@ const initTestData = async () => {
 
   const savedUser = await user.save();
 
-  const exercise = new Exercise({
+  const upper1 = new Exercise({
     name: 'Bench press',
-    description: 'A lift or exercise in which a weight is raised by extending the arms upward while lying on a bench',
+    description: 'A lift or exercise in which a weight is raised by extending the arms upward while lying on a bench.',
     category: 'Upper',
     user: null,
   });
 
-  const savedExercise = await exercise.save();
+  const upper2 = new Exercise({
+    name: 'Incline bench press',
+    description: 'A lift or exercise in which a weight is raised by extending the arms upward while lying on a incline (15 to 30 degrees) bench.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const legs1 = new Exercise({
+    name: 'Leg press',
+    description: 'Leg press is done sitting in a leg press machine. Sit on the machine with your back against the padded support and extend both legs.',
+    category: 'Legs',
+    user: null,
+  });
+
+  const legs2 = new Exercise({
+    name: 'Squat',
+    description: 'A squat is a strength exercise in which the trainee lowers their hips from a standing position and then stands back up.',
+    category: 'Legs',
+    user: null,
+  });
+
+  const core1 = new Exercise({
+    name: 'Sit up',
+    description: 'Sit up is done by laying on back and getting from there to sitting position.',
+    category: 'Core',
+    user: null,
+  });
+
+  const core2 = new Exercise({
+    name: 'Crunch',
+    description: 'Crunch is done by laying on back and rising only upper core by tensing the abdominal muscles.',
+    category: 'Core',
+    user: null,
+  });
+
+  const savedExercise1 = await upper1.save();
+  const savedExercise2 = await upper2.save();
+  const savedExercise3 = await legs1.save();
+  const savedExercise4 = await legs2.save();
+  const savedExercise5 = await core1.save();
+  const savedExercise6 = await core2.save();
 
   const workout = new Workout({
     date: new Date(),
@@ -60,40 +100,135 @@ const initTestData = async () => {
     user: savedUser._id,
     sets: [
       {
-        weight: 10,
-        repetitions: 20,
-        completed: false,
-        exercise: savedExercise._id,
+        weight: 80,
+        repetitions: 10,
+        completed: true,
+        exercise: savedExercise1._id,
+      },
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: true,
+        exercise: savedExercise1._id,
+      },
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: true,
+        exercise: savedExercise1._id,
+      },
+      {
+        weight: 50,
+        repetitions: 10,
+        completed: true,
+        exercise: savedExercise2._id,
+      },
+      {
+        weight: 50,
+        repetitions: 10,
+        completed: true,
+        exercise: savedExercise2._id,
+      },
+      {
+        weight: 50,
+        repetitions: 10,
+        completed: true,
+        exercise: savedExercise2._id,
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: savedExercise5._id,
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: savedExercise5._id,
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: savedExercise5._id,
       },
     ],
   });
 
-  const savedWorkout = await workout.save();
-
-  const workout2 = new Workout({
+  const template1 = new Workout({
     date: new Date(),
     template: true,
     user: savedUser._id,
     sets: [
       {
-        weight: 10,
-        repetitions: 20,
+        weight: 250,
+        repetitions: 12,
         completed: false,
-        exercise: savedExercise._id,
+        exercise: savedExercise3._id,
       },
       {
-        weight: 10,
-        repetitions: 20,
+        weight: 250,
+        repetitions: 12,
         completed: false,
-        exercise: savedExercise._id,
+        exercise: savedExercise3._id,
+      },
+      {
+        weight: 250,
+        repetitions: 10,
+        completed: false,
+        exercise: savedExercise3._id,
+      },
+      {
+        weight: 250,
+        repetitions: 8,
+        completed: false,
+        exercise: savedExercise3._id,
+      },
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: false,
+        exercise: savedExercise4._id,
+      },
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: false,
+        exercise: savedExercise4._id,
+      },
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: false,
+        exercise: savedExercise4._id,
+      },
+      {
+        weight: 0,
+        repetitions: 30,
+        completed: false,
+        exercise: savedExercise6._id,
+      },
+      {
+        weight: 0,
+        repetitions: 30,
+        completed: false,
+        exercise: savedExercise6._id,
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: false,
+        exercise: savedExercise6._id,
       },
     ],
   });
 
-  const savedWorkout2 = await workout2.save();
+  const savedWorkout = await workout.save();
+  const savedTemplate = await template1.save();
 
   user.workouts = user.workouts.concat(savedWorkout._id);
-  user.workouts = user.workouts.concat(savedWorkout2._id);
+  user.workouts = user.workouts.concat(savedTemplate._id);
   await user.save();
 };
 

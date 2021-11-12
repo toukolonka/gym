@@ -133,7 +133,7 @@ const Workout = () => {
     }));
 
   return (
-    <Container maxWidth="xs" sx={{ mb: 10 }}>
+    <Container maxWidth="xs">
       <Box
         sx={{
           marginTop: 2,
