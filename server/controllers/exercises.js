@@ -53,7 +53,7 @@ exercisesRouter.post('/', async (request, response, next) => {
 
     await exercise.save();
 
-    Exercise.find({}).sort({ name: 'asc' }).then((exercises) => {
+    Exercise.find({ $or: [{ user: null }, { user: user._id }] }).sort({ name: 'asc' }).then((exercises) => {
       response.json(exercises);
     });
   } catch (err) {
