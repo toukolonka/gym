@@ -83,12 +83,28 @@ const Template = () => {
     setOpen(false);
   };
 
+  const getPreviousSet = (exercise) => {
+    const sets = template.sets.filter((set) => set.exercise.id === exercise.id);
+    if (sets.length === 0) {
+      return {
+        weight: 0,
+        repetitions: 0,
+      };
+    }
+    const lastSet = sets.pop();
+    return {
+      weight: lastSet.weight,
+      repetitions: lastSet.repetitions,
+    };
+  };
+
   const handleAddSet = (exercise) => {
+    const set = getPreviousSet(exercise);
     setTemplate({
       ...template,
       sets: template.sets.concat({
-        weight: 0,
-        repetitions: 0,
+        weight: set.weight,
+        repetitions: set.repetitions,
         completed: false,
         exercise,
       }),
