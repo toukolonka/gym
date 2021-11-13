@@ -6,7 +6,7 @@ import exerciseService from '../../services/exerciseService';
 import Loading from '../../components/Loading/Loading';
 
 const Exercise = () => {
-  const [exercise, setExercise] = useState(null);
+  const [exerciseDetails, setExerciseDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const { id } = useParams();
@@ -16,7 +16,7 @@ const Exercise = () => {
     exerciseService
       .getOne(id)
       .then((data) => {
-        setExercise(data);
+        setExerciseDetails(data);
         setLoading(false);
       });
   }, []);
@@ -48,7 +48,7 @@ const Exercise = () => {
 
   return (
     <ExerciseView
-      exercise={exercise}
+      exerciseDetails={exerciseDetails}
       open={open}
       handleDelete={handleDelete}
       handleOpenDialog={handleOpenDialog}

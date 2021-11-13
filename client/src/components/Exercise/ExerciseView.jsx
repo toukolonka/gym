@@ -12,8 +12,10 @@ import {
   DialogActions,
 } from '@mui/material';
 
+import WorkoutList from '../Workout/WorkoutList';
+
 const ExerciseView = ({
-  exercise,
+  exerciseDetails,
   open,
   handleDelete,
   handleOpenDialog,
@@ -29,7 +31,7 @@ const ExerciseView = ({
       }}
     >
       <Typography component="h4" variant="h4">
-        {exercise.name}
+        {exerciseDetails.exercise.name}
       </Typography>
     </Box>
     <Box
@@ -41,7 +43,21 @@ const ExerciseView = ({
       }}
     >
       <Typography component="p" variant="p" align="center">
-        {exercise.description}
+        {exerciseDetails.exercise.description}
+      </Typography>
+    </Box>
+    <Box
+      sx={{
+        marginTop: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Typography component="h6" variant="h6" align="center">
+        All time 1RM:
+        {' '}
+        {exerciseDetails.maximum}
       </Typography>
     </Box>
     <Button
@@ -61,7 +77,7 @@ const ExerciseView = ({
       <DialogTitle id="responsive-dialog-title">
         Delete
         {' '}
-        {exercise.name}
+        {exerciseDetails.exercise.name}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -77,16 +93,32 @@ const ExerciseView = ({
         </Button>
       </DialogActions>
     </Dialog>
+    <WorkoutList workouts={exerciseDetails.workouts} />
   </Container>
 );
 
 ExerciseView.propTypes = {
-  exercise: PropTypes.exact({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
-    user: PropTypes.string,
+  exerciseDetails: PropTypes.exact({
+    exercise: PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired,
+      user: PropTypes.string,
+    }).isRequired,
+    workouts: PropTypes.arrayOf(PropTypes.exact({
+      date: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      sets: PropTypes.arrayOf(PropTypes.exact({
+        weight: PropTypes.number.isRequired,
+        repetitions: PropTypes.number.isRequired,
+        completed: PropTypes.bool.isRequired,
+        exercise: PropTypes.object.isRequired,
+      })).isRequired,
+      template: PropTypes.bool.isRequired,
+      user: PropTypes.string.isRequired,
+    })),
+    maximum: PropTypes.number.isRequired,
   }).isRequired,
   open: PropTypes.bool.isRequired,
   handleDelete: PropTypes.func.isRequired,

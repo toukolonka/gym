@@ -7,8 +7,11 @@ import {
   Grid,
   CardActionArea,
 } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
 const WorkoutList = ({ workouts }) => {
+  const history = useHistory();
+
   const extractExercises = (sets) => {
     const uniqueExercises = Array.from(new Set(sets.map((set) => set.exercise.name)));
     const exercises = uniqueExercises.map((exercise) => (
@@ -32,7 +35,7 @@ const WorkoutList = ({ workouts }) => {
           borderColor: 'primary.dark',
         }}
         >
-          <CardActionArea href={`workouts/${workout.id}`}>
+          <CardActionArea onClick={() => history.push(`../workouts/${workout.id}`)}>
             <CardContent sx={{ flexGrow: 1 }}>
               <Grid container>
                 <Grid item xs={10}>

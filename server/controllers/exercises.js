@@ -2,6 +2,7 @@
 
 const exercisesRouter = require('express').Router();
 const Exercise = require('../models/exercise');
+const Workout = require('../models/workout');
 const Errors = require('../utils/errors');
 const authorizeUser = require('../services/authorizationService');
 
@@ -23,9 +24,35 @@ exercisesRouter.get('/:id', async (request, response, next) => {
 
     const exercise = await Exercise.findById(request.params.id);
 
+    const workouts = await Workout
+      .find({ user: user._id, template: false, 'sets.exercise': exercise._id })
+      .populate({
+        path: 'sets',
+        type: Array,
+        populate: {
+          path: 'exercise',
+          model: 'Exercise',
+        },
+      });
+
+    const rms = workouts.map(
+      (workout) => workout.sets,
+    ).flat()
+      .map(
+        (set) => set.weight * (1 + (set.repetitions / 30)),
+      );
+
+    const maximum = Math.round(Math.max(...rms));
+
+    const exerciseDetails = {
+      exercise,
+      workouts,
+      maximum,
+    };
+
     if (exercise.user === null
       || exercise.user.toString() === user._id.toString()) {
-      return response.json(exercise);
+      return response.json(exerciseDetails);
     }
 
     throw new Errors.AuthorizationError('Not authorized');

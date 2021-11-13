@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, Typography, Container,
+  Box, Typography, Container, Button,
 } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
 import WorkoutList from '../../components/Workout/WorkoutList';
 import workoutService from '../../services/workoutService';
@@ -10,6 +11,8 @@ import Loading from '../../components/Loading/Loading';
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const history = useHistory();
+
   useEffect(() => {
     workoutService
       .getAll()
@@ -18,6 +21,15 @@ const Workouts = () => {
         setLoading(false);
       });
   }, []);
+
+  const handleStartWorkout = (event) => {
+    event.preventDefault();
+    workoutService
+      .create()
+      .then((createdWorkout) => {
+        history.push(`/workouts/${createdWorkout.id}`);
+      });
+  };
 
   return (
     <Container maxWidth="xs">
@@ -33,6 +45,16 @@ const Workouts = () => {
           My Workouts
         </Typography>
       </Box>
+      <Button
+        fullWidth
+        variant="contained"
+        size="large"
+        sx={{ mt: 2 }}
+        color="primary"
+        onClick={handleStartWorkout}
+      >
+        Start an empty workout
+      </Button>
       {loading
         ? <Loading />
         : (
