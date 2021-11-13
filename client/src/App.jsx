@@ -18,8 +18,7 @@ import Exercise from './pages/Exercise/Exercise';
 import Templates from './pages/Templates/Templates';
 import Template from './pages/Template/Template';
 import Profile from './pages/Profile/Profile';
-import NavigationBar from './components/NavigationBar/NavigationBar';
-import NavigationBarMobile from './components/NavigationBar/NavigationBarMobile';
+import Header from './components/Header/Header';
 import theme from './theme';
 
 const App = () => {
@@ -46,8 +45,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <div className="App">
-            <NavigationBar />
-            <NavigationBarMobile />
+            <Header />
             <Container maxWidth="lg" sx={{ mb: 5 }}>
               { errorMessage && <Alert severity="error">{ errorMessage }</Alert> }
               { infoMessage && <Alert severity="success">{ infoMessage }</Alert> }
