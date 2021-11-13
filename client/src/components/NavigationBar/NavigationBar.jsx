@@ -15,7 +15,7 @@ const NavigationBar = () => (
         </Typography>
         <Button color="inherit" component={Link} to="/templates">Templates</Button>
         <Button color="inherit" component={Link} to="/workouts">Workouts</Button>
-        <Button color="inherit" component={Link} to="/">Home</Button>
+        <Button color="primary" variant="contained" component={Link} to="/">Home</Button>
         <Button color="inherit" component={Link} to="/exercises">Exercises</Button>
         <Button color="inherit" component={Link} to="/profile">Profile</Button>
       </Toolbar>

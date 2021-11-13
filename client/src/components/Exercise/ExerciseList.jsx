@@ -64,7 +64,7 @@ const ExerciseList = ({
             size="large"
             fullWidth
             component={Link}
-            href={`exercises/${exercise.id}`}
+            href={`/exercises/${exercise.id}`}
           >
             {exercise.name}
           </Button>
