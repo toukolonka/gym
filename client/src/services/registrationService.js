@@ -11,6 +11,16 @@ const signup = async (userinfo) => {
   }
 };
 
+const update = async (userinfo) => {
+  try {
+    const response = await axios.put(baseUrl, userinfo);
+    return response.data;
+  } catch (err) {
+    return null;
+  }
+};
+
 export default {
   signup,
+  update,
 };
