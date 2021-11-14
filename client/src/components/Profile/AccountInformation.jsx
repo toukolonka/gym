@@ -11,6 +11,7 @@ const AccountInformation = ({
   <Box
     sx={{
       m: 2,
+      width: '100%',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -24,6 +25,7 @@ const AccountInformation = ({
     </Typography>
     <Button
       variant="outlined"
+      size="large"
       color="error"
       onClick={logout}
       sx={{ mt: 2 }}

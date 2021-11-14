@@ -39,7 +39,7 @@ const Profile = ({
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xs">
       <Box
         sx={{
           mt: 2,
