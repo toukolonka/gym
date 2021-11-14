@@ -44,7 +44,7 @@ const UpdateAccountForm = ({
         fullWidth
         name="new password"
         label="New Password"
-        placeholder="Sure you want a new password?"
+        placeholder="Want a new password?"
         type="password"
         id="password"
         color="primary"

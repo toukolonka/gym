@@ -31,6 +31,17 @@ const SignUp = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Validation
+    if (!username || !password || !email) {
+      setErrorMessage('All fields are required');
+      return;
+    }
+    // Validation
+    if (password && password.length < 5) {
+      setErrorMessage('Password provided should be at least 5 characters long');
+      return;
+    }
+
     // Register
     const userdata = await registrationService.signup({
       username,
