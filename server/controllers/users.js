@@ -50,7 +50,7 @@ usersRouter.put('/', async (request, response, next) => {
     const { body } = request;
     const user = await authorizeUser(request);
 
-    if (body.email === undefined && body.newPassword === undefined) {
+    if (!body.email && !body.newPassword) {
       throw new Errors.InvalidParametersError('New email or new password was not provided');
     }
 

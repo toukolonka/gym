@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
   Box, Typography, Container,
@@ -6,6 +6,7 @@ import {
 import UpdateAccountForm from '../../components/Profile/UpdateAccountForm';
 import AccountInformation from '../../components/Profile/AccountInformation';
 import registrationService from '../../services/registrationService';
+import { AuthContext } from '../../context/auth';
 
 const Profile = ({
   setErrorMessage,
@@ -13,6 +14,8 @@ const Profile = ({
 }) => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
+
+  const { user, logout } = useContext(AuthContext);
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -29,7 +32,6 @@ const Profile = ({
       newPassword,
     });
     if (updatedUser) {
-      console.log(updatedUser);
       setInfoMessage('Account information updated successfully');
     } else {
       setErrorMessage('Account information update failed');
@@ -49,7 +51,10 @@ const Profile = ({
         <Typography component="h3" variant="h3">
           Profile
         </Typography>
-        <AccountInformation />
+        <AccountInformation
+          user={user}
+          logout={logout}
+        />
         <UpdateAccountForm
           email={email}
           setEmail={handleEmailChange}
