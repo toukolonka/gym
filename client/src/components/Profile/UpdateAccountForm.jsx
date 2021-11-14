@@ -18,6 +18,7 @@ const UpdateAccountForm = ({
       onSubmit={handleSubmit}
       sx={{
         m: 2,
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
