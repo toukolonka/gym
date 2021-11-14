@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Box, Typography, Container,
@@ -14,6 +14,16 @@ const Profile = ({
 }) => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [updateButtonDisabled, setUpdateButtonDisabled] = useState(true);
+
+  // When email or newpassword field is changed, check if update-button should be disabled or not
+  useEffect(() => {
+    if (email || newPassword) {
+      setUpdateButtonDisabled(false);
+    } else {
+      setUpdateButtonDisabled(true);
+    }
+  }, [email, newPassword]);
 
   const { user, logout } = useContext(AuthContext);
 
@@ -27,6 +37,12 @@ const Profile = ({
 
   const handleAccountUpdate = async (event) => {
     event.preventDefault();
+
+    // Check that the input matches requirements
+    if (newPassword && newPassword.length < 5) {
+      setErrorMessage('Password provided should be at least 5 characters long');
+      return;
+    }
     const updatedUser = await registrationService.update({
       email,
       newPassword,
@@ -61,6 +77,7 @@ const Profile = ({
           password={newPassword}
           setPassword={handlePasswordChange}
           handleSubmit={handleAccountUpdate}
+          updateButtonDisabled={updateButtonDisabled}
         />
 
       </Box>
