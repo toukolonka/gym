@@ -11,6 +11,7 @@ const UpdateAccountForm = ({
   password,
   setPassword,
   handleSubmit,
+  updateButtonDisabled,
 }) => (
   <>
     <Box
@@ -55,6 +56,7 @@ const UpdateAccountForm = ({
         fullWidth
         variant="contained"
         sx={{ mt: 3 }}
+        disabled={updateButtonDisabled}
       >
         Update Account Information
       </Button>
@@ -68,6 +70,7 @@ UpdateAccountForm.propTypes = {
   password: PropTypes.string.isRequired,
   setPassword: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  updateButtonDisabled: PropTypes.bool.isRequired,
 };
 
 export default UpdateAccountForm;
