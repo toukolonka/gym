@@ -37,7 +37,12 @@ const SignUp = ({
       return;
     }
     // Validation
-    if (password && password.length < 5) {
+    if (username.length < 5) {
+      setErrorMessage('Username provided should be at least 5 characters long');
+      return;
+    }
+    // Validation
+    if (password.length < 5) {
       setErrorMessage('Password provided should be at least 5 characters long');
       return;
     }

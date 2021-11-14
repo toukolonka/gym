@@ -54,6 +54,7 @@ const SignUpForm = ({
           fullWidth
           name="username"
           label="Username"
+          placeholder="Username should be min 5 characters long"
           id="username"
           color="secondary"
           onChange={handleUsernameChange}
