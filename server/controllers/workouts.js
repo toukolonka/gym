@@ -5,10 +5,6 @@ const Workout = require('../models/workout');
 const Errors = require('../utils/errors');
 const authorizeUser = require('../services/authorizationService');
 
-/*
-  Return the workouts of the user based on token
-*/
-
 wokoutsRouter.get('/', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
@@ -21,7 +17,6 @@ wokoutsRouter.get('/', async (request, response, next) => {
         populate: {
           path: 'exercise',
           model: 'Exercise',
-          select: 'name',
         },
       });
 
@@ -43,7 +38,6 @@ wokoutsRouter.get('/:id', async (request, response, next) => {
         populate: {
           path: 'exercise',
           model: 'Exercise',
-          select: 'name',
         },
       });
 
@@ -58,9 +52,6 @@ wokoutsRouter.get('/:id', async (request, response, next) => {
   }
 });
 
-/*
-  Create a new workout
-*/
 wokoutsRouter.post('/', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
@@ -73,14 +64,74 @@ wokoutsRouter.post('/', async (request, response, next) => {
       sets: [],
     });
 
-    // Save the workout
     const savedWorkout = await workout.save();
-
-    // Add workout to users workouts
     user.workouts = user.workouts.concat(savedWorkout._id);
     await user.save();
 
     return response.json(savedWorkout);
+  } catch (err) {
+    next(err);
+  }
+});
+
+wokoutsRouter.post('/template/:id', async (request, response, next) => {
+  try {
+    const user = await authorizeUser(request);
+
+    const template = await Workout.findById(request.params.id);
+
+    const workout = new Workout({
+      date: new Date(),
+      template: false,
+      user: user._id,
+      sets: template.sets,
+    });
+
+    const savedWorkout = await workout.save();
+    user.workouts = user.workouts.concat(savedWorkout._id);
+    await user.save();
+
+    return response.json(savedWorkout);
+  } catch (err) {
+    next(err);
+  }
+});
+
+wokoutsRouter.put('/:id', async (request, response, next) => {
+  try {
+    await authorizeUser(request);
+    const { body } = request;
+
+    const workout = {
+      sets: body.sets.map((set) => ({
+        weight: set.weight,
+        repetitions: set.repetitions,
+        completed: set.completed,
+        exercise: set.exercise.id,
+      })),
+    };
+
+    await Workout.findByIdAndUpdate(request.params.id, workout, { new: true });
+
+    return response.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
+wokoutsRouter.delete('/:id', async (request, response, next) => {
+  try {
+    const user = await authorizeUser(request);
+    const workout = await Workout.findById(request.params.id);
+
+    if (user.id === workout.user.toString()) {
+      const removedWorkout = await Workout.findByIdAndRemove(request.params.id);
+      user.workouts = user.workouts.filter((w) => w._id !== removedWorkout._id);
+      await user.save();
+      return response.status(204).end();
+    }
+
+    throw new Errors.AuthorizationError('Not authorized');
   } catch (err) {
     next(err);
   }

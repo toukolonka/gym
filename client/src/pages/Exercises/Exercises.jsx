@@ -100,7 +100,8 @@ const Exercises = () => {
           <Button
             fullWidth
             variant="contained"
-            sx={{ mt: 3 }}
+            size="large"
+            sx={{ mt: 2 }}
             color="primary"
             onClick={() => setShowForm(true)}
           >

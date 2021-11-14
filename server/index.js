@@ -11,7 +11,6 @@ const middleware = require('./utils/middleware');
 
 const loginRouter = require('./controllers/login');
 const wokoutsRouter = require('./controllers/workouts');
-const setsRouter = require('./controllers/sets');
 const exercisesRouter = require('./controllers/exercises');
 const usersRouter = require('./controllers/users');
 const templatesRouter = require('./controllers/templates');
@@ -32,7 +31,6 @@ mongoose
 
 app.use('/api/login', loginRouter);
 app.use('/api/workouts', wokoutsRouter);
-app.use('/api/sets', setsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/exercises', exercisesRouter);
 app.use('/api/templates', templatesRouter);

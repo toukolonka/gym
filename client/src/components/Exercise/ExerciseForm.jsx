@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Typography, Box, TextField, Button, ToggleButtonGroup, ToggleButton,
+  Typography, Box, TextField, Button, ToggleButtonGroup, ToggleButton, Paper,
 } from '@mui/material';
 
 const ExerciseForm = ({
@@ -15,10 +15,13 @@ const ExerciseForm = ({
   handleSubmit,
   setShowForm,
 }) => (
-  <>
+  <Paper sx={{
+    padding: 1,
+    mt: 3,
+  }}
+  >
     <Box
       sx={{
-        marginTop: 2,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -76,14 +79,14 @@ const ExerciseForm = ({
           fullWidth
           variant="outlined"
           sx={{ mt: 3 }}
-          color="primary"
+          color="error"
           onClick={() => setShowForm(false)}
         >
           Cancel
         </Button>
       </Box>
     </Box>
-  </>
+  </Paper>
 );
 
 ExerciseForm.propTypes = {

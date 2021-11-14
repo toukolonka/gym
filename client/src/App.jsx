@@ -16,9 +16,9 @@ import Workout from './pages/Workout/Workout';
 import Exercises from './pages/Exercises/Exercises';
 import Exercise from './pages/Exercise/Exercise';
 import Templates from './pages/Templates/Templates';
+import Template from './pages/Template/Template';
 import Profile from './pages/Profile/Profile';
-import NavigationBar from './components/NavigationBar/NavigationBar';
-import NavigationBarMobile from './components/NavigationBar/NavigationBarMobile';
+import Header from './components/Header/Header';
 import theme from './theme';
 
 const App = () => {
@@ -45,9 +45,8 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <div className="App">
-            <NavigationBar />
-            <NavigationBarMobile />
-            <Container maxWidth="lg">
+            <Header />
+            <Container maxWidth="lg" sx={{ mb: 5 }}>
               { errorMessage && <Alert severity="error">{ errorMessage }</Alert> }
               { infoMessage && <Alert severity="success">{ infoMessage }</Alert> }
               <Switch>
@@ -60,6 +59,7 @@ const App = () => {
                 <AuthRoute exact path="/exercises/:id" component={Exercise} />
                 <AuthRoute exact path="/templates" component={Templates} />
                 <AuthRoute exact path="/profile" setErrorMessage={setErrorMessage} setInfoMessage={setInfoMessage} component={Profile} />
+                <AuthRoute exact path="/templates/:id" component={Template} />
               </Switch>
             </Container>
           </div>
