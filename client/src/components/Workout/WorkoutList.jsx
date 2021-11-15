@@ -39,7 +39,7 @@ const WorkoutList = ({ workouts }) => {
             <CardContent sx={{ flexGrow: 1 }}>
               <Grid container>
                 <Grid item xs={10}>
-                  <Typography gutterBottom variant="h5" component="h5">
+                  <Typography gutterBottom variant="h4" component="h4">
                     Workout Name
                   </Typography>
                 </Grid>
@@ -51,20 +51,28 @@ const WorkoutList = ({ workouts }) => {
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
-                  <strong>Exercise</strong>
+                  <Typography variant="h6">
+                    Exercise
+                  </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                  <strong>Sets</strong>
+                  <Typography variant="h6">
+                    Sets
+                  </Typography>
                 </Grid>
               </Grid>
               {extractExercises(workout.sets).map((exercise) => (
                 <div key={exercise.name}>
                   <Grid container>
                     <Grid item xs={8}>
-                      {exercise.name}
+                      <Typography variant="body1">
+                        {exercise.name}
+                      </Typography>
                     </Grid>
                     <Grid item xs={4}>
-                      {exercise.setCount}
+                      <Typography variant="body1">
+                        {exercise.setCount}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </div>

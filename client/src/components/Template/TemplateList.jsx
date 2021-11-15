@@ -38,7 +38,7 @@ const TemplateList = ({ templates, handleCreateWorkout }) => {
             <CardContent sx={{ flexGrow: 1 }}>
               <Grid container>
                 <Grid item xs={10}>
-                  <Typography gutterBottom variant="h4" component="h2">
+                  <Typography gutterBottom variant="h4" component="h4">
                     Template Name
                   </Typography>
                 </Grid>
@@ -50,20 +50,28 @@ const TemplateList = ({ templates, handleCreateWorkout }) => {
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
-                  <strong>Exercise</strong>
+                  <Typography variant="h6">
+                    Exercise
+                  </Typography>
                 </Grid>
                 <Grid item xs={4}>
-                  <strong>Sets</strong>
+                  <Typography variant="h6">
+                    Sets
+                  </Typography>
                 </Grid>
               </Grid>
               {extractExercises(template.sets).map((exercise) => (
                 <div key={exercise.name}>
                   <Grid container>
                     <Grid item xs={8}>
-                      {exercise.name}
+                      <Typography variant="body1">
+                        {exercise.name}
+                      </Typography>
                     </Grid>
                     <Grid item xs={4}>
-                      {exercise.setCount}
+                      <Typography variant="body1">
+                        {exercise.setCount}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </div>
