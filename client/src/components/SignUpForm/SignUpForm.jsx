@@ -47,6 +47,9 @@ const SignUpForm = ({
           color="secondary"
           onChange={handleEmailChange}
           value={email}
+          inputProps={{
+            autoCapitalize: 'none',
+          }}
         />
         <TextField
           margin="normal"
@@ -59,6 +62,9 @@ const SignUpForm = ({
           color="secondary"
           onChange={handleUsernameChange}
           value={username}
+          inputProps={{
+            autoCapitalize: 'none',
+          }}
         />
         <TextField
           margin="normal"

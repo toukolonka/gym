@@ -47,6 +47,9 @@ const SignInForm = ({
           color="primary"
           onChange={handleUsernameChange}
           value={username}
+          inputProps={{
+            autoCapitalize: 'none',
+          }}
         />
         <TextField
           margin="normal"
