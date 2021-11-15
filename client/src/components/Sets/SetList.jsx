@@ -52,20 +52,20 @@ const SetList = ({
         </Box>
 
         <Grid container alignItems="center" justifyContent="center">
-          <Grid item xs={2}>
+          <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
+            Delete
+          </Grid>
+          <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
             Set
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center' }}>
             Weight
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center' }}>
             Reps
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
             Done
-          </Grid>
-          <Grid item xs={2}>
-            Remove
           </Grid>
         </Grid>
         {sets.map((set, index) => (

@@ -32,10 +32,18 @@ const SetRow = ({
 
   return (
     <Grid container alignItems="center" justifyContent="center">
-      <Grid item xs={2}>
+      <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
+        <IconButton
+          color="error"
+          onClick={() => handleDeleteSet(set)}
+        >
+          <DeleteForeverIcon />
+        </IconButton>
+      </Grid>
+      <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
         {index}
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center' }}>
         <TextField
           margin="normal"
           name="weight"
@@ -48,11 +56,12 @@ const SetRow = ({
           size="small"
           type="number"
           sx={{
-            mr: 2,
+            ml: 1,
+            mr: 1,
           }}
         />
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center' }}>
         <TextField
           margin="normal"
           name="reps"
@@ -65,11 +74,12 @@ const SetRow = ({
           size="small"
           type="number"
           sx={{
-            mr: 2,
+            ml: 1,
+            mr: 1,
           }}
         />
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
         <IconButton
           color="success"
           disabled={isTemplate}
@@ -78,14 +88,6 @@ const SetRow = ({
           }}
         >
           {completed ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
-        </IconButton>
-      </Grid>
-      <Grid item xs={2}>
-        <IconButton
-          color="error"
-          onClick={() => handleDeleteSet(set)}
-        >
-          <DeleteForeverIcon />
         </IconButton>
       </Grid>
     </Grid>
