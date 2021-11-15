@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Box, Typography, Container,
+  Box, Typography, Container, Button,
 } from '@mui/material';
 import UpdateAccountForm from '../../components/Profile/UpdateAccountForm';
-import AccountInformation from '../../components/Profile/AccountInformation';
 import registrationService from '../../services/registrationService';
 import { AuthContext } from '../../context/auth';
 
@@ -67,10 +66,9 @@ const Profile = ({
         <Typography component="h3" variant="h3">
           Profile
         </Typography>
-        <AccountInformation
-          user={user}
-          logout={logout}
-        />
+        <Typography component="p" variant="p">
+          {user.username}
+        </Typography>
         <UpdateAccountForm
           email={email}
           setEmail={handleEmailChange}
@@ -79,8 +77,16 @@ const Profile = ({
           handleSubmit={handleAccountUpdate}
           updateButtonDisabled={updateButtonDisabled}
         />
-
       </Box>
+      <Button
+        variant="outlined"
+        color="error"
+        onClick={logout}
+        sx={{ mt: 2 }}
+        fullWidth
+      >
+        Sign out
+      </Button>
     </Container>
   );
 };
