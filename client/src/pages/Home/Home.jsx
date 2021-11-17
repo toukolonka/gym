@@ -42,6 +42,19 @@ const Home = () => {
       >
         Start an empty workout
       </Button>
+      <Box
+        sx={{
+          marginTop: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h3" variant="h3">
+          Statistics
+        </Typography>
+      </Box>
+
     </Container>
   );
 };
