@@ -38,6 +38,9 @@ const UpdateAccountForm = ({
         color="primary"
         onChange={setEmail}
         value={email}
+        inputProps={{
+          autoCapitalize: 'none',
+        }}
       />
       <TextField
         margin="normal"
