@@ -224,6 +224,7 @@ const Template = () => {
         />
       ))}
       <Autocomplete
+        blurOnSelect
         disablePortal
         value={selectedExercise}
         options={exerciseOptions}
