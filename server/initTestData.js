@@ -59,6 +59,89 @@ const initTestData = async () => {
     user: null,
   });
 
+  const upper3 = new Exercise({
+    name: 'Cable crossover',
+    description: 'Isolation movement for chest. Use single grip handles in a cable machine and pull hands from the sides to center by using chest.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const upper4 = new Exercise({
+    name: 'Dumbell fly',
+    description: 'Isolation movement for chest. Use two dumbbells in a flat bench and pull hands from the sides to center by using chest.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const upper5 = new Exercise({
+    name: 'Seated machine fly',
+    description: 'Isolation movement for chest. Sit on the seated fly machine and pull hands from the sides to center by using chest.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const upper6 = new Exercise({
+    name: 'Barbell curl',
+    description: 'Use barbell to curl with both hands at the same time.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const upper7 = new Exercise({
+    name: 'Dumbbell curl',
+    description: 'Use two dumbells to curl with each hand separately.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const upper8 = new Exercise({
+    name: 'Dumbbell hammer curl',
+    description: 'Use two dumbells to curl with each hand separately. Keep the wrists in the same position as using a hammer.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const upper9 = new Exercise({
+    name: 'Cable bar tricep extensions',
+    description: 'Pull a cable-attached bar down with triceps.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const upper10 = new Exercise({
+    name: 'Dip',
+    description: 'Lift yorself up in a dip rack by using chest and triceps.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const upper11 = new Exercise({
+    name: 'Lateral dumbbel raise',
+    description: 'Isolation movement for shoulders. Use two dumbbells to raise your hands from sides to horizontal level.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const upper12 = new Exercise({
+    name: 'Overhead press',
+    description: 'Use barbell to lift weight from chest level to above the head while standing.',
+    category: 'Upper',
+    user: null,
+  });
+
+  const benchPress = await upper1.save();
+  const incBenchPress = await upper2.save();
+  await upper3.save();
+  await upper4.save();
+  await upper5.save();
+  await upper6.save();
+  await upper7.save();
+  await upper8.save();
+  await upper9.save();
+  await upper10.save();
+  await upper11.save();
+  await upper12.save();
+
   const legs1 = new Exercise({
     name: 'Leg press',
     description: 'Leg press is done sitting in a leg press machine. Sit on the machine with your back against the padded support and extend both legs.',
@@ -68,10 +151,45 @@ const initTestData = async () => {
 
   const legs2 = new Exercise({
     name: 'Squat',
-    description: 'A squat is a strength exercise in which the trainee lowers their hips from a standing position and then stands back up.',
+    description: 'Lower your hips from a standing position and stand back up. Use barbell behind your neck, on top of shoulders to add weight.',
     category: 'Legs',
     user: null,
   });
+
+  const legs3 = new Exercise({
+    name: 'Front squat',
+    description: 'Lower your hips from a standing position and stand back up. Use barbell in front of your neck, on top of shoulders to add weight.',
+    category: 'Legs',
+    user: null,
+  });
+
+  const legs4 = new Exercise({
+    name: 'Calf raise',
+    description: 'Raise yourself by using calves. Add weight with barbell, dumbbels or calf raise machine.',
+    category: 'Legs',
+    user: null,
+  });
+
+  const legs5 = new Exercise({
+    name: 'Seated leg extension',
+    description: 'Sit on a leg extension machine and extend both legs straight.',
+    category: 'Legs',
+    user: null,
+  });
+
+  const legs6 = new Exercise({
+    name: 'Seated leg curl',
+    description: 'Sit on a leg curl machine and pull the resistanse with your heels.',
+    category: 'Legs',
+    user: null,
+  });
+
+  const legPress = await legs1.save();
+  const squat = await legs2.save();
+  await legs3.save();
+  await legs4.save();
+  await legs5.save();
+  await legs6.save();
 
   const core1 = new Exercise({
     name: 'Sit up',
@@ -87,12 +205,32 @@ const initTestData = async () => {
     user: null,
   });
 
-  const savedExercise1 = await upper1.save();
-  const savedExercise2 = await upper2.save();
-  const savedExercise3 = await legs1.save();
-  const savedExercise4 = await legs2.save();
-  const savedExercise5 = await core1.save();
-  const savedExercise6 = await core2.save();
+  const core3 = new Exercise({
+    name: 'Leg raise',
+    description: 'Lie on a mat on your back and lift your legs.',
+    category: 'Core',
+    user: null,
+  });
+
+  const core4 = new Exercise({
+    name: 'Back extension',
+    description: 'Lie on a mat on your stomach and lift your upper body.',
+    category: 'Core',
+    user: null,
+  });
+
+  const core5 = new Exercise({
+    name: 'Deadlift',
+    description: 'Pull a barbell from the ground with your hands straight down to end up in a standing position.',
+    category: 'Core',
+    user: null,
+  });
+
+  const SitUp = await core1.save();
+  const Crunch = await core2.save();
+  await core3.save();
+  await core4.save();
+  await core5.save();
 
   const workout = new Workout({
     date: new Date(),
@@ -103,55 +241,55 @@ const initTestData = async () => {
         weight: 80,
         repetitions: 10,
         completed: true,
-        exercise: savedExercise1._id,
+        exercise: benchPress._id,
       },
       {
         weight: 80,
         repetitions: 10,
         completed: true,
-        exercise: savedExercise1._id,
+        exercise: benchPress._id,
       },
       {
         weight: 80,
         repetitions: 10,
         completed: true,
-        exercise: savedExercise1._id,
+        exercise: benchPress._id,
       },
       {
         weight: 50,
         repetitions: 10,
         completed: true,
-        exercise: savedExercise2._id,
+        exercise: incBenchPress._id,
       },
       {
         weight: 50,
         repetitions: 10,
         completed: true,
-        exercise: savedExercise2._id,
+        exercise: incBenchPress._id,
       },
       {
         weight: 50,
         repetitions: 10,
         completed: true,
-        exercise: savedExercise2._id,
+        exercise: incBenchPress._id,
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
-        exercise: savedExercise5._id,
+        exercise: SitUp._id,
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
-        exercise: savedExercise5._id,
+        exercise: SitUp._id,
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
-        exercise: savedExercise5._id,
+        exercise: SitUp._id,
       },
     ],
   });
@@ -165,61 +303,61 @@ const initTestData = async () => {
         weight: 250,
         repetitions: 12,
         completed: false,
-        exercise: savedExercise3._id,
+        exercise: legPress._id,
       },
       {
         weight: 250,
         repetitions: 12,
         completed: false,
-        exercise: savedExercise3._id,
+        exercise: legPress._id,
       },
       {
         weight: 250,
         repetitions: 10,
         completed: false,
-        exercise: savedExercise3._id,
+        exercise: legPress._id,
       },
       {
         weight: 250,
         repetitions: 8,
         completed: false,
-        exercise: savedExercise3._id,
+        exercise: legPress._id,
       },
       {
         weight: 80,
         repetitions: 10,
         completed: false,
-        exercise: savedExercise4._id,
+        exercise: squat._id,
       },
       {
         weight: 80,
         repetitions: 10,
         completed: false,
-        exercise: savedExercise4._id,
+        exercise: squat._id,
       },
       {
         weight: 80,
         repetitions: 10,
         completed: false,
-        exercise: savedExercise4._id,
+        exercise: squat._id,
       },
       {
         weight: 0,
         repetitions: 30,
         completed: false,
-        exercise: savedExercise6._id,
+        exercise: Crunch._id,
       },
       {
         weight: 0,
         repetitions: 30,
         completed: false,
-        exercise: savedExercise6._id,
+        exercise: Crunch._id,
       },
       {
         weight: 0,
         repetitions: 25,
         completed: false,
-        exercise: savedExercise6._id,
+        exercise: Crunch._id,
       },
     ],
   });

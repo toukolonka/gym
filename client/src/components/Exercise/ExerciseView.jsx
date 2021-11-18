@@ -54,11 +54,14 @@ const ExerciseView = ({
         alignItems: 'center',
       }}
     >
+      {exerciseDetails.maximum > 0
+      && (
       <Typography component="h6" variant="h6" align="center">
         All time 1RM:
         {' '}
         {exerciseDetails.maximum}
       </Typography>
+      )}
     </Box>
     <Button
       fullWidth
@@ -118,7 +121,7 @@ ExerciseView.propTypes = {
       template: PropTypes.bool.isRequired,
       user: PropTypes.string.isRequired,
     })),
-    maximum: PropTypes.number.isRequired,
+    maximum: PropTypes.number,
   }).isRequired,
   open: PropTypes.bool.isRequired,
   handleDelete: PropTypes.func.isRequired,
