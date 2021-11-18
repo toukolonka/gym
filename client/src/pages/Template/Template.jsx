@@ -210,7 +210,7 @@ const Template = () => {
         color="success"
         onClick={handleFinishAndSave}
       >
-        Finish and save
+        Save template
       </Button>
       {exercises.map((exercise) => (
         <SetList

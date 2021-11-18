@@ -16,6 +16,7 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import workoutService from '../../services/workoutService';
 import exerciseService from '../../services/exerciseService';
+import templateService from '../../services/templateService';
 import Loading from '../../components/Loading/Loading';
 import SetList from '../../components/Sets/SetList';
 
@@ -25,7 +26,8 @@ const Workout = () => {
   const [exerciseOptions, setExerciseOptions] = useState(null);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [initiationFinished, setInitiationFinished] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [templateDialogOpen, setTemplateDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [loadingW, setLoadingW] = useState(true);
   const [loadingE, setLoadingE] = useState(true);
   const { id } = useParams();
@@ -85,7 +87,7 @@ const Workout = () => {
         history.push('/workouts');
       })
       .catch(() => {
-        setOpen(false);
+        setDeleteDialogOpen(false);
       });
   };
 
@@ -99,12 +101,20 @@ const Workout = () => {
     }
   }, []);
 
-  const handleOpenDialog = () => {
-    setOpen(true);
+  const handleOpenDeleteDialog = () => {
+    setDeleteDialogOpen(true);
   };
 
-  const handleCancel = () => {
-    setOpen(false);
+  const handleDeleteDialogCancel = () => {
+    setDeleteDialogOpen(false);
+  };
+
+  const handleOpenTemplateDialog = () => {
+    setTemplateDialogOpen(true);
+  };
+
+  const handleTemplateDialogCancel = () => {
+    setTemplateDialogOpen(false);
   };
 
   const getPreviousSet = (exercise) => {
@@ -167,6 +177,11 @@ const Workout = () => {
     });
   };
 
+  const handleCreateTemplate = () => {
+    templateService.createFromWorkout(id)
+      .then(() => handleFinishAndSave());
+  };
+
   if (loadingW || loadingE) {
     return (
       <Loading />
@@ -208,10 +223,32 @@ const Workout = () => {
         variant="contained"
         sx={{ mt: 3 }}
         color="success"
-        onClick={handleFinishAndSave}
+        onClick={handleOpenTemplateDialog}
       >
         Finish and save
       </Button>
+      <Dialog
+        open={templateDialogOpen}
+        onClose={handleTemplateDialogCancel}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          Create a template?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Create a template based on workout data or just save the workout
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleFinishAndSave} autoFocus>
+            Save workout
+          </Button>
+          <Button onClick={handleCreateTemplate} autoFocus>
+            Create template
+          </Button>
+        </DialogActions>
+      </Dialog>
       {exercises.map((exercise) => (
         <SetList
           key={exercise.id}
@@ -245,15 +282,15 @@ const Workout = () => {
         variant="contained"
         sx={{ mt: 3 }}
         color="error"
-        onClick={handleOpenDialog}
+        onClick={handleOpenDeleteDialog}
       >
         Delete
         {' '}
         {workoutText}
       </Button>
       <Dialog
-        open={open}
-        onClose={handleCancel}
+        open={deleteDialogOpen}
+        onClose={handleDeleteDialogCancel}
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
@@ -270,7 +307,7 @@ const Workout = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCancel}>
+          <Button autoFocus onClick={handleDeleteDialogCancel}>
             Cancel
           </Button>
           <Button onClick={handleDeleteWorkout} autoFocus>

@@ -13,6 +13,11 @@ const create = async () => {
   return response.data;
 };
 
+const createFromWorkout = async (id) => {
+  const response = await axios.post(`${baseUrl}/workout/${id}`);
+  return response.data;
+};
+
 const remove = async (id) => {
   const response = await axios.delete(`${baseUrl}/${id}`);
   return response.data;
@@ -21,5 +26,6 @@ const remove = async (id) => {
 export default {
   getAll,
   create,
+  createFromWorkout,
   remove,
 };

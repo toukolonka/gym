@@ -46,6 +46,29 @@ templatesRouter.post('/', async (request, response, next) => {
   }
 });
 
+templatesRouter.post('/workout/:id', async (request, response, next) => {
+  try {
+    const user = await authorizeUser(request);
+
+    const workout = await Workout.findById(request.params.id);
+
+    const template = new Workout({
+      date: new Date(),
+      template: true,
+      user: user._id,
+      sets: workout.sets,
+    });
+
+    const savedTemplate = await template.save();
+    user.workouts = user.workouts.concat(savedTemplate._id);
+    await user.save();
+
+    return response.status(201).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
 templatesRouter.delete('/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
