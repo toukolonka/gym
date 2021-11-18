@@ -20,6 +20,7 @@ import Loading from '../../components/Loading/Loading';
 import SetList from '../../components/Sets/SetList';
 
 const Template = () => {
+  const [templates, setTemplates] = useState(null);
   const [template, setTemplate] = useState(null);
   const [exerciseOptions, setExerciseOptions] = useState(null);
   const [selectedExercise, setSelectedExercise] = useState(null);
@@ -29,6 +30,14 @@ const Template = () => {
   const [loadingE, setLoadingE] = useState(true);
   const { id } = useParams();
   const history = useHistory();
+
+  useEffect(() => {
+    workoutService
+      .getAll()
+      .then((data) => {
+        setTemplates(data);
+      });
+  }, []);
 
   useEffect(() => {
     workoutService
@@ -84,14 +93,26 @@ const Template = () => {
   };
 
   const getPreviousSet = (exercise) => {
-    const sets = template.sets.filter((set) => set.exercise.id === exercise.id);
-    if (sets.length === 0) {
+    // Check exercise sets from current workout
+    const exerciseSets = template.sets.filter((set) => set.exercise.id === exercise.id);
+    if (exerciseSets.length === 0) {
+      // Check exercise sets from previous workouts
+      const prevWorkout = templates.find(({ sets }) => (
+        sets.find((set) => set.exercise.id === exercise.id)
+      ));
+      if (!prevWorkout) {
+        return {
+          weight: 0,
+          repetitions: 0,
+        };
+      }
+      const lastSet = prevWorkout.sets.find((set) => set.exercise.id === exercise.id);
       return {
-        weight: 0,
-        repetitions: 0,
+        weight: lastSet.weight,
+        repetitions: lastSet.repetitions,
       };
     }
-    const lastSet = sets.pop();
+    const lastSet = exerciseSets.pop();
     return {
       weight: lastSet.weight,
       repetitions: lastSet.repetitions,
