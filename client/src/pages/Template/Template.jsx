@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Typography,
@@ -30,6 +30,7 @@ const Template = () => {
   const [loadingE, setLoadingE] = useState(true);
   const { id } = useParams();
   const history = useHistory();
+  const templateRef = useRef();
 
   useEffect(() => {
     workoutService
@@ -48,6 +49,10 @@ const Template = () => {
         setInitiationFinished(true);
       });
   }, []);
+
+  useEffect(() => () => {
+    templateRef.current = template;
+  }, [template]);
 
   useEffect(() => {
     exerciseService
@@ -83,6 +88,16 @@ const Template = () => {
         setOpen(false);
       });
   };
+
+  // Delete template if template does not contain any sets and is created under a minute ago
+  // Equivalent to componentWillUnmount lifecycle method
+  useEffect(() => () => {
+    if (templateRef
+      && templateRef.current.sets.length === 0
+      && (new Date()) - (new Date(templateRef.current.date)) < 60000) {
+      handleDeleteTemplate();
+    }
+  }, []);
 
   const handleOpenDialog = () => {
     setOpen(true);
