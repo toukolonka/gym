@@ -9,6 +9,7 @@ templatesRouter.get('/', async (request, response, next) => {
 
     const templates = await Workout
       .find({ user: user._id, template: true })
+      .sort({ date: 'desc' })
       .populate({
         path: 'sets',
         type: Array,
