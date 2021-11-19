@@ -66,7 +66,7 @@ const SignUp = ({
         history.push('/');
       }
     } else {
-      setErrorMessage('Registration failed');
+      setErrorMessage('Username or password already in use');
     }
   };
 

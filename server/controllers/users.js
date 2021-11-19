@@ -33,6 +33,7 @@ usersRouter.post('/', async (request, response, next) => {
 
     const user = new User({
       username: body.username,
+      email: body.email,
       passwordHash,
       workouts: [],
     });

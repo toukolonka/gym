@@ -40,6 +40,7 @@ const initTestData = async () => {
 
   const user = new User({
     username: 'user123',
+    email: 'user123@gmail.com',
     passwordHash,
     workouts: [],
   });
