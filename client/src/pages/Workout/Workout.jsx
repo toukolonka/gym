@@ -97,7 +97,7 @@ const Workout = () => {
     if (workoutRef
       && workoutRef.current.sets.length === 0
       && (new Date()) - (new Date(workoutRef.current.date)) < 60000) {
-      handleDeleteWorkout();
+      workoutService.remove(id);
     }
   }, []);
 
