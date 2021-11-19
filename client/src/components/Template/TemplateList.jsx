@@ -9,8 +9,11 @@ import {
   Grid,
   CardActionArea,
 } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
 const TemplateList = ({ templates, handleCreateWorkout }) => {
+  const history = useHistory();
+
   const extractExercises = (sets) => {
     const uniqueExercises = Array.from(new Set(sets.map((set) => set.exercise.name)));
     const exercises = uniqueExercises.map((exercise) => (
@@ -34,7 +37,7 @@ const TemplateList = ({ templates, handleCreateWorkout }) => {
           borderColor: 'primary.dark',
         }}
         >
-          <CardActionArea href={`templates/${template.id}`}>
+          <CardActionArea onClick={() => history.push(`templates/${template.id}`)}>
             <CardContent sx={{ flexGrow: 1 }}>
               <Grid container>
                 <Grid item xs={10}>

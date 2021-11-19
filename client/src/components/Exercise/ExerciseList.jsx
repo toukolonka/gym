@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {
-  Button, Paper, Link, Typography, TextField, InputAdornment, ToggleButtonGroup, ToggleButton,
+  Button, Paper, Typography, TextField, InputAdornment, ToggleButtonGroup, ToggleButton,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 
 const ExerciseList = ({
@@ -64,7 +64,7 @@ const ExerciseList = ({
             size="large"
             fullWidth
             component={Link}
-            href={`exercises/${exercise.id}`}
+            to={`exercises/${exercise.id}`}
           >
             {exercise.name}
           </Button>
