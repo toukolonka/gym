@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const wokoutsRouter = require('express').Router();
+const { v4: uuidv4 } = require('uuid');
 const Workout = require('../models/workout');
 const Errors = require('../utils/errors');
 const authorizeUser = require('../services/authorizationService');
@@ -81,11 +82,19 @@ wokoutsRouter.post('/template/:id', async (request, response, next) => {
 
     const template = await Workout.findById(request.params.id);
 
+    const sets = template.sets.map((set) => ({
+      weight: set.weight,
+      repetitions: set.repetitions,
+      completed: false,
+      exercise: set.exercise,
+      uuid: uuidv4(),
+    }));
+
     const workout = new Workout({
       date: new Date(),
       template: false,
       user: user._id,
-      sets: template.sets,
+      sets,
     });
 
     const savedWorkout = await workout.save();

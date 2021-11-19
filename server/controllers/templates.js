@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const templatesRouter = require('express').Router();
+const { v4: uuidv4 } = require('uuid');
 const Workout = require('../models/workout');
 const authorizeUser = require('../services/authorizationService');
 
@@ -53,11 +54,19 @@ templatesRouter.post('/workout/:id', async (request, response, next) => {
 
     const workout = await Workout.findById(request.params.id);
 
+    const sets = workout.sets.flat().map((set) => ({
+      weight: set.weight,
+      repetitions: set.repetitions,
+      completed: false,
+      exercise: set.exercise,
+      uuid: uuidv4(),
+    }));
+
     const template = new Workout({
       date: new Date(),
       template: true,
       user: user._id,
-      sets: workout.sets,
+      sets,
     });
 
     const savedTemplate = await template.save();
