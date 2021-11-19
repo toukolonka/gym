@@ -16,18 +16,19 @@ const SetRow = ({
   handleUpdateSet,
   isTemplate,
 }) => {
-  const [weight, setWeight] = useState('');
-  const [repetitions, setRepetitions] = useState('');
-  const [completed, setCompleted] = useState(false);
+  const [weight, setWeight] = useState(set.weight);
+  const [repetitions, setRepetitions] = useState(set.repetitions);
+  const [completed, setCompleted] = useState(set.completed);
+  const [initiationFinished, setInitiationFinished] = useState(false);
 
   useEffect(() => {
-    if (set.weight > 0) setWeight(set.weight);
-    if (set.repetitions > 0) setRepetitions(set.repetitions);
-    setCompleted(set.completed);
-  }, []);
-
-  useEffect(() => {
-    handleUpdateSet(set.uuid, { weight, repetitions, completed });
+    if (initiationFinished) {
+      const timeOutId = setTimeout(() => handleUpdateSet(
+        set.uuid, { weight, repetitions, completed },
+      ), 1000);
+      return () => clearTimeout(timeOutId);
+    }
+    return setInitiationFinished(true);
   }, [weight, repetitions, completed]);
 
   return (
@@ -51,7 +52,7 @@ const SetRow = ({
           id="weight"
           color="primary"
           onChange={(event) => setWeight(event.target.value)}
-          value={weight}
+          value={weight || ''}
           inputProps={{ inputMode: 'numeric' }}
           size="small"
           type="number"
@@ -69,7 +70,7 @@ const SetRow = ({
           id="reps"
           color="primary"
           onChange={(event) => setRepetitions(event.target.value)}
-          value={repetitions}
+          value={repetitions || ''}
           inputProps={{ inputMode: 'numeric' }}
           size="small"
           type="number"

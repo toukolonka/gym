@@ -26,7 +26,7 @@ const Template = () => {
   const [template, setTemplate] = useState(null);
   const [exerciseOptions, setExerciseOptions] = useState(null);
   const [selectedExercise, setSelectedExercise] = useState(null);
-  const [initiationFinished, setInitiationFinished] = useState(null);
+  const [initiationFinished, setInitiationFinished] = useState(false);
   const [open, setOpen] = useState(false);
   const [loadingW, setLoadingW] = useState(true);
   const [loadingE, setLoadingE] = useState(true);
@@ -66,7 +66,7 @@ const Template = () => {
   }, []);
 
   useEffect(() => {
-    if (template && initiationFinished !== null) {
+    if (template && initiationFinished) {
       workoutService
         .update(id, template);
     }

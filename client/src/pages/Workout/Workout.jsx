@@ -26,7 +26,7 @@ const Workout = () => {
   const [workout, setWorkout] = useState(null);
   const [exerciseOptions, setExerciseOptions] = useState(null);
   const [selectedExercise, setSelectedExercise] = useState(null);
-  const [initiationFinished, setInitiationFinished] = useState(null);
+  const [initiationFinished, setInitiationFinished] = useState(false);
   const [templateDialogOpen, setTemplateDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [loadingW, setLoadingW] = useState(true);
@@ -67,7 +67,7 @@ const Workout = () => {
   }, []);
 
   useEffect(() => {
-    if (workout && initiationFinished !== null) {
+    if (workout && initiationFinished) {
       workoutService
         .update(id, workout);
     }
