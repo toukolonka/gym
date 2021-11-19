@@ -8,12 +8,7 @@ const initialState = {
 
 if (localStorage.getItem('gymToken')) {
   const decodedToken = jwtDecode(localStorage.getItem('gymToken'));
-
-  if (decodedToken.exp * 1000 < Date.now()) {
-    localStorage.removeItem('gymToken');
-  } else {
-    initialState.user = decodedToken;
-  }
+  initialState.user = decodedToken;
 }
 
 const AuthContext = createContext({
