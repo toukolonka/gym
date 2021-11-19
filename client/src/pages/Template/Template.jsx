@@ -13,6 +13,7 @@ import {
   DialogActions,
 } from '@mui/material';
 import { useParams, useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import workoutService from '../../services/workoutService';
 import exerciseService from '../../services/exerciseService';
@@ -143,27 +144,28 @@ const Template = () => {
         repetitions: set.repetitions,
         completed: false,
         exercise,
+        uuid: uuidv4(),
       }),
     });
   };
 
-  const handleUpdateSet = (set, values) => {
+  const handleUpdateSet = (uuid, values) => {
     setTemplate({
       ...template,
-      sets: template.sets.map((s) => (
-        s === set ? {
-          ...s,
+      sets: template.sets.map((set) => (
+        set.uuid === uuid ? {
+          ...set,
           weight: Number(values.weight),
           repetitions: Number(values.repetitions),
           completed: values.completed,
-        } : s)),
+        } : set)),
     });
   };
 
-  const handleDeleteSet = (set) => {
+  const handleDeleteSet = (uuid) => {
     setTemplate({
       ...template,
-      sets: template.sets.filter((s) => s !== set),
+      sets: template.sets.filter((set) => set.uuid !== uuid),
     });
   };
 

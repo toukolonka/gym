@@ -109,6 +109,7 @@ wokoutsRouter.put('/:id', async (request, response, next) => {
         repetitions: set.repetitions,
         completed: set.completed,
         exercise: set.exercise.id,
+        uuid: set.uuid,
       })),
     };
 

@@ -105,6 +105,7 @@ TemplateList.propTypes = {
       repetitions: propTypes.number.isRequired,
       completed: propTypes.bool.isRequired,
       exercise: propTypes.object.isRequired,
+      uuid: propTypes.string.isRequired,
     })).isRequired,
     template: propTypes.bool.isRequired,
     user: propTypes.string.isRequired,

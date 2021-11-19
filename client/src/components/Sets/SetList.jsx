@@ -70,8 +70,7 @@ const SetList = ({
         </Grid>
         {sets.map((set, index) => (
           <SetRow
-          // eslint-disable-next-line react/no-array-index-key
-            key={index}
+            key={set.uuid}
             set={set}
             index={index + 1}
             handleUpdateSet={handleUpdateSet}
@@ -110,6 +109,7 @@ SetList.propTypes = {
     repetitions: PropTypes.number.isRequired,
     completed: PropTypes.bool.isRequired,
     exercise: PropTypes.object.isRequired,
+    uuid: PropTypes.string.isRequired,
   })).isRequired,
   handleDeleteSet: PropTypes.func.isRequired,
   handleAddSet: PropTypes.func.isRequired,

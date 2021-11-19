@@ -27,7 +27,7 @@ const SetRow = ({
   }, []);
 
   useEffect(() => {
-    handleUpdateSet(set, { weight, repetitions, completed });
+    handleUpdateSet(set.uuid, { weight, repetitions, completed });
   }, [weight, repetitions, completed]);
 
   return (
@@ -35,7 +35,7 @@ const SetRow = ({
       <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
         <IconButton
           color="error"
-          onClick={() => handleDeleteSet(set)}
+          onClick={() => handleDeleteSet(set.uuid)}
         >
           <DeleteForeverIcon />
         </IconButton>
@@ -100,6 +100,7 @@ SetRow.propTypes = {
     repetitions: PropTypes.number.isRequired,
     completed: PropTypes.bool.isRequired,
     exercise: PropTypes.object.isRequired,
+    uuid: PropTypes.string.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
   handleDeleteSet: PropTypes.func.isRequired,

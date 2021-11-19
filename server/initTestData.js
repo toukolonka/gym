@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
 const logger = require('./utils/logger');
 require('dotenv').config();
 
@@ -242,54 +243,63 @@ const initTestData = async () => {
         repetitions: 10,
         completed: true,
         exercise: benchPress._id,
+        uuid: uuidv4(),
       },
       {
         weight: 80,
         repetitions: 10,
         completed: true,
         exercise: benchPress._id,
+        uuid: uuidv4(),
       },
       {
         weight: 80,
         repetitions: 10,
         completed: true,
         exercise: benchPress._id,
+        uuid: uuidv4(),
       },
       {
         weight: 50,
         repetitions: 10,
         completed: true,
         exercise: incBenchPress._id,
+        uuid: uuidv4(),
       },
       {
         weight: 50,
         repetitions: 10,
         completed: true,
         exercise: incBenchPress._id,
+        uuid: uuidv4(),
       },
       {
         weight: 50,
         repetitions: 10,
         completed: true,
         exercise: incBenchPress._id,
+        uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
         exercise: SitUp._id,
+        uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
         exercise: SitUp._id,
+        uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
         exercise: SitUp._id,
+        uuid: uuidv4(),
       },
     ],
   });
@@ -304,60 +314,70 @@ const initTestData = async () => {
         repetitions: 12,
         completed: false,
         exercise: legPress._id,
+        uuid: uuidv4(),
       },
       {
         weight: 250,
         repetitions: 12,
         completed: false,
         exercise: legPress._id,
+        uuid: uuidv4(),
       },
       {
         weight: 250,
         repetitions: 10,
         completed: false,
         exercise: legPress._id,
+        uuid: uuidv4(),
       },
       {
         weight: 250,
         repetitions: 8,
         completed: false,
         exercise: legPress._id,
+        uuid: uuidv4(),
       },
       {
         weight: 80,
         repetitions: 10,
         completed: false,
         exercise: squat._id,
+        uuid: uuidv4(),
       },
       {
         weight: 80,
         repetitions: 10,
         completed: false,
         exercise: squat._id,
+        uuid: uuidv4(),
       },
       {
         weight: 80,
         repetitions: 10,
         completed: false,
         exercise: squat._id,
+        uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 30,
         completed: false,
         exercise: Crunch._id,
+        uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 30,
         completed: false,
         exercise: Crunch._id,
+        uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: false,
         exercise: Crunch._id,
+        uuid: uuidv4(),
       },
     ],
   });
