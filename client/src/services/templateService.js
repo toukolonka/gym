@@ -3,6 +3,11 @@ import axios from 'axios';
 // Use gymToken directly from local storage instead of information from context/auth.jsx
 const baseUrl = '/api/templates';
 
+const getOne = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`);
+  return response.data;
+};
+
 const getAll = async () => {
   const response = await axios.get(baseUrl);
   return response.data;
@@ -24,6 +29,7 @@ const remove = async (id) => {
 };
 
 export default {
+  getOne,
   getAll,
   create,
   createFromWorkout,

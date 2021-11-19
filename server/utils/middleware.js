@@ -35,6 +35,8 @@ const errorHandler = (error, _, response, next) => {
     return response.status(401).json({ error: error.message });
   } if (error.name === 'MongoServerError') {
     return response.status(409).json({ error: error.message });
+  } if (error instanceof Errors.ResourceNotFoundError) {
+    return response.status(404).send({ message: error.message });
   }
 
   next(error);

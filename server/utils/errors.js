@@ -24,6 +24,8 @@ class InvalidParametersError extends CustomError {}
 
 class InvalidLoginError extends CustomError {}
 
+class ResourceNotFoundError extends CustomError {}
+
 module.exports = {
   AuthorizationHeaderError,
   AuthorizationError,
@@ -31,4 +33,5 @@ module.exports = {
   UserNotFoundError,
   InvalidParametersError,
   InvalidLoginError,
+  ResourceNotFoundError,
 };

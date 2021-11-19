@@ -43,6 +43,10 @@ wokoutsRouter.get('/:id', async (request, response, next) => {
         },
       });
 
+    if (workout === null) {
+      throw new Errors.ResourceNotFoundError(`Workout with id ${request.params.id} not found`);
+    }
+
     if (workout.user === null
       || workout.user.toString() === user._id.toString()) {
       return response.json(workout);
@@ -81,6 +85,10 @@ wokoutsRouter.post('/template/:id', async (request, response, next) => {
     const user = await authorizeUser(request);
 
     const template = await Workout.findById(request.params.id);
+
+    if (template === null) {
+      throw new Errors.ResourceNotFoundError(`Template with id ${request.params.id} not found`);
+    }
 
     const sets = template.sets.map((set) => ({
       weight: set.weight,
@@ -122,7 +130,13 @@ wokoutsRouter.put('/:id', async (request, response, next) => {
       })),
     };
 
-    await Workout.findByIdAndUpdate(request.params.id, workout, { new: true });
+    const updatedWorkout = await Workout.findByIdAndUpdate(
+      request.params.id, workout, { new: true },
+    );
+
+    if (updatedWorkout === null) {
+      throw new Errors.ResourceNotFoundError(`Workout with id ${request.params.id} not found`);
+    }
 
     return response.status(204).end();
   } catch (err) {
@@ -134,6 +148,10 @@ wokoutsRouter.delete('/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
     const workout = await Workout.findById(request.params.id);
+
+    if (workout === null) {
+      throw new Errors.ResourceNotFoundError(`Workout with id ${request.params.id} not found`);
+    }
 
     if (user.id === workout.user.toString()) {
       const removedWorkout = await Workout.findByIdAndRemove(request.params.id);

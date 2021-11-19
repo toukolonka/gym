@@ -24,6 +24,10 @@ exercisesRouter.get('/:id', async (request, response, next) => {
 
     const exercise = await Exercise.findById(request.params.id);
 
+    if (exercise === null) {
+      throw new Errors.ResourceNotFoundError(`Exercise with id ${request.params.id} not found`);
+    }
+
     const workouts = await Workout
       .find({ user: user._id, template: false, 'sets.exercise': exercise._id })
       .populate({
@@ -93,6 +97,10 @@ exercisesRouter.delete('/:id', async (request, response, next) => {
     const user = await authorizeUser(request);
 
     const exerciseToBeDeleted = await Exercise.findById(request.params.id);
+
+    if (exerciseToBeDeleted === null) {
+      throw new Errors.ResourceNotFoundError(`Exercise with id ${request.params.id} not found`);
+    }
 
     if (exerciseToBeDeleted.user !== null
       && exerciseToBeDeleted.user.toString() === user._id.toString()) {

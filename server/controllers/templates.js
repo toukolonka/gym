@@ -2,6 +2,7 @@
 const templatesRouter = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const Workout = require('../models/workout');
+const Errors = require('../utils/errors');
 const authorizeUser = require('../services/authorizationService');
 
 templatesRouter.get('/', async (request, response, next) => {
@@ -21,6 +22,36 @@ templatesRouter.get('/', async (request, response, next) => {
       });
 
     return response.json(templates);
+  } catch (err) {
+    next(err);
+  }
+});
+
+templatesRouter.get('/:id', async (request, response, next) => {
+  try {
+    const user = await authorizeUser(request);
+
+    const template = await Workout
+      .findById(request.params.id)
+      .populate({
+        path: 'sets',
+        type: Array,
+        populate: {
+          path: 'exercise',
+          model: 'Exercise',
+        },
+      });
+
+    if (template === null) {
+      throw new Errors.ResourceNotFoundError(`Template with id ${request.params.id} not found`);
+    }
+
+    if (template.user === null
+      || template.user.toString() === user._id.toString()) {
+      return response.json(template);
+    }
+
+    throw new Errors.AuthorizationError('Not authorized');
   } catch (err) {
     next(err);
   }
@@ -54,6 +85,10 @@ templatesRouter.post('/workout/:id', async (request, response, next) => {
 
     const workout = await Workout.findById(request.params.id);
 
+    if (workout === null) {
+      throw new Errors.ResourceNotFoundError(`Workout with id ${request.params.id} not found`);
+    }
+
     const sets = workout.sets.flat().map((set) => ({
       weight: set.weight,
       repetitions: set.repetitions,
@@ -84,9 +119,8 @@ templatesRouter.delete('/:id', async (request, response, next) => {
     const user = await authorizeUser(request);
     const template = await Workout.findById(request.params.id);
 
-    if (!template) {
-      // @TODO throw error in the backend
-      return response.status(400).end();
+    if (template === null) {
+      throw new Errors.ResourceNotFoundError(`Template with id ${request.params.id} not found`);
     }
 
     if (user.id === template.user.toString()) {
@@ -96,8 +130,7 @@ templatesRouter.delete('/:id', async (request, response, next) => {
       return response.status(204).end();
     }
 
-    // @TODO throw error in the backend
-    return response.status(401).end();
+    throw new Errors.AuthorizationError('Not authorized');
   } catch (err) {
     next(err);
   }

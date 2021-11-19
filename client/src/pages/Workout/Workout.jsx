@@ -96,6 +96,7 @@ const Workout = () => {
   // Equivalent to componentWillUnmount lifecycle method
   useEffect(() => () => {
     if (workoutRef
+      && workoutRef.current !== null
       && workoutRef.current.sets.length === 0
       && (new Date()) - (new Date(workoutRef.current.date)) < 60000) {
       workoutService.remove(id);

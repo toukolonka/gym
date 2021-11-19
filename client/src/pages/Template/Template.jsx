@@ -16,6 +16,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import workoutService from '../../services/workoutService';
+import templateService from '../../services/templateService';
 import exerciseService from '../../services/exerciseService';
 import Loading from '../../components/Loading/Loading';
 import SetList from '../../components/Sets/SetList';
@@ -42,7 +43,7 @@ const Template = () => {
   }, []);
 
   useEffect(() => {
-    workoutService
+    templateService
       .getOne(id)
       .then((data) => {
         setTemplate(data);
@@ -94,6 +95,7 @@ const Template = () => {
   // Equivalent to componentWillUnmount lifecycle method
   useEffect(() => () => {
     if (templateRef
+      && templateRef.current !== null
       && templateRef.current.sets.length === 0
       && (new Date()) - (new Date(templateRef.current.date)) < 60000) {
       handleDeleteTemplate();
