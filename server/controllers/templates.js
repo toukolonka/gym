@@ -62,6 +62,7 @@ templatesRouter.post('/', async (request, response, next) => {
     const user = await authorizeUser(request);
 
     const workout = new Workout({
+      name: '',
       date: new Date(),
       template: true,
       user: user._id,

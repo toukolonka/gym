@@ -42,7 +42,7 @@ const TemplateList = ({ templates, handleCreateWorkout }) => {
               <Grid container>
                 <Grid item xs={10}>
                   <Typography gutterBottom variant="h4" component="h4">
-                    Template Name
+                    {template.name}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -98,6 +98,7 @@ const TemplateList = ({ templates, handleCreateWorkout }) => {
 
 TemplateList.propTypes = {
   templates: propTypes.arrayOf(propTypes.exact({
+    name: propTypes.string.isRequired,
     date: propTypes.string.isRequired,
     id: propTypes.string.isRequired,
     sets: propTypes.arrayOf(propTypes.exact({

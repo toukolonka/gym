@@ -309,6 +309,7 @@ const initTestData = async () => {
   });
 
   const template1 = new Workout({
+    name: '',
     date: new Date(),
     template: true,
     user: savedUser._id,
