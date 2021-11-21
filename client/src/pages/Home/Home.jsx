@@ -47,15 +47,17 @@ const Home = () => {
       const exerciseSets = Object.values(workout.sets)
         .filter((set) => set.exercise.id === selectedExercise.id);
 
-      // Extract best rms from sets
-      const rms = exerciseSets
-        .map(
-          (set) => set.weight * (1 + (set.repetitions / 30)),
-        );
-      const maximum = Math.round(Math.max(...rms));
-      console.log(maximum);
-      // Add the maximum and date to draftData
-      draftData.push([workoutdate, maximum]);
+      // If there are sets of selected exercise in workout
+      if (exerciseSets.length > 0) {
+        // Extract best rms from sets
+        const rms = exerciseSets
+          .map(
+            (set) => set.weight * (1 + (set.repetitions / 30)),
+          );
+        const maximum = Math.round(Math.max(...rms));
+        // Add the maximum and date to draftData
+        draftData.push([workoutdate, maximum]);
+      }
     });
     setExerciseData(draftData);
   }, [selectedExercise]);
@@ -102,7 +104,7 @@ const Home = () => {
           options={exerciseOptions}
           getOptionLabel={(option) => option.name}
           // eslint-disable-next-line react/jsx-props-no-spreading
-          renderInput={(params) => <TextField {...params} label="New Exercise" />}
+          renderInput={(params) => <TextField {...params} label="Select Exercise" />}
           sx={{ mt: 2 }}
           onChange={(_, exercise) => {
             if (exercise !== null) {

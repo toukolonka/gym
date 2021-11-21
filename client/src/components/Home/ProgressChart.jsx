@@ -5,8 +5,7 @@ import Chart from 'react-google-charts';
 const ProgressChart = ({
   data,
 }) => {
-  console.log(data);
-  if (data.length < 2) return <p>No data</p>;
+  if (data.length < 3) return <p>No data to display</p>;
   return (
     <Chart
       height={400}
