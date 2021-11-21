@@ -234,8 +234,8 @@ const initTestData = async () => {
   await core4.save();
   await core5.save();
 
-  const workout = new Workout({
-    date: new Date(),
+  const workout1 = new Workout({
+    date: new Date('2021-11-01'),
     template: false,
     user: savedUser._id,
     sets: [
@@ -262,6 +262,77 @@ const initTestData = async () => {
       },
       {
         weight: 50,
+        repetitions: 10,
+        completed: true,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 50,
+        repetitions: 10,
+        completed: true,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 50,
+        repetitions: 10,
+        completed: true,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: SitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: SitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: SitUp._id,
+        uuid: uuidv4(),
+      },
+    ],
+  });
+
+  const workout2 = new Workout({
+    date: new Date('2021-11-10'),
+    template: false,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 80,
+        repetitions: 11,
+        completed: true,
+        exercise: benchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: true,
+        exercise: benchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 80,
+        repetitions: 13,
+        completed: true,
+        exercise: benchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 55,
         repetitions: 10,
         completed: true,
         exercise: incBenchPress._id,
@@ -383,10 +454,85 @@ const initTestData = async () => {
     ],
   });
 
-  const savedWorkout = await workout.save();
+  const workout3 = new Workout({
+    date: new Date('2021-11-20'),
+    template: false,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 85,
+        repetitions: 11,
+        completed: true,
+        exercise: benchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: true,
+        exercise: benchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 85,
+        repetitions: 13,
+        completed: true,
+        exercise: benchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 55,
+        repetitions: 12,
+        completed: true,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 50,
+        repetitions: 10,
+        completed: true,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 50,
+        repetitions: 10,
+        completed: true,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: SitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: SitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: SitUp._id,
+        uuid: uuidv4(),
+      },
+    ],
+  });
+
+  const savedWorkout1 = await workout1.save();
+  const savedWorkout2 = await workout2.save();
+  const savedWorkout3 = await workout3.save();
   const savedTemplate = await template1.save();
 
-  user.workouts = user.workouts.concat(savedWorkout._id);
+  user.workouts = user.workouts.concat(savedWorkout1._id);
+  user.workouts = user.workouts.concat(savedWorkout2._id);
+  user.workouts = user.workouts.concat(savedWorkout3._id);
   user.workouts = user.workouts.concat(savedTemplate._id);
   await user.save();
 };

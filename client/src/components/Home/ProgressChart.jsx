@@ -13,7 +13,7 @@ const ProgressChart = ({
       loader={<div>Loading Chart</div>}
       data={data}
       options={{
-        title: '1RM Progress (Calculated One Rep Max)',
+        title: '1RM Progress (Calculated One Rep Max Kg)',
         colors: ['#00bcd4'],
         chartArea: { width: '75%', height: '75%' },
         backgroundColor: '#303030',
@@ -44,16 +44,7 @@ const ProgressChart = ({
 };
 
 ProgressChart.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.instanceOf(Date),
-    ]),
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-  )).isRequired,
+  data: PropTypes.arrayOf(PropTypes.array).isRequired,
 };
 
 export default ProgressChart;
