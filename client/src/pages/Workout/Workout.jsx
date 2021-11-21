@@ -20,6 +20,7 @@ import exerciseService from '../../services/exerciseService';
 import templateService from '../../services/templateService';
 import Loading from '../../components/Loading/Loading';
 import SetList from '../../components/Sets/SetList';
+import WorkoutHeader from '../../components/Workout/WorkoutHeader';
 
 const Workout = () => {
   const [workouts, setWorkouts] = useState(null);
@@ -185,6 +186,13 @@ const Workout = () => {
       .then(() => handleFinishAndSave());
   };
 
+  const handleUpdateName = (name) => {
+    setWorkout({
+      ...workout,
+      name,
+    });
+  };
+
   if (loadingW || loadingE) {
     return (
       <Loading />
@@ -212,9 +220,7 @@ const Workout = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h3" variant="h3">
-          {workoutText}
-        </Typography>
+        <WorkoutHeader name={workout.name} handleUpdateName={handleUpdateName} />
         <Typography component="p" variant="p">
           {new Date(workout.date).toLocaleDateString(undefined, {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',

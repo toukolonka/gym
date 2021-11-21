@@ -62,9 +62,11 @@ wokoutsRouter.post('/', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
 
+    const date = new Date();
     // Create new workout
     const workout = new Workout({
-      date: new Date(),
+      name: `${date.toLocaleDateString(undefined, { weekday: 'short' })} ${date.toLocaleDateString()}`,
+      date,
       template: false,
       user: user._id,
       sets: [],
@@ -120,7 +122,10 @@ wokoutsRouter.put('/:id', async (request, response, next) => {
     await authorizeUser(request);
     const { body } = request;
 
+    const name = (body.name.length >= 20) ? body.name.substring(0, 20) : body.name;
+
     const workout = {
+      name,
       sets: body.sets.map((set) => ({
         weight: set.weight,
         repetitions: set.repetitions,

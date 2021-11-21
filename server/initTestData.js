@@ -234,8 +234,11 @@ const initTestData = async () => {
   await core4.save();
   await core5.save();
 
+  const date = new Date();
+
   const workout = new Workout({
-    date: new Date(),
+    name: `${date.toLocaleDateString(undefined, { weekday: 'short' })} ${date.toLocaleDateString()}`,
+    date,
     template: false,
     user: savedUser._id,
     sets: [
