@@ -13,12 +13,11 @@ const ProgressChart = ({
       loader={<div>Loading Chart</div>}
       data={data}
       options={{
-        title: '1RM Progress',
+        title: '1RM Progress (Calculated One Rep Max)',
         colors: ['#00bcd4'],
         chartArea: { width: '75%', height: '75%' },
         backgroundColor: '#303030',
         hAxis: {
-          title: 'Time',
           format: 'dd/MM/yy',
           textStyle: {
             color: '#fff',
@@ -38,12 +37,7 @@ const ProgressChart = ({
             color: '#fff',
           },
         },
-        legend: {
-          textStyle: {
-            color: '#fff',
-          },
-          position: 'bottom',
-        },
+        legend: 'none',
       }}
     />
   );
