@@ -40,7 +40,7 @@ const WorkoutList = ({ workouts }) => {
               <Grid container>
                 <Grid item xs={10}>
                   <Typography gutterBottom variant="h4" component="h4">
-                    Workout Name
+                    {workout.name}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -87,6 +87,7 @@ const WorkoutList = ({ workouts }) => {
 
 WorkoutList.propTypes = {
   workouts: propTypes.arrayOf(propTypes.exact({
+    name: propTypes.string.isRequired,
     date: propTypes.string.isRequired,
     id: propTypes.string.isRequired,
     sets: propTypes.arrayOf(propTypes.exact({

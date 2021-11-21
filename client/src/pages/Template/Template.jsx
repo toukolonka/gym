@@ -20,6 +20,7 @@ import templateService from '../../services/templateService';
 import exerciseService from '../../services/exerciseService';
 import Loading from '../../components/Loading/Loading';
 import SetList from '../../components/Sets/SetList';
+import TemplateHeader from '../../components/Template/TemplateHeader';
 
 const Template = () => {
   const [templates, setTemplates] = useState(null);
@@ -171,6 +172,13 @@ const Template = () => {
     });
   };
 
+  const handleUpdateName = (name) => {
+    setTemplate({
+      ...template,
+      name,
+    });
+  };
+
   if (loadingW || loadingE) {
     return (
       <Loading />
@@ -198,9 +206,7 @@ const Template = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h3" variant="h3">
-          {templateText}
-        </Typography>
+        <TemplateHeader name={template.name} handleUpdateName={handleUpdateName} />
         <Typography component="p" variant="p">
           {new Date(template.date).toLocaleDateString(undefined, {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
