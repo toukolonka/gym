@@ -47,8 +47,6 @@ const Home = () => {
       const exerciseSets = Object.values(workout.sets)
         .filter((set) => set.exercise.id === selectedExercise.id && set.completed);
 
-      console.log(exerciseSets);
-
       // If there are sets of selected exercise in workout
       if (exerciseSets.length > 0) {
         // Extract best rms from sets
