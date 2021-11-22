@@ -100,8 +100,11 @@ wokoutsRouter.post('/template/:id', async (request, response, next) => {
       uuid: uuidv4(),
     }));
 
+    const date = new Date();
+
     const workout = new Workout({
-      date: new Date(),
+      name: `${template.name} ${date.toLocaleDateString(undefined, { weekday: 'short' })} ${date.toLocaleDateString()}`,
+      date,
       template: false,
       user: user._id,
       sets,

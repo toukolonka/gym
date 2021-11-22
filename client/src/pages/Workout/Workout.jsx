@@ -220,7 +220,7 @@ const Workout = () => {
           alignItems: 'center',
         }}
       >
-        <WorkoutHeader name={workout.name} handleUpdateName={handleUpdateName} />
+        <WorkoutHeader name={workout.name} label="Workout name" handleUpdateName={handleUpdateName} />
         <Typography component="p" variant="p">
           {new Date(workout.date).toLocaleDateString(undefined, {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',

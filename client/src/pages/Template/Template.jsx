@@ -20,7 +20,7 @@ import templateService from '../../services/templateService';
 import exerciseService from '../../services/exerciseService';
 import Loading from '../../components/Loading/Loading';
 import SetList from '../../components/Sets/SetList';
-import TemplateHeader from '../../components/Template/TemplateHeader';
+import WorkoutHeader from '../../components/Workout/WorkoutHeader';
 
 const Template = () => {
   const [templates, setTemplates] = useState(null);
@@ -206,7 +206,7 @@ const Template = () => {
           alignItems: 'center',
         }}
       >
-        <TemplateHeader name={template.name} handleUpdateName={handleUpdateName} />
+        <WorkoutHeader name={template.name} label="Template name" handleUpdateName={handleUpdateName} />
         <Typography component="p" variant="p">
           {new Date(template.date).toLocaleDateString(undefined, {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',

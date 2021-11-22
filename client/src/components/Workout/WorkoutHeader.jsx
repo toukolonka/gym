@@ -1,9 +1,11 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 
-const WorkoutHeader = ({ name, handleUpdateName }) => {
+const WorkoutHeader = ({ name, label, handleUpdateName }) => {
   const [workoutName, setWorkoutName] = useState(name);
+  const [isNameFocused, setIsNameFocused] = useState(false);
 
   useEffect(() => {
     const timeOutId = setTimeout(() => handleUpdateName(
@@ -12,19 +14,54 @@ const WorkoutHeader = ({ name, handleUpdateName }) => {
     return () => clearTimeout(timeOutId);
   }, [workoutName]);
 
-  return (
+  const placeholder = (
     <TextField
-      label="Workout name"
+      variant="standard"
+      inputProps={{ style: { fontSize: 30, textAlign: 'center' }, inputMode: 'text' }} // font size of input text
       value={workoutName}
-      inputProps={{ style: { fontSize: 25 }, inputMode: 'text' }} // font size of input text
-      InputLabelProps={{ style: { fontSize: 25 } }} // font size of input label
-      onChange={(event) => setWorkoutName(event.target.value)}
+      placeholder={label}
+      onClick={() => setIsNameFocused(true)}
+      onKeyPress={(event) => { if (event.key === 'Enter') setIsNameFocused(false); }}
     />
+  );
+
+  const input = (
+    <TextField
+      autoFocus
+      variant="standard"
+      inputProps={{ style: { fontSize: 30, textAlign: 'center' }, inputMode: 'text' }} // font size of input text
+      value={workoutName}
+      onChange={(event) => setWorkoutName(event.target.value)}
+      onKeyPress={(event) => { if (event.key === 'Enter') setIsNameFocused(false); }}
+      onBlur={() => setIsNameFocused(false)}
+    />
+  );
+
+  const header = (
+    <Typography
+      fontSize={30}
+      text-align="center"
+      onClick={() => setIsNameFocused(true)}
+    >
+      {workoutName}
+    </Typography>
+  );
+
+  return (
+    <div>
+      {(!isNameFocused && workoutName.trim() === '') ? (
+        placeholder
+      ) : (
+        (!isNameFocused) ? header : (
+          input
+        ))}
+    </div>
   );
 };
 
 WorkoutHeader.propTypes = {
   name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   handleUpdateName: PropTypes.func.isRequired,
 };
 
