@@ -3,14 +3,13 @@ import {
   Box,
   Typography,
   Container,
-  Autocomplete,
-  TextField,
   Button,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
+  Modal,
 } from '@mui/material';
 import { useParams, useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -22,12 +21,12 @@ import templateService from '../../services/templateService';
 import Loading from '../../components/Loading/Loading';
 import SetList from '../../components/Sets/SetList';
 import WorkoutHeader from '../../components/Workout/WorkoutHeader';
+import ExerciseOptions from '../../components/ExerciseOptions/ExerciseOptions';
 
 const Workout = () => {
   const [workouts, setWorkouts] = useState(null);
   const [workout, setWorkout] = useState(null);
   const [exerciseOptions, setExerciseOptions] = useState(null);
-  const [selectedExercise, setSelectedExercise] = useState(null);
   const [initiationFinished, setInitiationFinished] = useState(false);
   const [templateDialogOpen, setTemplateDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -37,6 +36,29 @@ const Workout = () => {
   const history = useHistory();
   const workoutRef = useRef();
   const { enqueueSnackbar } = useSnackbar();
+
+  const [exerciseModalOpen, setExerciseModalOpen] = useState(false);
+
+  const [searchText, setSearchText] = useState('');
+  const [searchCategory, setSearchCategory] = useState('All');
+
+  const handleSearchTextChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const handleSearchCategoryChange = (event) => {
+    setSearchCategory(event.target.value);
+  };
+
+  const handleOpenExerciseModal = () => {
+    setExerciseModalOpen(true);
+  };
+
+  const handleCloseExerciseModal = () => {
+    setExerciseModalOpen(false);
+    setSearchText('');
+    setSearchCategory('All');
+  };
 
   useEffect(() => {
     workoutService
@@ -208,6 +230,14 @@ const Workout = () => {
     );
   }
 
+  const exerciseOptionsAfterSearch = exerciseOptions.filter(
+    (exercise) => exercise.name.toLowerCase().includes(searchText.toLowerCase()),
+  );
+
+  const filteredExerciseOptions = exerciseOptionsAfterSearch.filter(
+    (exercise) => searchCategory === 'All' || exercise.category === searchCategory,
+  );
+
   const workoutText = 'Workout';
 
   const exercises = Array.from(new Set(workout.sets.map((set) => set.exercise.id)))
@@ -278,23 +308,35 @@ const Workout = () => {
           isTemplate={workout.template}
         />
       ))}
-      <Autocomplete
-        blurOnSelect
-        disablePortal
-        value={selectedExercise}
-        options={exerciseOptions}
-        getOptionLabel={(option) => option.name}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params) => <TextField {...params} label="New Exercise" />}
-        sx={{ mt: 3 }}
-        onChange={(_, exercise) => {
-          setSelectedExercise(exercise);
-          if (exercise !== null) {
-            handleAddSet(exercise);
-            setSelectedExercise(null);
-          }
+      <Button sx={{ mt: 3 }} fullWidth variant="contained" onClick={handleOpenExerciseModal}>Add an exercise</Button>
+      <Modal
+        open={exerciseModalOpen}
+        onClose={handleCloseExerciseModal}
+      >
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          maxWidth: 400,
+          width: '80%',
+          height: '70%',
+          overflow: 'auto',
+          bgcolor: 'background.paper',
+          outline: 'none',
         }}
-      />
+        >
+          <ExerciseOptions
+            exercises={filteredExerciseOptions}
+            searchText={searchText}
+            searchCategory={searchCategory}
+            handleSearchTextChange={handleSearchTextChange}
+            handleSearchCategoryChange={handleSearchCategoryChange}
+            handleAddSet={handleAddSet}
+            handleCloseExerciseModal={handleCloseExerciseModal}
+          />
+        </Box>
+      </Modal>
       <Button
         fullWidth
         variant="contained"

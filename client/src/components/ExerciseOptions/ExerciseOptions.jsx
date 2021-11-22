@@ -1,24 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Paper, Typography, TextField, InputAdornment, ToggleButtonGroup, ToggleButton,
+  Button, Box, Typography, TextField, InputAdornment, ToggleButtonGroup, ToggleButton,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 
-const ExerciseList = ({
+const ExerciseOptions = ({
   exercises,
   handleSearchTextChange,
   searchText,
   handleSearchCategoryChange,
   searchCategory,
+  handleAddSet,
+  handleCloseExerciseModal,
 }) => (
-  <Paper sx={{
-    padding: 1,
-  }}
-  >
+  <Box sx={{ margin: 2 }}>
     <TextField
-      sx={{ mt: 3, mb: 2 }}
+      sx={{ mb: 1 }}
       fullWidth
       name="search"
       label="Search"
@@ -39,10 +37,10 @@ const ExerciseList = ({
       color="primary"
       exclusive
       margin="normal"
-      onChange={handleSearchCategoryChange}
-      value={searchCategory}
       fullWidth
       sx={{ mt: 1, mb: 1 }}
+      onChange={handleSearchCategoryChange}
+      value={searchCategory}
     >
       <ToggleButton value="All">All</ToggleButton>
       <ToggleButton value="Upper">Upper</ToggleButton>
@@ -62,17 +60,19 @@ const ExerciseList = ({
             sx={{ mb: 1, mt: 1 }}
             size="large"
             fullWidth
-            component={Link}
-            to={`exercises/${exercise.id}`}
+            onClick={() => {
+              handleAddSet(exercise);
+              handleCloseExerciseModal();
+            }}
           >
             {exercise.name}
           </Button>
         </div>
       ))}
-  </Paper>
+  </Box>
 );
 
-ExerciseList.propTypes = {
+ExerciseOptions.propTypes = {
   exercises: PropTypes.arrayOf(PropTypes.exact({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -84,6 +84,8 @@ ExerciseList.propTypes = {
   searchText: PropTypes.string.isRequired,
   handleSearchCategoryChange: PropTypes.func.isRequired,
   searchCategory: PropTypes.string.isRequired,
+  handleAddSet: PropTypes.func.isRequired,
+  handleCloseExerciseModal: PropTypes.func.isRequired,
 };
 
-export default ExerciseList;
+export default ExerciseOptions;
