@@ -26,73 +26,79 @@ const TemplateList = ({ templates, handleCreateWorkout }) => {
   };
 
   return (
-    templates.map((template) => (
-      <div key={template.id}>
-        <Card sx={{
-          height: '100%',
-          marginTop: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          border: 2,
-          borderColor: 'primary.dark',
-        }}
-        >
-          <CardActionArea onClick={() => history.push(`templates/${template.id}`)}>
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Grid container>
-                <Grid item xs={10}>
-                  <Typography gutterBottom variant="h4" component="h4">
-                    {template.name.trim() !== '' ? template.name : 'Template'}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="subtitle1">
-                    {new Date(template.date).toLocaleDateString(undefined, {
-                      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-                    })}
-                  </Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography variant="h6">
-                    Exercise
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="h6">
-                    Sets
-                  </Typography>
-                </Grid>
-              </Grid>
-              {extractExercises(template.sets).map((exercise) => (
-                <div key={exercise.name}>
-                  <Grid container>
-                    <Grid item xs={8}>
-                      <Typography variant="body1">
-                        {exercise.name}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography variant="body1">
-                        {exercise.setCount}
-                      </Typography>
-                    </Grid>
+    templates.length === 0
+      ? (
+        <Typography component="h6" variant="h6" align="center">
+          No templates found
+        </Typography>
+      )
+      : templates.map((template) => (
+        <div key={template.id}>
+          <Card sx={{
+            height: '100%',
+            marginTop: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            border: 2,
+            borderColor: 'primary.dark',
+          }}
+          >
+            <CardActionArea onClick={() => history.push(`templates/${template.id}`)}>
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Grid container>
+                  <Grid item xs={10}>
+                    <Typography gutterBottom variant="h4" component="h4">
+                      {template.name.trim() !== '' ? template.name : 'Template'}
+                    </Typography>
                   </Grid>
-                </div>
-              ))}
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button
-              fullWidth
-              variant="contained"
-              onClick={() => handleCreateWorkout(template.id)}
-            >
-              Start workout
-            </Button>
-          </CardActions>
-        </Card>
-      </div>
-    ))
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle1">
+                      {new Date(template.date).toLocaleDateString(undefined, {
+                        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                      })}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Typography variant="h6">
+                      Exercise
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="h6">
+                      Sets
+                    </Typography>
+                  </Grid>
+                </Grid>
+                {extractExercises(template.sets).map((exercise) => (
+                  <div key={exercise.name}>
+                    <Grid container>
+                      <Grid item xs={8}>
+                        <Typography variant="body1">
+                          {exercise.name}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body1">
+                          {exercise.setCount}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </div>
+                ))}
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <Button
+                fullWidth
+                variant="contained"
+                onClick={() => handleCreateWorkout(template.id)}
+              >
+                Start workout
+              </Button>
+            </CardActions>
+          </Card>
+        </div>
+      ))
   );
 };
 
@@ -110,7 +116,7 @@ TemplateList.propTypes = {
     })).isRequired,
     template: propTypes.bool.isRequired,
     user: propTypes.string.isRequired,
-  })),
+  })).isRequired,
   handleCreateWorkout: propTypes.func.isRequired,
 };
 

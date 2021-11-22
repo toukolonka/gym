@@ -24,64 +24,70 @@ const WorkoutList = ({ workouts }) => {
   };
 
   return (
-    workouts.map((workout) => (
-      <div key={workout.id}>
-        <Card sx={{
-          height: '100%',
-          marginTop: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          border: 2,
-          borderColor: 'primary.dark',
-        }}
-        >
-          <CardActionArea onClick={() => history.push(`../workouts/${workout.id}`)}>
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Grid container>
-                <Grid item xs={10}>
-                  <Typography gutterBottom variant="h4" component="h4">
-                    {workout.name.trim() !== '' ? workout.name : 'Workout'}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="subtitle1">
-                    {new Date(workout.date).toLocaleDateString(undefined, {
-                      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-                    })}
-                  </Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography variant="h6">
-                    Exercise
-                  </Typography>
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="h6">
-                    Sets
-                  </Typography>
-                </Grid>
-              </Grid>
-              {extractExercises(workout.sets).map((exercise) => (
-                <div key={exercise.name}>
-                  <Grid container>
-                    <Grid item xs={8}>
-                      <Typography variant="body1">
-                        {exercise.name}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Typography variant="body1">
-                        {exercise.setCount}
-                      </Typography>
-                    </Grid>
+    workouts.length === 0
+      ? (
+        <Typography component="h6" variant="h6" align="center">
+          No workouts found
+        </Typography>
+      )
+      : workouts.map((workout) => (
+        <div key={workout.id}>
+          <Card sx={{
+            height: '100%',
+            marginTop: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            border: 2,
+            borderColor: 'primary.dark',
+          }}
+          >
+            <CardActionArea onClick={() => history.push(`../workouts/${workout.id}`)}>
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Grid container>
+                  <Grid item xs={10}>
+                    <Typography gutterBottom variant="h4" component="h4">
+                      {workout.name.trim() !== '' ? workout.name : 'Workout'}
+                    </Typography>
                   </Grid>
-                </div>
-              ))}
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </div>
-    ))
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle1">
+                      {new Date(workout.date).toLocaleDateString(undefined, {
+                        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                      })}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Typography variant="h6">
+                      Exercise
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="h6">
+                      Sets
+                    </Typography>
+                  </Grid>
+                </Grid>
+                {extractExercises(workout.sets).map((exercise) => (
+                  <div key={exercise.name}>
+                    <Grid container>
+                      <Grid item xs={8}>
+                        <Typography variant="body1">
+                          {exercise.name}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Typography variant="body1">
+                          {exercise.setCount}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </div>
+                ))}
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </div>
+      ))
   );
 };
 
@@ -99,7 +105,7 @@ WorkoutList.propTypes = {
     })).isRequired,
     template: propTypes.bool.isRequired,
     user: propTypes.string.isRequired,
-  })),
+  })).isRequired,
 };
 
 export default WorkoutList;
