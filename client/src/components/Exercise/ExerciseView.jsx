@@ -20,6 +20,7 @@ const ExerciseView = ({
   handleDelete,
   handleOpenDialog,
   handleCancel,
+  user,
 }) => (
   <Container maxWidth="xs">
     <Box
@@ -30,7 +31,7 @@ const ExerciseView = ({
         alignItems: 'center',
       }}
     >
-      <Typography component="h4" variant="h4">
+      <Typography component="h4" variant="h4" style={{ wordWrap: 'break-word' }}>
         {exerciseDetails.exercise.name}
       </Typography>
     </Box>
@@ -63,15 +64,18 @@ const ExerciseView = ({
       </Typography>
       )}
     </Box>
-    <Button
-      fullWidth
-      variant="contained"
-      sx={{ mt: 3 }}
-      color="error"
-      onClick={handleOpenDialog}
-    >
-      Delete exercise
-    </Button>
+    {user.id === exerciseDetails.exercise.user
+      && (
+      <Button
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3 }}
+        color="error"
+        onClick={handleOpenDialog}
+      >
+        Delete exercise
+      </Button>
+      )}
     <Dialog
       open={open}
       onClose={handleCancel}
@@ -96,6 +100,18 @@ const ExerciseView = ({
         </Button>
       </DialogActions>
     </Dialog>
+    <Box
+      sx={{
+        marginTop: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Typography component="h5" variant="h5" style={{ wordWrap: 'break-word' }}>
+        Workouts
+      </Typography>
+    </Box>
     <WorkoutList workouts={exerciseDetails.workouts} />
   </Container>
 );
@@ -124,6 +140,11 @@ ExerciseView.propTypes = {
       user: PropTypes.string.isRequired,
     })),
     maximum: PropTypes.number,
+  }).isRequired,
+  user: PropTypes.exact({
+    username: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    iat: PropTypes.number.isRequired,
   }).isRequired,
   open: PropTypes.bool.isRequired,
   handleDelete: PropTypes.func.isRequired,

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import ExerciseView from '../../components/Exercise/ExerciseView';
 import exerciseService from '../../services/exerciseService';
 import Loading from '../../components/Loading/Loading';
+import { AuthContext } from '../../context/auth';
 
 const Exercise = () => {
   const [exerciseDetails, setExerciseDetails] = useState(null);
@@ -13,6 +14,7 @@ const Exercise = () => {
   const { id } = useParams();
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     exerciseService
@@ -59,6 +61,7 @@ const Exercise = () => {
       handleDelete={handleDelete}
       handleOpenDialog={handleOpenDialog}
       handleCancel={handleCancel}
+      user={user}
     />
   );
 };
