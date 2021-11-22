@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import workoutService from '../../services/workoutService';
 import exerciseService from '../../services/exerciseService';
 import LineChart from '../../components/Home/LineChart';
+import WorkoutCountTable from '../../components/Home/WorkoutCountTable';
 
 const Home = () => {
   const history = useHistory();
@@ -14,6 +15,8 @@ const Home = () => {
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [exerciseData, setExerciseData] = useState([]);
   const [workoutSetCounts, setWorkoutSetCounts] = useState([]);
+  const [totalWorkoutCount, setTotalWorkoutCount] = useState(0);
+  const [monthlyWorkoutCount, setMontlyWorkoutCount] = useState(0);
 
   useEffect(async () => {
     const exercises = await exerciseService.getAll();
@@ -25,15 +28,31 @@ const Home = () => {
     // Initialize array with the dataset names
     const tempArray = [['Date', 'Sets per workout']];
 
+    // Initialize totals
+    let tempTotalCount = 0;
+    let tempMonthlyCount = 0;
+
+    const currentDate = new Date();
+
     // Get completed sets from workout and add to temparray
     await Object.values(workouts).forEach((workout) => {
       const workoutDate = new Date(workout.date);
       const setCount = Object.values(workout.sets)
         .filter((set) => set.completed)
         .length;
+      // If setcount more than 0, add to temparray
       if (setCount) tempArray.push([workoutDate, setCount]);
+      // Increase totals
+      tempTotalCount += 1;
+
+      if (workoutDate.getMonth() === currentDate.getMonth()
+          && workoutDate.getFullYear() === currentDate.getFullYear()) {
+        tempMonthlyCount += 1;
+      }
     });
     setWorkoutSetCounts(tempArray);
+    setTotalWorkoutCount(tempTotalCount);
+    setMontlyWorkoutCount(tempMonthlyCount);
   }, []);
 
   const handleStartWorkout = (event) => {
@@ -114,6 +133,10 @@ const Home = () => {
         <Typography component="h4" variant="h4">
           Workout Statistics
         </Typography>
+        <WorkoutCountTable
+          totalWorkoutCount={totalWorkoutCount}
+          monthlyWorkoutCount={monthlyWorkoutCount}
+        />
         <LineChart data={workoutSetCounts} title="Sets completed per workout" />
         <Typography component="h4" variant="h4">
           Exercise Statistics
