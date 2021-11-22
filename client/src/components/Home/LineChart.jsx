@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-google-charts';
 
-const ProgressChart = ({
+const LineChart = ({
   data,
+  title,
 }) => {
   if (data.length < 3) return <p>No data to display</p>;
   return (
@@ -13,7 +14,7 @@ const ProgressChart = ({
       loader={<div>Loading Chart</div>}
       data={data}
       options={{
-        title: '1RM Progress (Calculated One Rep Max Kg)',
+        title,
         colors: ['#00bcd4'],
         chartArea: { width: '75%', height: '75%' },
         backgroundColor: '#303030',
@@ -43,8 +44,9 @@ const ProgressChart = ({
   );
 };
 
-ProgressChart.propTypes = {
+LineChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.array).isRequired,
+  title: PropTypes.string.isRequired,
 };
 
-export default ProgressChart;
+export default LineChart;

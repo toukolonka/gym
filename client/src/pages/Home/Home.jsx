@@ -6,17 +6,34 @@ import { useHistory } from 'react-router-dom';
 
 import workoutService from '../../services/workoutService';
 import exerciseService from '../../services/exerciseService';
-import ProgressChart from '../../components/Home/ProgressChart';
+import LineChart from '../../components/Home/LineChart';
 
 const Home = () => {
   const history = useHistory();
   const [exerciseOptions, setExerciseOptions] = useState([]);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [exerciseData, setExerciseData] = useState([]);
+  const [workoutSetCounts, setWorkoutSetCounts] = useState([]);
 
   useEffect(async () => {
     const exercises = await exerciseService.getAll();
     setExerciseOptions(exercises);
+
+    // Fetch all workouts
+    const workouts = await workoutService.getAll();
+
+    // Initialize array with the dataset names
+    const tempArray = [['Date', 'Sets per workout']];
+
+    // Get completed sets from workout and add to temparray
+    await Object.values(workouts).forEach((workout) => {
+      const workoutDate = new Date(workout.date);
+      const setCount = Object.values(workout.sets)
+        .filter((set) => set.completed)
+        .length;
+      if (setCount) tempArray.push([workoutDate, setCount]);
+    });
+    setWorkoutSetCounts(tempArray);
   }, []);
 
   const handleStartWorkout = (event) => {
@@ -37,7 +54,7 @@ const Home = () => {
       return;
     }
 
-    const draftData = [[selectedExercise.name, '1RM']];
+    const draftData = [['Date', selectedExercise.name]];
 
     // If there are workouts
     await Object.values(workouts).forEach((workout) => {
@@ -94,8 +111,12 @@ const Home = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h3" variant="h3">
-          Statistics
+        <Typography component="h4" variant="h4">
+          Workout Statistics
+        </Typography>
+        <LineChart data={workoutSetCounts} title="Sets completed per workout" />
+        <Typography component="h4" variant="h4">
+          Exercise Statistics
         </Typography>
         <Autocomplete
           disablePortal
@@ -112,7 +133,7 @@ const Home = () => {
             }
           }}
         />
-        <ProgressChart data={exerciseData} />
+        <LineChart data={exerciseData} title="1RM Progress (Calculated One Rep Max Kg)" />
       </Box>
 
     </Container>
