@@ -32,6 +32,10 @@ wokoutsRouter.get('/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
 
+    if (!request.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Errors.ResourceNotFoundError(`Workout with id ${request.params.id} not found`);
+    }
+
     const workout = await Workout
       .findById(request.params.id)
       .populate({
@@ -85,6 +89,10 @@ wokoutsRouter.post('/', async (request, response, next) => {
 wokoutsRouter.post('/template/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
+
+    if (!request.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Errors.ResourceNotFoundError(`Template with id ${request.params.id} not found`);
+    }
 
     const template = await Workout.findById(request.params.id);
 
@@ -155,6 +163,11 @@ wokoutsRouter.put('/:id', async (request, response, next) => {
 wokoutsRouter.delete('/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
+
+    if (!request.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Errors.ResourceNotFoundError(`Template with id ${request.params.id} not found`);
+    }
+
     const workout = await Workout.findById(request.params.id);
 
     if (workout === null) {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 import ExerciseView from '../../components/Exercise/ExerciseView';
 import exerciseService from '../../services/exerciseService';
@@ -11,6 +12,7 @@ const Exercise = () => {
   const [open, setOpen] = useState(false);
   const { id } = useParams();
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     exerciseService
@@ -18,13 +20,17 @@ const Exercise = () => {
       .then((data) => {
         setExerciseDetails(data);
         setLoading(false);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, []);
 
   const handleDelete = () => {
     exerciseService
       .remove(id)
       .then(() => {
+        enqueueSnackbar('Exercise deleted successfully', { variant: 'success' });
         history.push('/exercises');
       })
       .catch(() => {

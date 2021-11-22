@@ -1,20 +1,19 @@
 import React, { useState, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+
 import registrationService from '../../services/registrationService';
 import loginService from '../../services/loginService';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import { AuthContext } from '../../context/auth';
 
-const SignUp = ({
-  setErrorMessage,
-  setInfoMessage,
-}) => {
+const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const context = useContext(AuthContext);
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -33,17 +32,22 @@ const SignUp = ({
 
     // Validation
     if (!username || !password || !email) {
-      setErrorMessage('All fields are required');
+      enqueueSnackbar('All fields are required', { variant: 'error' });
+      return;
+    }
+    // Validation
+    if (!email.includes('@')) {
+      enqueueSnackbar('Please provide a valid email', { variant: 'error' });
       return;
     }
     // Validation
     if (username.length < 5) {
-      setErrorMessage('Username provided should be at least 5 characters long');
+      enqueueSnackbar('Username should contain at least 5 characters', { variant: 'error' });
       return;
     }
     // Validation
     if (password.length < 5) {
-      setErrorMessage('Password provided should be at least 5 characters long');
+      enqueueSnackbar('Password should contain at least 5 characters', { variant: 'error' });
       return;
     }
 
@@ -56,17 +60,18 @@ const SignUp = ({
 
     if (userdata) {
       // If registration was successful, login
-      setInfoMessage('Registration successful');
+      enqueueSnackbar('Registration successful', { variant: 'success' });
       const logindata = await loginService.login({
         username,
         password,
       });
       if (logindata) {
         context.login(logindata);
+        enqueueSnackbar('Login Successful', { variant: 'success' });
         history.push('/');
       }
     } else {
-      setErrorMessage('Username or password already in use');
+      enqueueSnackbar('Username or password already in use', { variant: 'error' });
     }
   };
 
@@ -83,11 +88,6 @@ const SignUp = ({
       />
     </>
   );
-};
-
-SignUp.propTypes = {
-  setErrorMessage: PropTypes.func.isRequired,
-  setInfoMessage: PropTypes.func.isRequired,
 };
 
 export default SignUp;

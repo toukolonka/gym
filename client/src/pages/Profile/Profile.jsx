@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import {
   Box, Typography, Container, Button,
 } from '@mui/material';
@@ -7,10 +6,7 @@ import UpdateAccountForm from '../../components/Profile/UpdateAccountForm';
 import registrationService from '../../services/registrationService';
 import { AuthContext } from '../../context/auth';
 
-const Profile = ({
-  setErrorMessage,
-  setInfoMessage,
-}) => {
+const Profile = () => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [updateButtonDisabled, setUpdateButtonDisabled] = useState(true);
@@ -39,7 +35,7 @@ const Profile = ({
 
     // Check that the input matches requirements
     if (newPassword && newPassword.length < 5) {
-      setErrorMessage('Password provided should be at least 5 characters long');
+      // setErrorMessage('Password provided should be at least 5 characters long');
       return;
     }
     const updatedUser = await registrationService.update({
@@ -47,9 +43,9 @@ const Profile = ({
       newPassword,
     });
     if (updatedUser) {
-      setInfoMessage('Account information updated successfully');
+      // setInfoMessage('Account information updated successfully');
     } else {
-      setErrorMessage('Account information update failed');
+      // setErrorMessage('Account information update failed');
     }
   };
 
@@ -89,11 +85,6 @@ const Profile = ({
       </Button>
     </Container>
   );
-};
-
-Profile.propTypes = {
-  setErrorMessage: PropTypes.func.isRequired,
-  setInfoMessage: PropTypes.func.isRequired,
 };
 
 export default Profile;

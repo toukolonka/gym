@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
   Box, Typography, Button, Container,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
 import exerciseService from '../../services/exerciseService';
 import ExerciseList from '../../components/Exercise/ExerciseList';
 import ExerciseForm from '../../components/Exercise/ExerciseForm';
@@ -16,6 +18,7 @@ const Exercises = () => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [searchCategory, setSearchCategory] = useState('All');
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     exerciseService
@@ -35,9 +38,11 @@ const Exercises = () => {
         category: newExerciseCategory,
       })
       .then((returnedExercises) => {
+        enqueueSnackbar(`Exercise ${newExerciseName} created`, { variant: 'success' });
         setExercises(returnedExercises);
         setNewExerciseName('');
         setNewExerciseDescription('');
+        setShowForm(false);
       });
   };
 

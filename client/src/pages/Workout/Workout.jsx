@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { useParams, useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { useSnackbar } from 'notistack';
 
 import workoutService from '../../services/workoutService';
 import exerciseService from '../../services/exerciseService';
@@ -35,6 +36,7 @@ const Workout = () => {
   const { id } = useParams();
   const history = useHistory();
   const workoutRef = useRef();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     workoutService
@@ -51,7 +53,10 @@ const Workout = () => {
         setWorkout(data);
         setLoadingW(false);
         setInitiationFinished(true);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, []);
 
   useEffect(() => () => {
@@ -78,6 +83,7 @@ const Workout = () => {
     workoutService
       .update(id, workout)
       .then(() => {
+        enqueueSnackbar('Workout saved', { variant: 'success' });
         history.push('/workouts');
       });
   };
@@ -183,7 +189,10 @@ const Workout = () => {
 
   const handleCreateTemplate = () => {
     templateService.createFromWorkout(id)
-      .then(() => handleFinishAndSave());
+      .then(() => {
+        enqueueSnackbar('Template created', { variant: 'success' });
+        handleFinishAndSave();
+      });
   };
 
   const handleUpdateName = (name) => {

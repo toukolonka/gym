@@ -31,6 +31,10 @@ templatesRouter.get('/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
 
+    if (!request.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Errors.ResourceNotFoundError(`Template with id ${request.params.id} not found`);
+    }
+
     const template = await Workout
       .findById(request.params.id)
       .populate({
@@ -84,6 +88,10 @@ templatesRouter.post('/workout/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
 
+    if (!request.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Errors.ResourceNotFoundError(`Workout with id ${request.params.id} not found`);
+    }
+
     const workout = await Workout.findById(request.params.id);
 
     if (workout === null) {
@@ -119,6 +127,11 @@ templatesRouter.post('/workout/:id', async (request, response, next) => {
 templatesRouter.delete('/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
+
+    if (!request.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Errors.ResourceNotFoundError(`Template with id ${request.params.id} not found`);
+    }
+
     const template = await Workout.findById(request.params.id);
 
     if (template === null) {

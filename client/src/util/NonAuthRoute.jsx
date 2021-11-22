@@ -7,17 +7,14 @@ import { AuthContext } from '../context/auth';
 
 function NonAuthRoute({
   component: Component,
-  path: Path,
-  exact: Exact,
   ...rest
 }) {
   const { user } = useContext(AuthContext);
 
   return (
     <Route
-      exact={Exact}
-      path={Path}
-      render={() => (user ? <Redirect to="/" /> : <Component {...rest} />)}
+      {...rest}
+      render={(props) => (user ? <Redirect to="/" /> : <Component {...props} />)}
     />
   );
 }

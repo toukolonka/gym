@@ -1,18 +1,17 @@
 import React, { useState, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+
 import SignInForm from '../../components/SignInForm/SignInForm';
 import loginService from '../../services/loginService';
 import { AuthContext } from '../../context/auth';
 
-const SignIn = ({
-  setErrorMessage,
-  setInfoMessage,
-}) => {
+const SignIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const context = useContext(AuthContext);
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -30,12 +29,12 @@ const SignIn = ({
     });
     // If login with backend was succesfully completed
     if (userData) {
-      setInfoMessage('Login Successful');
       context.login(userData);
+      enqueueSnackbar('Login Successful', { variant: 'success' });
       history.push('/');
     } else {
       setPassword('');
-      setErrorMessage('Username or password incorrect');
+      enqueueSnackbar('Username or password incorrect', { variant: 'error' });
     }
   };
 
@@ -50,11 +49,6 @@ const SignIn = ({
       />
     </>
   );
-};
-
-SignIn.propTypes = {
-  setErrorMessage: PropTypes.func.isRequired,
-  setInfoMessage: PropTypes.func.isRequired,
 };
 
 export default SignIn;

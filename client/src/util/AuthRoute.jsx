@@ -7,17 +7,14 @@ import { AuthContext } from '../context/auth';
 
 function AuthRoute({
   component: Component,
-  path: Path,
-  exact: Exact,
   ...rest
 }) {
   const { user } = useContext(AuthContext);
 
   return (
     <Route
-      exact={Exact}
-      path={Path}
-      render={() => (user ? <Component {...rest} /> : <Redirect to="/sign-in" />)}
+      {...rest}
+      render={(props) => (user ? <Component {...props} /> : <Redirect to="/sign-in" />)}
     />
   );
 }

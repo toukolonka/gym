@@ -22,6 +22,10 @@ exercisesRouter.get('/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
 
+    if (!request.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Errors.ResourceNotFoundError(`Exercise with id ${request.params.id} not found`);
+    }
+
     const exercise = await Exercise.findById(request.params.id);
 
     if (exercise === null) {
@@ -95,6 +99,10 @@ exercisesRouter.post('/', async (request, response, next) => {
 exercisesRouter.delete('/:id', async (request, response, next) => {
   try {
     const user = await authorizeUser(request);
+
+    if (!request.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new Errors.ResourceNotFoundError(`Exercise with id ${request.params.id} not found`);
+    }
 
     const exerciseToBeDeleted = await Exercise.findById(request.params.id);
 
