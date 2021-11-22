@@ -236,7 +236,7 @@ const initTestData = async () => {
 
   const workout1 = new Workout({
     name: 'Chest day',
-    date: new Date('2021-11-01'),
+    date: new Date('2021-10-30'),
     template: false,
     user: savedUser._id,
     sets: [
