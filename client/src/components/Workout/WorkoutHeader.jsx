@@ -6,12 +6,16 @@ import { TextField, Typography } from '@mui/material';
 const WorkoutHeader = ({ name, label, handleUpdateName }) => {
   const [workoutName, setWorkoutName] = useState(name);
   const [isNameFocused, setIsNameFocused] = useState(false);
+  const [initiationFinished, setInitiationFinished] = useState(false);
 
   useEffect(() => {
-    const timeOutId = setTimeout(() => handleUpdateName(
-      workoutName,
-    ), 1000);
-    return () => clearTimeout(timeOutId);
+    if (initiationFinished) {
+      const timeOutId = setTimeout(() => handleUpdateName(
+        workoutName,
+      ), 1000);
+      return () => clearTimeout(timeOutId);
+    }
+    return setInitiationFinished(true);
   }, [workoutName]);
 
   const placeholder = (

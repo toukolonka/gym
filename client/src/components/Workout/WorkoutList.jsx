@@ -40,7 +40,7 @@ const WorkoutList = ({ workouts }) => {
               <Grid container>
                 <Grid item xs={10}>
                   <Typography gutterBottom variant="h4" component="h4">
-                    {workout.name}
+                    {workout.name.trim() !== '' ? workout.name : 'Workout'}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>

@@ -173,6 +173,7 @@ const Template = () => {
   };
 
   const handleUpdateName = (name) => {
+    console.log('Here');
     setTemplate({
       ...template,
       name,

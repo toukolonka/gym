@@ -42,7 +42,7 @@ const TemplateList = ({ templates, handleCreateWorkout }) => {
               <Grid container>
                 <Grid item xs={10}>
                   <Typography gutterBottom variant="h4" component="h4">
-                    {template.name}
+                    {template.name.trim() !== '' ? template.name : 'Template'}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
