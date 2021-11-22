@@ -110,6 +110,7 @@ ExerciseView.propTypes = {
       user: PropTypes.string,
     }).isRequired,
     workouts: PropTypes.arrayOf(PropTypes.exact({
+      name: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
       sets: PropTypes.arrayOf(PropTypes.exact({
@@ -117,6 +118,7 @@ ExerciseView.propTypes = {
         repetitions: PropTypes.number.isRequired,
         completed: PropTypes.bool.isRequired,
         exercise: PropTypes.object.isRequired,
+        uuid: PropTypes.string.isRequired,
       })).isRequired,
       template: PropTypes.bool.isRequired,
       user: PropTypes.string.isRequired,
