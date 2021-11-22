@@ -15,6 +15,7 @@ const ExerciseList = ({
 }) => (
   <Paper sx={{
     padding: 1,
+    mt: 3,
   }}
   >
     <TextField
