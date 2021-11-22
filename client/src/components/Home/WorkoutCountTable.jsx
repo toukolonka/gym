@@ -10,7 +10,7 @@ const WorkoutCountTable = ({
   totalWorkoutCount,
   monthlyWorkoutCount,
 }) => (
-  <Table>
+  <Table sx={{ marginBottom: '20px' }}>
     <TableHead>
       <TableRow>
         <TableCell />
