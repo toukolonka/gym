@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import {
   Box, Typography, Container, Button,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
 import UpdateAccountForm from '../../components/Profile/UpdateAccountForm';
 import registrationService from '../../services/registrationService';
 import { AuthContext } from '../../context/auth';
@@ -10,6 +12,7 @@ const Profile = () => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [updateButtonDisabled, setUpdateButtonDisabled] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
 
   // When email or newpassword field is changed, check if update-button should be disabled or not
   useEffect(() => {
@@ -35,18 +38,24 @@ const Profile = () => {
 
     // Check that the input matches requirements
     if (newPassword && newPassword.length < 5) {
-      // setErrorMessage('Password provided should be at least 5 characters long');
+      enqueueSnackbar('Password provided should be at least 5 characters long', { variant: 'error' });
       return;
     }
-    const updatedUser = await registrationService.update({
+    if (email && !email.includes('@')) {
+      enqueueSnackbar('Please provide a valid email', { variant: 'error' });
+      return;
+    }
+
+    registrationService.update({
       email,
       newPassword,
-    });
-    if (updatedUser) {
-      // setInfoMessage('Account information updated successfully');
-    } else {
-      // setErrorMessage('Account information update failed');
-    }
+    })
+      .then(() => {
+        enqueueSnackbar('Account information updated successfully', { variant: 'success' });
+        setNewPassword('');
+        setEmail('');
+      })
+      .catch(() => enqueueSnackbar('Account information update failed', { variant: 'error' }));
   };
 
   return (
