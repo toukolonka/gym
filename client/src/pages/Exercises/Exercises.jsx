@@ -26,7 +26,10 @@ const Exercises = () => {
       .then((data) => {
         setExercises(data);
         setLoading(false);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, []);
 
   const handleSubmit = (event) => {
@@ -43,7 +46,10 @@ const Exercises = () => {
         setNewExerciseName('');
         setNewExerciseDescription('');
         setShowForm(false);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   };
 
   const handleNameChange = (event) => {

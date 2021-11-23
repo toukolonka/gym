@@ -35,8 +35,9 @@ const Exercise = () => {
         enqueueSnackbar('Exercise deleted successfully', { variant: 'success' });
         history.push('/exercises');
       })
-      .catch(() => {
+      .catch((error) => {
         setOpen(false);
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
       });
   };
 

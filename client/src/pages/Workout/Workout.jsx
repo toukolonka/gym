@@ -41,7 +41,10 @@ const Workout = () => {
       .getAll()
       .then((data) => {
         setWorkouts(data);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, []);
 
   useEffect(() => {
@@ -67,13 +70,19 @@ const Workout = () => {
       .then((data) => {
         setExerciseOptions(data);
         setLoadingE(false);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, []);
 
   useEffect(() => {
     if (workout && initiationFinished) {
       workoutService
-        .update(id, workout);
+        .update(id, workout)
+        .catch(((error) => {
+          enqueueSnackbar(error.response.data.message, { variant: 'error' });
+        }));
     }
   }, [workout]);
 
@@ -83,7 +92,10 @@ const Workout = () => {
       .then(() => {
         enqueueSnackbar('Workout saved', { variant: 'success' });
         history.push('/workouts');
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   };
 
   const handleDeleteWorkout = () => {
@@ -92,8 +104,9 @@ const Workout = () => {
       .then(() => {
         history.push('/workouts');
       })
-      .catch(() => {
+      .catch((error) => {
         setDeleteDialogOpen(false);
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
       });
   };
 
@@ -190,7 +203,10 @@ const Workout = () => {
       .then(() => {
         enqueueSnackbar('Template created', { variant: 'success' });
         handleFinishAndSave();
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   };
 
   const handleUpdateName = (name) => {

@@ -3,6 +3,7 @@ import {
   Box, Typography, Container, Button,
 } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 import WorkoutList from '../../components/Workout/WorkoutList';
 import workoutService from '../../services/workoutService';
@@ -12,6 +13,7 @@ const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     workoutService
@@ -19,7 +21,10 @@ const Workouts = () => {
       .then((data) => {
         setWorkouts(data);
         setLoading(false);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, []);
 
   const handleStartWorkout = (event) => {
@@ -28,7 +33,10 @@ const Workouts = () => {
       .create()
       .then((createdWorkout) => {
         history.push(`/workouts/${createdWorkout.id}`);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   };
 
   return (

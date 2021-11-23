@@ -6,6 +6,8 @@ import {
   Button,
 } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+
 import TemplateList from '../../components/Template/TemplateList';
 import templateService from '../../services/templateService';
 import workoutService from '../../services/workoutService';
@@ -15,6 +17,7 @@ const Templates = () => {
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     templateService
@@ -22,7 +25,10 @@ const Templates = () => {
       .then((data) => {
         setTemplates(data);
         setLoading(false);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, []);
 
   const handleCreateTemplate = (event) => {
@@ -31,7 +37,10 @@ const Templates = () => {
       .create()
       .then((createdTemplate) => {
         history.push(`/templates/${createdTemplate.id}`);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   };
 
   const handleCreateWorkout = (id) => {
@@ -39,7 +48,10 @@ const Templates = () => {
       .createFromTemplate(id)
       .then((createdWorkout) => {
         history.push(`/workouts/${createdWorkout.id}`);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   };
 
   return (

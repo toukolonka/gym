@@ -40,7 +40,10 @@ const Template = () => {
       .getAll()
       .then((data) => {
         setTemplates(data);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, []);
 
   useEffect(() => {
@@ -66,13 +69,19 @@ const Template = () => {
       .then((data) => {
         setExerciseOptions(data);
         setLoadingE(false);
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, []);
 
   useEffect(() => {
     if (template && initiationFinished) {
       workoutService
-        .update(id, template);
+        .update(id, template)
+        .catch(((error) => {
+          enqueueSnackbar(error.response.data.message, { variant: 'error' });
+        }));
     }
   }, [template]);
 
@@ -82,7 +91,10 @@ const Template = () => {
       .then(() => {
         enqueueSnackbar('Template saved', { variant: 'success' });
         history.push('/templates');
-      });
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   };
 
   const handleDeleteTemplate = () => {
@@ -91,8 +103,9 @@ const Template = () => {
       .then(() => {
         history.push('/templates');
       })
-      .catch(() => {
+      .catch((error) => {
         setOpen(false);
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
       });
   };
 
