@@ -20,6 +20,7 @@ const LineChart = ({
         chartArea: { width: '75%', height: '75%' },
         colors: ['#00bcd4'],
         backgroundColor: '#303030',
+        pointSize: 10,
         hAxis: {
           format: 'dd/MM/yy',
           textStyle: {
