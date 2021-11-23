@@ -68,6 +68,8 @@ const ExerciseOptionsModal = ({
           overflow: 'auto',
           bgcolor: 'background.paper',
           outline: 'none',
+          border: 2,
+          borderColor: 'primary.dark',
         }}
         >
           <Box sx={{ margin: 2 }}>
