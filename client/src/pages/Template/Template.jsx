@@ -3,8 +3,6 @@ import {
   Box,
   Typography,
   Container,
-  Autocomplete,
-  TextField,
   Button,
   Dialog,
   DialogTitle,
@@ -22,12 +20,12 @@ import exerciseService from '../../services/exerciseService';
 import Loading from '../../components/Loading/Loading';
 import SetList from '../../components/Sets/SetList';
 import WorkoutHeader from '../../components/Workout/WorkoutHeader';
+import ExerciseOptionsModal from '../../components/Modals/ExerciseOptionsModal';
 
 const Template = () => {
   const [templates, setTemplates] = useState(null);
   const [template, setTemplate] = useState(null);
   const [exerciseOptions, setExerciseOptions] = useState(null);
-  const [selectedExercise, setSelectedExercise] = useState(null);
   const [initiationFinished, setInitiationFinished] = useState(false);
   const [open, setOpen] = useState(false);
   const [loadingW, setLoadingW] = useState(true);
@@ -239,22 +237,10 @@ const Template = () => {
           isTemplate={template.template}
         />
       ))}
-      <Autocomplete
-        blurOnSelect
-        disablePortal
-        value={selectedExercise}
-        options={exerciseOptions}
-        getOptionLabel={(option) => option.name}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params) => <TextField {...params} label="New Exercise" />}
-        sx={{ mt: 3 }}
-        onChange={(_, exercise) => {
-          setSelectedExercise(exercise);
-          if (exercise !== null) {
-            handleAddSet(exercise);
-            setSelectedExercise(null);
-          }
-        }}
+      <ExerciseOptionsModal
+        exerciseOptions={exerciseOptions}
+        handleExerciseButtonClick={handleAddSet}
+        buttonLabel="Add an exercise"
       />
       <Button
         fullWidth

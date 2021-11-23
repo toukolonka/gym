@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Box, Typography, Button, Container, Autocomplete, TextField,
+  Box, Typography, Button, Container,
 } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import workoutService from '../../services/workoutService';
 import exerciseService from '../../services/exerciseService';
 import LineChart from '../../components/Home/LineChart';
 import WorkoutCountTable from '../../components/Home/WorkoutCountTable';
+import ExerciseOptionsModal from '../../components/Modals/ExerciseOptionsModal';
 
 const Home = () => {
   const history = useHistory();
@@ -141,21 +142,17 @@ const Home = () => {
         <Typography component="h4" variant="h4">
           Exercise Statistics
         </Typography>
-        <Autocomplete
-          disablePortal
-          fullWidth
-          value={selectedExercise}
-          options={exerciseOptions}
-          getOptionLabel={(option) => option.name}
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          renderInput={(params) => <TextField {...params} label="Select Exercise" />}
-          sx={{ mt: 2 }}
-          onChange={(_, exercise) => {
-            if (exercise !== null) {
-              setSelectedExercise(exercise);
-            }
-          }}
+        <ExerciseOptionsModal
+          exerciseOptions={exerciseOptions}
+          handleExerciseButtonClick={setSelectedExercise}
+          buttonLabel="Select Exercise"
         />
+        {selectedExercise !== null && selectedExercise.name !== null
+        && (
+        <Typography component="h6" variant="h6" sx={{ mt: 2 }}>
+          {selectedExercise.name}
+        </Typography>
+        )}
         <LineChart data={exerciseData} title="1RM Progress (Calculated One Rep Max Kg)" />
       </Box>
 
