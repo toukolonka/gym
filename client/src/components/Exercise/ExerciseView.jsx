@@ -149,7 +149,6 @@ ExerciseView.propTypes = {
     username: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     email: PropTypes.string,
-    token: PropTypes.string,
     iat: PropTypes.number,
   }).isRequired,
   open: PropTypes.bool.isRequired,

@@ -63,8 +63,8 @@ const SignUp = () => {
           username,
           password,
         })
-          .then((logindata) => {
-            context.login(logindata);
+          .then((userData) => {
+            context.login(userData);
             enqueueSnackbar('Login Successful', { variant: 'success' });
             history.push('/');
           });

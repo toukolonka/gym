@@ -42,7 +42,7 @@ function AuthProvider(props) {
     localStorage.setItem('gymToken', userData.token);
     dispatch({
       type: 'LOGIN',
-      payload: userData,
+      payload: userData.user,
     });
   }
 
