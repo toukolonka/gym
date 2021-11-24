@@ -107,7 +107,7 @@ templatesRouter.post('/workout/:id', async (request, response, next) => {
     }));
 
     const template = new Workout({
-      name: workout.name,
+      name: '',
       date: new Date(),
       template: true,
       user: user._id,

@@ -69,7 +69,7 @@ wokoutsRouter.post('/', async (request, response, next) => {
     const date = new Date();
     // Create new workout
     const workout = new Workout({
-      name: `${date.toLocaleDateString(undefined, { weekday: 'short' })} ${date.toLocaleDateString()}`,
+      name: '',
       date,
       template: false,
       user: user._id,
@@ -111,7 +111,7 @@ wokoutsRouter.post('/template/:id', async (request, response, next) => {
     const date = new Date();
 
     const workout = new Workout({
-      name: `${template.name} ${date.toLocaleDateString(undefined, { weekday: 'short' })} ${date.toLocaleDateString()}`,
+      name: '',
       date,
       template: false,
       user: user._id,
