@@ -11,10 +11,12 @@ import {
 } from '@mui/material';
 
 import SetRow from './SetRow';
+import SetInfo from './SetInfo';
 
 const SetList = ({
   exercise,
   sets,
+  allTimeBestSet,
   handleDeleteSet,
   handleUpdateSet,
   handleAddSet,
@@ -68,6 +70,7 @@ const SetList = ({
             Done
           </Grid>
         </Grid>
+        {allTimeBestSet.repetitions > 0 && <SetInfo allTimeBestSet={allTimeBestSet} />}
         {sets.map((set, index) => (
           <SetRow
             key={set.uuid}
@@ -111,6 +114,10 @@ SetList.propTypes = {
     exercise: PropTypes.object.isRequired,
     uuid: PropTypes.string.isRequired,
   })).isRequired,
+  allTimeBestSet: PropTypes.exact({
+    weight: PropTypes.number.isRequired,
+    repetitions: PropTypes.number.isRequired,
+  }).isRequired,
   handleDeleteSet: PropTypes.func.isRequired,
   handleAddSet: PropTypes.func.isRequired,
   handleUpdateSet: PropTypes.func.isRequired,

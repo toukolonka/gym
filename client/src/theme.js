@@ -21,6 +21,7 @@ const theme = createTheme({
     },
     text: {
       primary: '#fff',
+      info: '#03a9f4',
     },
   },
 });

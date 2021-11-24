@@ -158,6 +158,41 @@ const Template = () => {
     };
   };
 
+  const getAllTimeBestSet = (exercise) => {
+    if (!templates || templates.length === 0) {
+      return {
+        weight: 0,
+        repetitions: 0,
+      };
+    }
+    // Check exercise sets from previous workouts
+    const exerciseSets = templates.flatMap(({ sets }) => (
+      sets.filter((set) => set.exercise.id === exercise.id)
+    ));
+    if (exerciseSets.length === 0) {
+      return {
+        weight: 0,
+        repetitions: 0,
+      };
+    }
+    const prevBestSetWeight = exerciseSets.reduce((prev, current) => (
+      (prev.weight > current.weight) ? prev : current
+    ));
+    if (prevBestSetWeight.weight === 0) {
+      const prevBestSetReps = exerciseSets.reduce((prev, current) => (
+        (prev.repetitions > current.repetitions) ? prev : current
+      ));
+      return {
+        weight: prevBestSetReps.weight,
+        repetitions: prevBestSetReps.repetitions,
+      };
+    }
+    return {
+      weight: prevBestSetWeight.weight,
+      repetitions: prevBestSetWeight.repetitions,
+    };
+  };
+
   const handleAddSet = (exercise) => {
     const set = getPreviousSet(exercise);
     setTemplate({
@@ -247,6 +282,7 @@ const Template = () => {
           key={exercise.id}
           exercise={exercise}
           sets={template.sets.filter((s) => s.exercise.id === exercise.id)}
+          allTimeBestSet={getAllTimeBestSet(exercise)}
           handleAddSet={handleAddSet}
           handleUpdateSet={handleUpdateSet}
           handleDeleteSet={handleDeleteSet}

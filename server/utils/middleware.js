@@ -20,21 +20,21 @@ const errorHandler = (error, _, response, next) => {
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' });
   } if (error.name === 'ValidationError') {
-    return response.status(400).json({ error: error.message });
+    return response.status(400).send({ error: error.message });
   } if (error instanceof Errors.InvalidTokenError) {
-    return response.status(401).json({ error: error.message });
+    return response.status(401).send({ error: error.message });
   } if (error instanceof Errors.AuthorizationHeaderError) {
-    return response.status(401).json({ error: error.message });
+    return response.status(401).send({ error: error.message });
   } if (error instanceof Errors.AuthorizationError) {
-    return response.status(401).json({ error: error.message });
+    return response.status(401).send({ error: error.message });
   } if (error instanceof Errors.UserNotFoundError) {
-    return response.status(400).json({ error: error.message });
+    return response.status(400).send({ error: error.message });
   } if (error instanceof Errors.InvalidParametersError) {
-    return response.status(400).json({ error: error.message });
+    return response.status(400).send({ error: error.message });
   } if (error instanceof Errors.InvalidLoginError) {
-    return response.status(401).json({ error: error.message });
+    return response.status(401).send({ error: error.message });
   } if (error.name === 'MongoServerError') {
-    return response.status(409).json({ error: error.message });
+    return response.status(409).send({ error: error.message });
   } if (error instanceof Errors.ResourceNotFoundError) {
     return response.status(404).send({ message: error.message });
   }
