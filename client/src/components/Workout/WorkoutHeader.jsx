@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Typography } from '@mui/material';
+import { TextField, Typography, Container } from '@mui/material';
 
 const WorkoutHeader = ({ name, label, handleUpdateName }) => {
   const [workoutName, setWorkoutName] = useState(name);
@@ -21,7 +21,7 @@ const WorkoutHeader = ({ name, label, handleUpdateName }) => {
   const placeholder = (
     <TextField
       variant="standard"
-      inputProps={{ style: { fontSize: 30, textAlign: 'center' }, inputMode: 'text' }} // font size of input text
+      inputProps={{ style: { fontSize: 30, textAlign: 'center' }, inputMode: 'text', maxLength: 30 }} // font size of input text
       value={workoutName}
       placeholder={label}
       onClick={() => setIsNameFocused(true)}
@@ -33,7 +33,7 @@ const WorkoutHeader = ({ name, label, handleUpdateName }) => {
     <TextField
       autoFocus
       variant="standard"
-      inputProps={{ style: { fontSize: 30, textAlign: 'center' }, inputMode: 'text' }} // font size of input text
+      inputProps={{ style: { fontSize: 30, textAlign: 'center' }, inputMode: 'text', maxLength: 30 }} // font size of input text
       value={workoutName}
       onChange={(event) => setWorkoutName(event.target.value)}
       onKeyPress={(event) => { if (event.key === 'Enter') setIsNameFocused(false); }}
@@ -42,13 +42,17 @@ const WorkoutHeader = ({ name, label, handleUpdateName }) => {
   );
 
   const header = (
-    <Typography
-      fontSize={30}
-      text-align="center"
-      onClick={() => setIsNameFocused(true)}
-    >
-      {workoutName}
-    </Typography>
+    <Container maxWidth="xs">
+      <Typography
+        fontSize={30}
+        align="center"
+        onClick={() => setIsNameFocused(true)}
+        maxWidth="xs"
+        style={{ wordWrap: 'break-word' }}
+      >
+        {workoutName}
+      </Typography>
+    </Container>
   );
 
   return (

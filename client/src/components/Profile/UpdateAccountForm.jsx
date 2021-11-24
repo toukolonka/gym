@@ -40,6 +40,7 @@ const UpdateAccountForm = ({
         value={email}
         inputProps={{
           autoCapitalize: 'none',
+          maxLength: 50,
         }}
       />
       <TextField

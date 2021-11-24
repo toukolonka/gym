@@ -15,13 +15,14 @@ const SetInfo = ({ allTimeBestSet }) => {
   return (
     <div>
       {open ? (
-        <Grid container color="info" alignItems="center" justifyContent="center">
-          <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Typography sx={{ color: 'text.info' }}>
-              All time best
+        <Grid container alignItems="center" justifyContent="center">
+          <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }} />
+          <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Typography>
+              Best
             </Typography>
           </Grid>
-          <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center', color: 'info' }}>
+          <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center' }}>
             <TextField
               disabled
               margin="normal"
@@ -51,17 +52,29 @@ const SetInfo = ({ allTimeBestSet }) => {
               }}
             />
           </Grid>
-          <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
-            <IconButton color="info" onClick={() => setOpen(false)}>
+          <Grid
+            item
+            xs={2}
+            sx={{
+              display: 'flex', justifyContent: 'center', mt: 2, mb: 1,
+            }}
+          >
+            <IconButton color="primary" onClick={() => setOpen(false)}>
               <CloseIcon />
             </IconButton>
           </Grid>
         </Grid>
       ) : (
-        <Grid container color="info" alignItems="center" justifyContent="center">
+        <Grid container alignItems="center" justifyContent="center">
           <Grid item xs={10} sx={{ display: 'flex', justifyContent: 'center' }} />
-          <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
-            <IconButton color="info" margin="normal" onClick={() => setOpen(true)}>
+          <Grid
+            item
+            xs={2}
+            sx={{
+              display: 'flex', justifyContent: 'center', mt: 2, mb: 1,
+            }}
+          >
+            <IconButton color="primary" margin="normal" onClick={() => setOpen(true)}>
               <InfoIcon />
             </IconButton>
           </Grid>

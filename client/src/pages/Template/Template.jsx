@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -33,7 +33,6 @@ const Template = () => {
   const [loadingE, setLoadingE] = useState(true);
   const { id } = useParams();
   const history = useHistory();
-  const templateRef = useRef();
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -58,10 +57,6 @@ const Template = () => {
         enqueueSnackbar(error.response.data.message, { variant: 'error' });
       }));
   }, []);
-
-  useEffect(() => () => {
-    templateRef.current = template;
-  }, [template]);
 
   useEffect(() => {
     exerciseService
@@ -104,6 +99,7 @@ const Template = () => {
     workoutService
       .remove(id)
       .then(() => {
+        enqueueSnackbar('Template deleted', { variant: 'success' });
         history.push('/templates');
       })
       .catch((error) => {
@@ -111,17 +107,6 @@ const Template = () => {
         enqueueSnackbar(error.response.data.message, { variant: 'error' });
       });
   };
-
-  // Delete template if template does not contain any sets and is created under a minute ago
-  // Equivalent to componentWillUnmount lifecycle method
-  useEffect(() => () => {
-    if (templateRef
-      && templateRef.current !== null
-      && templateRef.current.sets.length === 0
-      && (new Date()) - (new Date(templateRef.current.date)) < 60000) {
-      handleDeleteTemplate();
-    }
-  }, []);
 
   const handleOpenDialog = () => {
     setOpen(true);

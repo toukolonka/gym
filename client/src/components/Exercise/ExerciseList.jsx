@@ -60,13 +60,26 @@ const ExerciseList = ({
         <div key={exercise.id}>
           <Button
             variant="outlined"
-            sx={{ mb: 1, mt: 1 }}
+            sx={{
+              mb: 1,
+              mt: 1,
+            }}
             size="large"
             fullWidth
             component={Link}
             to={`exercises/${exercise.id}`}
           >
-            {exercise.name}
+            <Typography
+              variant="button"
+              sx={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                display: 'block',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {exercise.name}
+            </Typography>
           </Button>
         </div>
       ))}

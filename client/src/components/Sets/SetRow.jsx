@@ -28,6 +28,18 @@ const SetRow = ({
     setInitiationFinished(true);
   }, [weight, repetitions, completed]);
 
+  const handleWeightChange = (event) => {
+    if (event.target.value <= 999) {
+      setWeight(event.target.value);
+    }
+  };
+
+  const handleRepetitionsChange = (event) => {
+    if (event.target.value <= 999) {
+      setRepetitions(event.target.value);
+    }
+  };
+
   return (
     <Grid container alignItems="center" justifyContent="center">
       <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -48,7 +60,7 @@ const SetRow = ({
           label="kg"
           id="weight"
           color="primary"
-          onChange={(event) => setWeight(event.target.value)}
+          onChange={(event) => handleWeightChange(event)}
           value={weight || ''}
           inputProps={{ inputMode: 'numeric' }}
           size="small"
@@ -66,7 +78,7 @@ const SetRow = ({
           label="reps"
           id="reps"
           color="primary"
-          onChange={(event) => setRepetitions(event.target.value)}
+          onChange={(event) => handleRepetitionsChange(event)}
           value={repetitions || ''}
           inputProps={{ inputMode: 'numeric' }}
           size="small"

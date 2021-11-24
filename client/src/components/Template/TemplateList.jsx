@@ -47,7 +47,7 @@ const TemplateList = ({ templates, handleCreateWorkout }) => {
               <CardContent sx={{ flexGrow: 1 }}>
                 <Grid container>
                   <Grid item xs={10}>
-                    <Typography gutterBottom variant="h4" component="h4">
+                    <Typography gutterBottom variant="h4" component="h4" style={{ wordWrap: 'break-word' }}>
                       {template.name.trim() !== '' ? template.name : 'Template'}
                     </Typography>
                   </Grid>

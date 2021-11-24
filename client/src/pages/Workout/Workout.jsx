@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -34,7 +34,6 @@ const Workout = () => {
   const [loadingE, setLoadingE] = useState(true);
   const { id } = useParams();
   const history = useHistory();
-  const workoutRef = useRef();
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -59,10 +58,6 @@ const Workout = () => {
         enqueueSnackbar(error.response.data.message, { variant: 'error' });
       }));
   }, []);
-
-  useEffect(() => () => {
-    workoutRef.current = workout;
-  }, [workout]);
 
   useEffect(() => {
     exerciseService
@@ -105,6 +100,7 @@ const Workout = () => {
     workoutService
       .remove(id)
       .then(() => {
+        enqueueSnackbar('Workout deleted', { variant: 'success' });
         history.push('/workouts');
       })
       .catch((error) => {
@@ -112,17 +108,6 @@ const Workout = () => {
         enqueueSnackbar(error.response.data.message, { variant: 'error' });
       });
   };
-
-  // Delete workout if workout does not contain any sets and is created under a minute ago
-  // Equivalent to componentWillUnmount lifecycle method
-  useEffect(() => () => {
-    if (workoutRef
-      && workoutRef.current !== null
-      && workoutRef.current.sets.length === 0
-      && (new Date()) - (new Date(workoutRef.current.date)) < 60000) {
-      workoutService.remove(id);
-    }
-  }, []);
 
   const handleOpenDeleteDialog = () => {
     setDeleteDialogOpen(true);

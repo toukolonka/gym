@@ -40,6 +40,7 @@ const ExerciseForm = ({
           color="primary"
           onChange={handleNameChange}
           value={newExerciseName}
+          inputProps={{ maxLength: 40 }}
         />
         <TextField
           margin="normal"
@@ -51,6 +52,7 @@ const ExerciseForm = ({
           multiline
           onChange={handleDescriptionChange}
           value={newExerciseDescription}
+          inputProps={{ maxLength: 200 }}
         />
         <ToggleButtonGroup
           color="primary"

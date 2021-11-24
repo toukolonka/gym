@@ -31,9 +31,11 @@ const ExerciseView = ({
         alignItems: 'center',
       }}
     >
-      <Typography component="h4" variant="h4" style={{ wordWrap: 'break-word' }}>
-        {exerciseDetails.exercise.name}
-      </Typography>
+      <Container maxWidth="xs">
+        <Typography component="h4" variant="h4" align="center" style={{ wordWrap: 'break-word' }}>
+          {exerciseDetails.exercise.name}
+        </Typography>
+      </Container>
     </Box>
     <Box
       sx={{
@@ -43,9 +45,11 @@ const ExerciseView = ({
         alignItems: 'center',
       }}
     >
-      <Typography component="p" variant="p" align="center">
-        {exerciseDetails.exercise.description}
-      </Typography>
+      <Container maxWidth="xs">
+        <Typography component="p" variant="p" align="center" style={{ wordWrap: 'break-word' }}>
+          {exerciseDetails.exercise.description}
+        </Typography>
+      </Container>
     </Box>
     <Box
       sx={{

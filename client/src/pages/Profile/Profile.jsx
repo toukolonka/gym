@@ -23,7 +23,7 @@ const Profile = () => {
 
   // When email or newpassword field is changed, check if update-button should be disabled or not
   useEffect(() => {
-    if (email || newPassword) {
+    if ((email && user && user.email && email !== user.email) || newPassword) {
       setUpdateButtonDisabled(false);
     } else {
       setUpdateButtonDisabled(true);

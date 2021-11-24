@@ -45,7 +45,7 @@ const WorkoutList = ({ workouts }) => {
               <CardContent sx={{ flexGrow: 1 }}>
                 <Grid container>
                   <Grid item xs={10}>
-                    <Typography gutterBottom variant="h4" component="h4">
+                    <Typography gutterBottom variant="h4" component="h4" style={{ wordWrap: 'break-word' }}>
                       {workout.name.trim() !== '' ? workout.name : 'Workout'}
                     </Typography>
                   </Grid>
