@@ -43,12 +43,14 @@ const SignUpForm = ({
           fullWidth
           id="email"
           label="Email Address"
+          placeholder="Email should be min 5 characters long"
           name="email"
           color="secondary"
           onChange={handleEmailChange}
           value={email}
           inputProps={{
             autoCapitalize: 'none',
+            maxLength: 50,
           }}
         />
         <TextField
@@ -64,6 +66,7 @@ const SignUpForm = ({
           value={username}
           inputProps={{
             autoCapitalize: 'none',
+            maxLength: 50,
           }}
         />
         <TextField

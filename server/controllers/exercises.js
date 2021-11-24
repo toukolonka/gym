@@ -79,6 +79,10 @@ exercisesRouter.post('/', async (request, response, next) => {
       throw new Errors.InvalidParametersError('Exercise name and description has to be provided');
     }
 
+    if (body.name.length > 40 || body.description.length > 200) {
+      throw new Errors.InvalidParametersError('Exercise name or description too long');
+    }
+
     const exercise = new Exercise({
       name: body.name,
       description: body.description,

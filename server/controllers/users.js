@@ -24,8 +24,12 @@ usersRouter.post('/', async (request, response, next) => {
       throw new Errors.InvalidParametersError('Username or password was not provided');
     }
 
-    if (body.username.length < 5 || body.password.length < 5) {
-      throw new Errors.InvalidParametersError('Username or password provided is not long enough');
+    if (body.username.length < 5 || body.password.length < 5 || body.email.length < 5) {
+      throw new Errors.InvalidParametersError('Username, password or email provided is not long enough (min 5 characters)');
+    }
+
+    if (body.username.length > 50) {
+      throw new Errors.InvalidParametersError('Username provided is too long (max 50 characters)');
     }
 
     const saltRounds = 10;

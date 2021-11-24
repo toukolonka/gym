@@ -133,7 +133,11 @@ wokoutsRouter.put('/:id', async (request, response, next) => {
     await authorizeUser(request);
     const { body } = request;
 
-    const name = (body.name.length >= 20) ? body.name.substring(0, 20) : body.name;
+    if (body.name.length > 30) {
+      throw new Errors.InvalidParametersError('Workout name too long (max 30 characters)');
+    }
+
+    const { name } = body;
 
     const workout = {
       name,

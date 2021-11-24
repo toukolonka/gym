@@ -32,9 +32,9 @@ const SignIn = () => {
         enqueueSnackbar('Login Successful', { variant: 'success' });
         history.push('/');
       })
-      .catch(() => {
+      .catch((error) => {
         setPassword('');
-        enqueueSnackbar('Username or password incorrect', { variant: 'error' });
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
       });
   };
 

@@ -73,12 +73,14 @@ const Profile = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h3" variant="h3">
+        <Typography component="h3" variant="h3" align="center">
           Profile
         </Typography>
-        <Typography component="p" variant="p">
-          {user.username}
-        </Typography>
+        <Container maxWidth="xs">
+          <Typography component="p" variant="p" align="center" style={{ wordWrap: 'break-word' }}>
+            {user.username}
+          </Typography>
+        </Container>
         <UpdateAccountForm
           email={email}
           setEmail={handleEmailChange}

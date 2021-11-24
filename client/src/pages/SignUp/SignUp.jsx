@@ -36,7 +36,7 @@ const SignUp = () => {
       return;
     }
     // Validation
-    if (!email.includes('@')) {
+    if (!email.includes('@') || email.length < 5) {
       enqueueSnackbar('Please provide a valid email', { variant: 'error' });
       return;
     }
@@ -58,6 +58,7 @@ const SignUp = () => {
       email,
     })
       .then(() => {
+        enqueueSnackbar('Registration Successful', { variant: 'success' });
         loginService.login({
           username,
           password,
@@ -68,8 +69,8 @@ const SignUp = () => {
             history.push('/');
           });
       })
-      .catch(() => {
-        enqueueSnackbar('Username or password already in use', { variant: 'error' });
+      .catch((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
       });
   };
 

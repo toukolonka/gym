@@ -47,7 +47,6 @@ const WorkoutHeader = ({ name, label, handleUpdateName }) => {
         fontSize={30}
         align="center"
         onClick={() => setIsNameFocused(true)}
-        maxWidth="xs"
         style={{ wordWrap: 'break-word' }}
       >
         {workoutName}

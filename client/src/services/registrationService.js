@@ -3,21 +3,13 @@ import axios from 'axios';
 const baseUrl = '/api/users';
 
 const signup = async (userinfo) => {
-  try {
-    const response = await axios.post(baseUrl, userinfo);
-    return response.data;
-  } catch (err) {
-    return null;
-  }
+  const response = await axios.post(baseUrl, userinfo);
+  return response.data;
 };
 
 const update = async (userinfo) => {
-  try {
-    const response = await axios.put(baseUrl, userinfo);
-    return response.data;
-  } catch (err) {
-    return null;
-  }
+  const response = await axios.put(baseUrl, userinfo);
+  return response.data;
 };
 
 export default {
