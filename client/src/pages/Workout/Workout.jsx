@@ -27,6 +27,7 @@ const Workout = () => {
   const [workout, setWorkout] = useState(null);
   const [exerciseOptions, setExerciseOptions] = useState(null);
   const [initiationFinished, setInitiationFinished] = useState(false);
+  const [initiationFinished2, setInitiationFinished2] = useState(false);
   const [templateDialogOpen, setTemplateDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [loadingW, setLoadingW] = useState(true);
@@ -53,7 +54,6 @@ const Workout = () => {
       .then((data) => {
         setWorkout(data);
         setLoadingW(false);
-        setInitiationFinished(true);
       })
       .catch(((error) => {
         enqueueSnackbar(error.response.data.message, { variant: 'error' });
@@ -77,13 +77,16 @@ const Workout = () => {
   }, []);
 
   useEffect(() => {
-    if (workout && initiationFinished) {
-      workoutService
-        .update(id, workout)
+    if (workout && initiationFinished && initiationFinished2) {
+      const timeOutId = setTimeout(() => workoutService.update(id, workout)
         .catch(((error) => {
           enqueueSnackbar(error.response.data.message, { variant: 'error' });
-        }));
+        })), 1000);
+      return () => clearTimeout(timeOutId);
+    } if (!initiationFinished) {
+      return setInitiationFinished(true);
     }
+    return setInitiationFinished2(true);
   }, [workout]);
 
   const handleFinishAndSave = () => {

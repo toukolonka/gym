@@ -23,12 +23,9 @@ const SetRow = ({
 
   useEffect(() => {
     if (initiationFinished) {
-      const timeOutId = setTimeout(() => handleUpdateSet(
-        set.uuid, { weight, repetitions, completed },
-      ), 1000);
-      return () => clearTimeout(timeOutId);
+      handleUpdateSet(set.uuid, { weight, repetitions, completed });
     }
-    return setInitiationFinished(true);
+    setInitiationFinished(true);
   }, [weight, repetitions, completed]);
 
   return (
