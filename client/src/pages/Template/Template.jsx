@@ -312,7 +312,7 @@ const Template = () => {
           <Button autoFocus onClick={handleCancel}>
             Cancel
           </Button>
-          <Button onClick={handleDeleteTemplate} autoFocus>
+          <Button variant="contained" color="error" onClick={handleDeleteTemplate} autoFocus>
             Delete
           </Button>
         </DialogActions>

@@ -99,7 +99,7 @@ const ExerciseView = ({
         <Button autoFocus onClick={handleCancel}>
           Cancel
         </Button>
-        <Button onClick={handleDelete} autoFocus>
+        <Button variant="contained" color="error" onClick={handleDelete} autoFocus>
           Delete
         </Button>
       </DialogActions>

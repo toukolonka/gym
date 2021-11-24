@@ -354,7 +354,7 @@ const Workout = () => {
           <Button autoFocus onClick={handleDeleteDialogCancel}>
             Cancel
           </Button>
-          <Button onClick={handleDeleteWorkout} autoFocus>
+          <Button variant="contained" color="error" onClick={handleDeleteWorkout} autoFocus>
             Delete
           </Button>
         </DialogActions>
