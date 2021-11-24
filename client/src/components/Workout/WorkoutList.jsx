@@ -71,7 +71,15 @@ const WorkoutList = ({ workouts }) => {
                   <div key={exercise.name}>
                     <Grid container>
                       <Grid item xs={8}>
-                        <Typography variant="body1">
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            display: 'block',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
                           {exercise.name}
                         </Typography>
                       </Grid>

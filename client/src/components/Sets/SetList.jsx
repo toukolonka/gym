@@ -39,7 +39,18 @@ const SetList = ({
     >
       <CardContent sx={{ flexGrow: 1 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-          <Typography gutterBottom variant="h5" component="h5">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="h5"
+            sx={{
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              display: 'block',
+              textOverflow: 'ellipsis',
+              mr: 2,
+            }}
+          >
             {exercise.name}
           </Typography>
 
@@ -47,7 +58,6 @@ const SetList = ({
           && (
           <Typography gutterBottom variant="strong" component="strong">
             1RM:
-            {' '}
             {maximum}
           </Typography>
           )}

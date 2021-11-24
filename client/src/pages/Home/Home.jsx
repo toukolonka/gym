@@ -164,9 +164,11 @@ const Home = () => {
         />
         {selectedExercise !== null && selectedExercise.name !== null
         && (
-        <Typography component="h6" variant="h6" sx={{ mt: 2 }}>
-          {selectedExercise.name}
-        </Typography>
+          <Container maxWidth="xs">
+            <Typography align="center" component="h6" variant="h6" sx={{ mt: 2 }} style={{ wordWrap: 'break-word' }}>
+              {selectedExercise.name}
+            </Typography>
+          </Container>
         )}
         <LineChart data={exerciseData} title="1RM Progress (Calculated One Rep Max Kg)" />
       </Box>
