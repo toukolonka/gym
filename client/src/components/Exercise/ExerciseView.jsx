@@ -144,6 +144,7 @@ ExerciseView.propTypes = {
   user: PropTypes.exact({
     username: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
+    email: PropTypes.string,
     iat: PropTypes.number.isRequired,
   }).isRequired,
   open: PropTypes.bool.isRequired,

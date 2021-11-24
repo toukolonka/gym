@@ -32,7 +32,7 @@ const UpdateAccountForm = ({
         margin="normal"
         fullWidth
         name="email"
-        label="New Email"
+        label="Email"
         placeholder="Give us your new email address!"
         id="email"
         color="primary"

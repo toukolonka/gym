@@ -12,7 +12,14 @@ const Profile = () => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [updateButtonDisabled, setUpdateButtonDisabled] = useState(true);
+  const { user, logout } = useContext(AuthContext);
   const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (user && user.email) {
+      setEmail(user.email);
+    }
+  }, []);
 
   // When email or newpassword field is changed, check if update-button should be disabled or not
   useEffect(() => {
@@ -22,8 +29,6 @@ const Profile = () => {
       setUpdateButtonDisabled(true);
     }
   }, [email, newPassword]);
-
-  const { user, logout } = useContext(AuthContext);
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);

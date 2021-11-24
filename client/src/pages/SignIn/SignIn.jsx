@@ -21,21 +21,21 @@ const SignIn = () => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const userData = await loginService.login({
+    loginService.login({
       username,
       password,
-    });
-    // If login with backend was succesfully completed
-    if (userData) {
-      context.login(userData);
-      enqueueSnackbar('Login Successful', { variant: 'success' });
-      history.push('/');
-    } else {
-      setPassword('');
-      enqueueSnackbar('Username or password incorrect', { variant: 'error' });
-    }
+    })
+      .then((userData) => {
+        context.login(userData);
+        enqueueSnackbar('Login Successful', { variant: 'success' });
+        history.push('/');
+      })
+      .catch(() => {
+        setPassword('');
+        enqueueSnackbar('Username or password incorrect', { variant: 'error' });
+      });
   };
 
   return (

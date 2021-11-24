@@ -27,7 +27,7 @@ const SignUp = () => {
     setEmail(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     // Validation
@@ -52,27 +52,25 @@ const SignUp = () => {
     }
 
     // Register
-    const userdata = await registrationService.signup({
+    registrationService.signup({
       username,
       password,
       email,
-    });
-
-    if (userdata) {
-      // If registration was successful, login
-      enqueueSnackbar('Registration successful', { variant: 'success' });
-      const logindata = await loginService.login({
-        username,
-        password,
+    })
+      .then(() => {
+        loginService.login({
+          username,
+          password,
+        })
+          .then((logindata) => {
+            context.login(logindata);
+            enqueueSnackbar('Login Successful', { variant: 'success' });
+            history.push('/');
+          });
+      })
+      .catch(() => {
+        enqueueSnackbar('Username or password already in use', { variant: 'error' });
       });
-      if (logindata) {
-        context.login(logindata);
-        enqueueSnackbar('Login Successful', { variant: 'success' });
-        history.push('/');
-      }
-    } else {
-      enqueueSnackbar('Username or password already in use', { variant: 'error' });
-    }
   };
 
   return (
