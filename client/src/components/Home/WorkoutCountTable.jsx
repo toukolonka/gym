@@ -21,8 +21,8 @@ const WorkoutCountTable = ({
     <TableBody>
       <TableRow>
         <TableCell>Workouts</TableCell>
-        <TableCell align="center">{monthlyWorkoutCount}</TableCell>
-        <TableCell align="center">{totalWorkoutCount}</TableCell>
+        <TableCell align="center">{monthlyWorkoutCount > 0 ? monthlyWorkoutCount : ''}</TableCell>
+        <TableCell align="center">{totalWorkoutCount > 0 ? totalWorkoutCount : ''}</TableCell>
       </TableRow>
     </TableBody>
   </Table>

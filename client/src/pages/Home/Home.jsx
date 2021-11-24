@@ -3,6 +3,7 @@ import {
   Box, Typography, Button, Container,
 } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 import workoutService from '../../services/workoutService';
 import exerciseService from '../../services/exerciseService';
@@ -18,42 +19,52 @@ const Home = () => {
   const [workoutSetCounts, setWorkoutSetCounts] = useState([]);
   const [totalWorkoutCount, setTotalWorkoutCount] = useState(0);
   const [monthlyWorkoutCount, setMontlyWorkoutCount] = useState(0);
+  const { enqueueSnackbar } = useSnackbar();
 
-  useEffect(async () => {
-    const exercises = await exerciseService.getAll();
-    setExerciseOptions(exercises);
+  useEffect(() => {
+    exerciseService.getAll()
+      .then((data) => {
+        setExerciseOptions(data);
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
 
     // Fetch all workouts
-    const workouts = await workoutService.getAll();
+    workoutService.getAll()
+      .then((workouts) => {
+        // Initialize array with the dataset names
+        const tempArray = [['Date', 'Sets per workout']];
 
-    // Initialize array with the dataset names
-    const tempArray = [['Date', 'Sets per workout']];
+        // Initialize totals
+        let tempTotalCount = 0;
+        let tempMonthlyCount = 0;
 
-    // Initialize totals
-    let tempTotalCount = 0;
-    let tempMonthlyCount = 0;
+        const currentDate = new Date();
 
-    const currentDate = new Date();
+        // Get completed sets from workout and add to temparray
+        Object.values(workouts).forEach((workout) => {
+          const workoutDate = new Date(workout.date);
+          const setCount = Object.values(workout.sets)
+            .filter((set) => set.completed)
+            .length;
+          // If setcount more than 0, add to temparray
+          if (setCount) tempArray.push([workoutDate, setCount]);
+          // Increase totals
+          tempTotalCount += 1;
 
-    // Get completed sets from workout and add to temparray
-    await Object.values(workouts).forEach((workout) => {
-      const workoutDate = new Date(workout.date);
-      const setCount = Object.values(workout.sets)
-        .filter((set) => set.completed)
-        .length;
-      // If setcount more than 0, add to temparray
-      if (setCount) tempArray.push([workoutDate, setCount]);
-      // Increase totals
-      tempTotalCount += 1;
-
-      if (workoutDate.getMonth() === currentDate.getMonth()
+          if (workoutDate.getMonth() === currentDate.getMonth()
           && workoutDate.getFullYear() === currentDate.getFullYear()) {
-        tempMonthlyCount += 1;
-      }
-    });
-    setWorkoutSetCounts(tempArray);
-    setTotalWorkoutCount(tempTotalCount);
-    setMontlyWorkoutCount(tempMonthlyCount);
+            tempMonthlyCount += 1;
+          }
+        });
+        setWorkoutSetCounts(tempArray);
+        setTotalWorkoutCount(tempTotalCount);
+        setMontlyWorkoutCount(tempMonthlyCount);
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, []);
 
   const handleStartWorkout = (event) => {
@@ -65,38 +76,42 @@ const Home = () => {
       });
   };
 
-  useEffect(async () => {
-    const workouts = await workoutService.getAll();
+  useEffect(() => {
+    workoutService.getAll()
+      .then((workouts) => {
+        // If workouts list is empty
+        if (!workouts || !selectedExercise) {
+          setExerciseData([]);
+          return;
+        }
 
-    // If workouts list is empty
-    if (!workouts || !selectedExercise) {
-      setExerciseData([]);
-      return;
-    }
+        const draftData = [['Date', selectedExercise.name]];
 
-    const draftData = [['Date', selectedExercise.name]];
+        // If there are workouts
+        Object.values(workouts).forEach((workout) => {
+          const workoutdate = new Date(workout.date);
 
-    // If there are workouts
-    await Object.values(workouts).forEach((workout) => {
-      const workoutdate = new Date(workout.date);
+          // Get the sets for the particular exercise
+          const exerciseSets = Object.values(workout.sets)
+            .filter((set) => set.exercise.id === selectedExercise.id && set.completed);
 
-      // Get the sets for the particular exercise
-      const exerciseSets = Object.values(workout.sets)
-        .filter((set) => set.exercise.id === selectedExercise.id && set.completed);
-
-      // If there are sets of selected exercise in workout
-      if (exerciseSets.length > 0) {
-        // Extract best rms from sets
-        const rms = exerciseSets
-          .map(
-            (set) => set.weight * (1 + (set.repetitions / 30)),
-          );
-        const maximum = Math.round(Math.max(...rms));
-        // Add the maximum and date to draftData
-        draftData.push([workoutdate, maximum]);
-      }
-    });
-    setExerciseData(draftData);
+          // If there are sets of selected exercise in workout
+          if (exerciseSets.length > 0) {
+            // Extract best rms from sets
+            const rms = exerciseSets
+              .map(
+                (set) => set.weight * (1 + (set.repetitions / 30)),
+              );
+            const maximum = Math.round(Math.max(...rms));
+            // Add the maximum and date to draftData
+            draftData.push([workoutdate, maximum]);
+          }
+        });
+        setExerciseData(draftData);
+      })
+      .catch(((error) => {
+        enqueueSnackbar(error.response.data.message, { variant: 'error' });
+      }));
   }, [selectedExercise]);
 
   return (
