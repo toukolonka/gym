@@ -20,12 +20,6 @@
 
 
 ### In addition to this you need an .env file which contains the following variables
-<<<<<<< HEAD
-#### DEV_MONGODB_URI
-#### PORT
-#### SECRET
-=======
 `DEV_MONGODB_URI`
 `PORT`
 `SECRET`
->>>>>>> 3537e68... Modified README
