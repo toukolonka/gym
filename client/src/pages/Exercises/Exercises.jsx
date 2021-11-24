@@ -41,7 +41,7 @@ const Exercises = () => {
         category: newExerciseCategory,
       })
       .then((returnedExercises) => {
-        enqueueSnackbar(`Exercise ${newExerciseName} created`, { variant: 'success' });
+        enqueueSnackbar('Exercise created', { variant: 'success' });
         setExercises(returnedExercises);
         setNewExerciseName('');
         setNewExerciseDescription('');

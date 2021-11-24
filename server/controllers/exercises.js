@@ -10,9 +10,12 @@ exercisesRouter.get('/', async (request, response, next) => {
   const user = await authorizeUser(request);
 
   try {
-    Exercise.find({ $or: [{ user: null }, { user: user._id }] }).sort({ name: 'asc' }).then((exercises) => {
-      response.json(exercises);
-    });
+    Exercise.find({ $or: [{ user: null }, { user: user._id }] })
+      .collation({ locale: 'en' })
+      .sort({ name: 1 })
+      .then((exercises) => {
+        response.json(exercises);
+      });
   } catch (err) {
     next(err);
   }
@@ -92,9 +95,12 @@ exercisesRouter.post('/', async (request, response, next) => {
 
     await exercise.save();
 
-    Exercise.find({ $or: [{ user: null }, { user: user._id }] }).sort({ name: 'asc' }).then((exercises) => {
-      response.json(exercises);
-    });
+    Exercise.find({ $or: [{ user: null }, { user: user._id }] })
+      .collation({ locale: 'en' })
+      .sort({ name: 1 })
+      .then((exercises) => {
+        response.json(exercises);
+      });
   } catch (err) {
     next(err);
   }
@@ -109,6 +115,16 @@ exercisesRouter.delete('/:id', async (request, response, next) => {
     }
 
     const exerciseToBeDeleted = await Exercise.findById(request.params.id);
+
+    const workouts = await Workout.find({ user: user._id });
+
+    const sets = workouts.flatMap((workout) => workout.sets);
+
+    const canNotBeDeleted = sets.some((set) => set.exercise.toString() === exerciseToBeDeleted.id);
+
+    if (canNotBeDeleted) {
+      return response.status(409).send({ message: 'Cannot delete exercise because you have used it in workouts' });
+    }
 
     if (exerciseToBeDeleted === null) {
       throw new Errors.ResourceNotFoundError(`Exercise with id ${request.params.id} not found`);

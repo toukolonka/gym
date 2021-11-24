@@ -123,7 +123,17 @@ const ExerciseOptionsModal = ({
                       handleCloseExerciseModal();
                     }}
                   >
-                    {exercise.name}
+                    <Typography
+                      variant="button"
+                      sx={{
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        display: 'block',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      {exercise.name}
+                    </Typography>
                   </Button>
                 </div>
               ))}

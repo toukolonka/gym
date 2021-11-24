@@ -296,11 +296,11 @@ const Workout = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleFinishAndSave} autoFocus>
-            Save workout
-          </Button>
           <Button onClick={handleCreateTemplate} autoFocus>
             Create template
+          </Button>
+          <Button variant="contained" onClick={handleFinishAndSave} autoFocus>
+            Save workout
           </Button>
         </DialogActions>
       </Dialog>

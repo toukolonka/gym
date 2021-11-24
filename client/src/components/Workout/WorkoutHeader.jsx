@@ -55,14 +55,14 @@ const WorkoutHeader = ({ name, label, handleUpdateName }) => {
   );
 
   return (
-    <div>
+    <Container maxWidth="xs">
       {(!isNameFocused && workoutName.trim() === '') ? (
         placeholder
       ) : (
         (!isNameFocused) ? header : (
           input
         ))}
-    </div>
+    </Container>
   );
 };
 
