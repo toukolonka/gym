@@ -33,8 +33,10 @@ const errorHandler = (error, _, response, next) => {
     return response.status(400).send({ message: error.message });
   } if (error instanceof Errors.InvalidLoginError) {
     return response.status(401).send({ message: error.message });
+  } if (error.name === 'MongoServerError' && error.code === 11000) {
+    return response.status(409).send({ message: 'Email or username already in use' });
   } if (error.name === 'MongoServerError') {
-    return response.status(409).send({ message: error.message });
+    return response.status(409).send({ message: 'Database error' });
   } if (error instanceof Errors.ResourceNotFoundError) {
     return response.status(404).send({ message: error.message });
   }
