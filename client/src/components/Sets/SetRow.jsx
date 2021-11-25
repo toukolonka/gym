@@ -29,13 +29,13 @@ const SetRow = ({
   }, [weight, repetitions, completed]);
 
   const handleWeightChange = (event) => {
-    if (event.target.value <= 999) {
+    if (event.target.value <= 999 && event.target.value >= 0) {
       setWeight(event.target.value);
     }
   };
 
   const handleRepetitionsChange = (event) => {
-    if (event.target.value <= 999) {
+    if (event.target.value <= 999 && event.target.value >= 0) {
       setRepetitions(event.target.value);
     }
   };
