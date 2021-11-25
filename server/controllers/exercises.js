@@ -37,6 +37,7 @@ exercisesRouter.get('/:id', async (request, response, next) => {
 
     const workouts = await Workout
       .find({ user: user._id, template: false, 'sets.exercise': exercise._id })
+      .sort({ date: 'desc' })
       .populate({
         path: 'sets',
         type: Array,
