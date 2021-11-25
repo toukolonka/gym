@@ -40,9 +40,18 @@ const SignUp = () => {
       enqueueSnackbar('Please provide a valid email', { variant: 'error' });
       return;
     }
+    if (email.length > 50) {
+      enqueueSnackbar('Email can be up to 50 characters long', { variant: 'error' });
+      return;
+    }
     // Validation
     if (username.length < 5) {
       enqueueSnackbar('Username should contain at least 5 characters', { variant: 'error' });
+      return;
+    }
+
+    if (username.length > 50) {
+      enqueueSnackbar('Username can be up to 50 characters long', { variant: 'error' });
       return;
     }
     // Validation

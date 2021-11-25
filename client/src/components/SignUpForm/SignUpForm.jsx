@@ -50,7 +50,6 @@ const SignUpForm = ({
           value={email}
           inputProps={{
             autoCapitalize: 'none',
-            maxLength: 50,
           }}
         />
         <TextField
@@ -66,7 +65,6 @@ const SignUpForm = ({
           value={username}
           inputProps={{
             autoCapitalize: 'none',
-            maxLength: 50,
           }}
         />
         <TextField
