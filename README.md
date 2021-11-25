@@ -19,7 +19,7 @@
 `npm start`
 
 
-### In addition to this you need a running MongoDb database an .env file which contains the following variables
+### In addition to this you need a running MongoDb database and .env file which contains the following variables
 `DEV_MONGODB_URI`
 `PORT`
 `SECRET`
