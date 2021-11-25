@@ -12,6 +12,7 @@ const Profile = () => {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [updateButtonDisabled, setUpdateButtonDisabled] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -57,10 +58,17 @@ const Profile = () => {
     })
       .then(() => {
         enqueueSnackbar('Account information updated successfully', { variant: 'success' });
-        setNewPassword('');
-        setEmail('');
+        logout();
       })
       .catch(() => enqueueSnackbar('Account information update failed', { variant: 'error' }));
+  };
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCancelDialog = () => {
+    setDialogOpen(false);
   };
 
   return (
@@ -88,6 +96,9 @@ const Profile = () => {
           setPassword={handlePasswordChange}
           handleSubmit={handleAccountUpdate}
           updateButtonDisabled={updateButtonDisabled}
+          dialogOpen={dialogOpen}
+          handleOpenDialog={handleOpenDialog}
+          handleCancelDialog={handleCancelDialog}
         />
       </Box>
       <Button

@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from '@mui/material';
 
 const UpdateAccountForm = ({
   email,
@@ -12,11 +19,12 @@ const UpdateAccountForm = ({
   setPassword,
   handleSubmit,
   updateButtonDisabled,
+  dialogOpen,
+  handleOpenDialog,
+  handleCancelDialog,
 }) => (
   <>
     <Box
-      component="form"
-      onSubmit={handleSubmit}
       sx={{
         m: 2,
         width: '100%',
@@ -56,14 +64,36 @@ const UpdateAccountForm = ({
         value={password}
       />
       <Button
-        type="submit"
         fullWidth
         variant="contained"
         sx={{ mt: 3 }}
         disabled={updateButtonDisabled}
+        onClick={handleOpenDialog}
       >
         Update Account Information
       </Button>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleCancelDialog}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          Re-sign-in required
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            You need to sign out and sign in again in order to update account information
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleCancelDialog}>
+            Cancel
+          </Button>
+          <Button variant="contained" color="error" onClick={handleSubmit} autoFocus>
+            Sign out and update
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   </>
 );
@@ -75,6 +105,9 @@ UpdateAccountForm.propTypes = {
   setPassword: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   updateButtonDisabled: PropTypes.bool.isRequired,
+  dialogOpen: PropTypes.bool.isRequired,
+  handleOpenDialog: PropTypes.func.isRequired,
+  handleCancelDialog: PropTypes.func.isRequired,
 };
 
 export default UpdateAccountForm;
