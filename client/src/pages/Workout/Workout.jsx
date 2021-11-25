@@ -299,7 +299,7 @@ const Workout = () => {
           <Button onClick={handleCreateTemplate} autoFocus>
             Create template
           </Button>
-          <Button variant="contained" onClick={handleFinishAndSave} autoFocus>
+          <Button variant="contained" color="success" onClick={handleFinishAndSave} autoFocus>
             Save workout
           </Button>
         </DialogActions>

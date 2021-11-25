@@ -51,7 +51,7 @@ exercisesRouter.get('/:id', async (request, response, next) => {
       (workout) => workout.sets,
     ).flat()
       .map(
-        (set) => set.weight * (1 + (set.repetitions / 30)),
+        (set) => (set.repetitions === 1 ? set.weight : set.weight * (1 + (set.repetitions / 30))),
       );
 
     const maximum = Math.round(Math.max(...rms));
