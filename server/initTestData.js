@@ -133,16 +133,16 @@ const initTestData = async () => {
 
   const benchPress = await upper1.save();
   const incBenchPress = await upper2.save();
-  await upper3.save();
+  const cableCrossover = await upper3.save();
   await upper4.save();
   await upper5.save();
-  await upper6.save();
-  await upper7.save();
+  const barCurl = await upper6.save();
+  const curl = await upper7.save();
   await upper8.save();
   await upper9.save();
   await upper10.save();
   await upper11.save();
-  await upper12.save();
+  const overhedPress = await upper12.save();
 
   const legs1 = new Exercise({
     name: 'Leg press',
@@ -189,7 +189,7 @@ const initTestData = async () => {
   const legPress = await legs1.save();
   const squat = await legs2.save();
   await legs3.save();
-  await legs4.save();
+  const calves = await legs4.save();
   await legs5.save();
   await legs6.save();
 
@@ -228,10 +228,10 @@ const initTestData = async () => {
     user: null,
   });
 
-  const SitUp = await core1.save();
-  const Crunch = await core2.save();
+  const sitUp = await core1.save();
+  await core2.save();
   await core3.save();
-  await core4.save();
+  const back = await core4.save();
   await core5.save();
 
   const workout1 = new Workout({
@@ -256,7 +256,7 @@ const initTestData = async () => {
       },
       {
         weight: 80,
-        repetitions: 10,
+        repetitions: 8,
         completed: true,
         exercise: benchPress._id,
         uuid: uuidv4(),
@@ -277,30 +277,37 @@ const initTestData = async () => {
       },
       {
         weight: 50,
-        repetitions: 10,
+        repetitions: 8,
         completed: true,
         exercise: incBenchPress._id,
         uuid: uuidv4(),
       },
       {
-        weight: 0,
-        repetitions: 25,
+        weight: 20,
+        repetitions: 12,
         completed: true,
-        exercise: SitUp._id,
+        exercise: cableCrossover._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 12,
+        completed: true,
+        exercise: cableCrossover._id,
         uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
-        exercise: SitUp._id,
+        exercise: sitUp._id,
         uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
-        exercise: SitUp._id,
+        exercise: sitUp._id,
         uuid: uuidv4(),
       },
     ],
@@ -314,7 +321,7 @@ const initTestData = async () => {
     sets: [
       {
         weight: 80,
-        repetitions: 11,
+        repetitions: 10,
         completed: true,
         exercise: benchPress._id,
         uuid: uuidv4(),
@@ -328,7 +335,7 @@ const initTestData = async () => {
       },
       {
         weight: 80,
-        repetitions: 13,
+        repetitions: 10,
         completed: true,
         exercise: benchPress._id,
         uuid: uuidv4(),
@@ -341,38 +348,52 @@ const initTestData = async () => {
         uuid: uuidv4(),
       },
       {
-        weight: 50,
+        weight: 55,
         repetitions: 10,
         completed: true,
         exercise: incBenchPress._id,
         uuid: uuidv4(),
       },
       {
-        weight: 50,
+        weight: 55,
         repetitions: 10,
         completed: true,
         exercise: incBenchPress._id,
         uuid: uuidv4(),
       },
       {
-        weight: 0,
-        repetitions: 25,
+        weight: 20,
+        repetitions: 12,
         completed: true,
-        exercise: SitUp._id,
+        exercise: cableCrossover._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 12,
+        completed: true,
+        exercise: cableCrossover._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 12,
+        completed: true,
+        exercise: cableCrossover._id,
         uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
-        exercise: SitUp._id,
+        exercise: sitUp._id,
         uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
-        exercise: SitUp._id,
+        exercise: sitUp._id,
         uuid: uuidv4(),
       },
     ],
@@ -386,13 +407,6 @@ const initTestData = async () => {
     sets: [
       {
         weight: 85,
-        repetitions: 11,
-        completed: true,
-        exercise: benchPress._id,
-        uuid: uuidv4(),
-      },
-      {
-        weight: 80,
         repetitions: 10,
         completed: true,
         exercise: benchPress._id,
@@ -400,51 +414,637 @@ const initTestData = async () => {
       },
       {
         weight: 85,
-        repetitions: 13,
+        repetitions: 8,
+        completed: true,
+        exercise: benchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 85,
+        repetitions: 8,
         completed: true,
         exercise: benchPress._id,
         uuid: uuidv4(),
       },
       {
         weight: 55,
+        repetitions: 10,
+        completed: true,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 55,
+        repetitions: 10,
+        completed: true,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 55,
+        repetitions: 10,
+        completed: true,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 25,
         repetitions: 12,
         completed: true,
-        exercise: incBenchPress._id,
+        exercise: cableCrossover._id,
         uuid: uuidv4(),
       },
       {
-        weight: 50,
+        weight: 25,
+        repetitions: 12,
+        completed: true,
+        exercise: cableCrossover._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 25,
+        repetitions: 12,
+        completed: true,
+        exercise: cableCrossover._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+    ],
+  });
+
+  const workout4 = new Workout({
+    name: 'Leg day',
+    date: new Date('2021-11-02'),
+    template: false,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 200,
+        repetitions: 12,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 200,
+        repetitions: 12,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 200,
         repetitions: 10,
         completed: true,
-        exercise: incBenchPress._id,
+        exercise: legPress._id,
         uuid: uuidv4(),
       },
       {
-        weight: 50,
+        weight: 200,
+        repetitions: 8,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 80,
         repetitions: 10,
         completed: true,
-        exercise: incBenchPress._id,
+        exercise: squat._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: true,
+        exercise: squat._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: true,
+        exercise: squat._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 30,
+        completed: true,
+        exercise: calves._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 30,
+        completed: true,
+        exercise: calves._id,
+        uuid: uuidv4(),
+      },
+    ],
+  });
+
+  const workout5 = new Workout({
+    name: 'Leg day',
+    date: new Date('2021-11-12'),
+    template: false,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 225,
+        repetitions: 10,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 225,
+        repetitions: 10,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 225,
+        repetitions: 10,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 225,
+        repetitions: 8,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 85,
+        repetitions: 10,
+        completed: true,
+        exercise: squat._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 85,
+        repetitions: 10,
+        completed: true,
+        exercise: squat._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 85,
+        repetitions: 10,
+        completed: true,
+        exercise: squat._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 30,
+        repetitions: 30,
+        completed: true,
+        exercise: calves._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 30,
+        repetitions: 30,
+        completed: true,
+        exercise: calves._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 30,
+        repetitions: 30,
+        completed: true,
+        exercise: calves._id,
+        uuid: uuidv4(),
+      },
+    ],
+  });
+
+  const workout6 = new Workout({
+    name: 'Leg day',
+    date: new Date('2021-11-22'),
+    template: false,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 250,
+        repetitions: 10,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 225,
+        repetitions: 10,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 225,
+        repetitions: 10,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 225,
+        repetitions: 8,
+        completed: true,
+        exercise: legPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 90,
+        repetitions: 10,
+        completed: true,
+        exercise: squat._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 90,
+        repetitions: 10,
+        completed: true,
+        exercise: squat._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 85,
+        repetitions: 10,
+        completed: true,
+        exercise: squat._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 85,
+        repetitions: 8,
+        completed: true,
+        exercise: squat._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 40,
+        repetitions: 30,
+        completed: true,
+        exercise: calves._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 40,
+        repetitions: 30,
+        completed: true,
+        exercise: calves._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 40,
+        repetitions: 30,
+        completed: true,
+        exercise: calves._id,
+        uuid: uuidv4(),
+      },
+    ],
+  });
+
+  const workout7 = new Workout({
+    name: 'Core and arms day',
+    date: new Date('2021-11-05'),
+    template: false,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 10,
+        repetitions: 10,
+        completed: true,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 10,
+        repetitions: 10,
+        completed: true,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 10,
+        repetitions: 10,
+        completed: true,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: true,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: true,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: true,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 30,
+        repetitions: 10,
+        completed: true,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 30,
+        repetitions: 10,
+        completed: true,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 30,
+        repetitions: 10,
+        completed: true,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 5,
+        repetitions: 15,
+        completed: true,
+        exercise: back._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 5,
+        repetitions: 15,
+        completed: true,
+        exercise: back._id,
         uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
-        exercise: SitUp._id,
+        exercise: sitUp._id,
         uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
-        exercise: SitUp._id,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+    ],
+  });
+
+  const workout8 = new Workout({
+    name: 'Core and arms day',
+    date: new Date('2021-11-15'),
+    template: false,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 12,
+        repetitions: 10,
+        completed: true,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 12,
+        repetitions: 10,
+        completed: true,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 12,
+        repetitions: 10,
+        completed: true,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: true,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: true,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: true,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 35,
+        repetitions: 10,
+        completed: true,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 35,
+        repetitions: 10,
+        completed: true,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 35,
+        repetitions: 10,
+        completed: true,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 10,
+        repetitions: 15,
+        completed: true,
+        exercise: back._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 10,
+        repetitions: 15,
+        completed: true,
+        exercise: back._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 10,
+        repetitions: 15,
+        completed: true,
+        exercise: back._id,
         uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: true,
-        exercise: SitUp._id,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+    ],
+  });
+
+  const workout9 = new Workout({
+    name: 'Core and arms day',
+    date: new Date('2021-11-25'),
+    template: false,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 12,
+        repetitions: 10,
+        completed: true,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 12,
+        repetitions: 10,
+        completed: true,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 12,
+        repetitions: 10,
+        completed: true,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 25,
+        repetitions: 10,
+        completed: true,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 25,
+        repetitions: 10,
+        completed: true,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: true,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 35,
+        repetitions: 10,
+        completed: true,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 35,
+        repetitions: 10,
+        completed: true,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 35,
+        repetitions: 10,
+        completed: true,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 10,
+        repetitions: 20,
+        completed: true,
+        exercise: back._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 10,
+        repetitions: 20,
+        completed: true,
+        exercise: back._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 10,
+        repetitions: 20,
+        completed: true,
+        exercise: back._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: true,
+        exercise: sitUp._id,
         uuid: uuidv4(),
       },
     ],
@@ -452,33 +1052,33 @@ const initTestData = async () => {
 
   const template1 = new Workout({
     name: 'Legs',
-    date: new Date(),
+    date: new Date('2021-11-02'),
     template: true,
     user: savedUser._id,
     sets: [
       {
-        weight: 250,
+        weight: 200,
         repetitions: 12,
         completed: false,
         exercise: legPress._id,
         uuid: uuidv4(),
       },
       {
-        weight: 250,
+        weight: 200,
         repetitions: 12,
         completed: false,
         exercise: legPress._id,
         uuid: uuidv4(),
       },
       {
-        weight: 250,
+        weight: 200,
         repetitions: 10,
         completed: false,
         exercise: legPress._id,
         uuid: uuidv4(),
       },
       {
-        weight: 250,
+        weight: 200,
         repetitions: 8,
         completed: false,
         exercise: legPress._id,
@@ -506,38 +1106,261 @@ const initTestData = async () => {
         uuid: uuidv4(),
       },
       {
-        weight: 0,
+        weight: 20,
         repetitions: 30,
         completed: false,
-        exercise: Crunch._id,
+        exercise: calves._id,
         uuid: uuidv4(),
       },
       {
-        weight: 0,
+        weight: 20,
         repetitions: 30,
         completed: false,
-        exercise: Crunch._id,
+        exercise: calves._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 25,
+        completed: false,
+        exercise: calves._id,
+        uuid: uuidv4(),
+      },
+    ],
+  });
+
+  const template2 = new Workout({
+    name: 'Chest',
+    date: new Date('2021-10-30'),
+    template: true,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: false,
+        exercise: benchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 80,
+        repetitions: 10,
+        completed: false,
+        exercise: benchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 80,
+        repetitions: 8,
+        completed: false,
+        exercise: benchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 50,
+        repetitions: 10,
+        completed: false,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 50,
+        repetitions: 10,
+        completed: false,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 50,
+        repetitions: 8,
+        completed: false,
+        exercise: incBenchPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 12,
+        completed: false,
+        exercise: cableCrossover._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 12,
+        completed: false,
+        exercise: cableCrossover._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: false,
+        exercise: cableCrossover._id,
         uuid: uuidv4(),
       },
       {
         weight: 0,
         repetitions: 25,
         completed: false,
-        exercise: Crunch._id,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: false,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: false,
+        exercise: sitUp._id,
         uuid: uuidv4(),
       },
     ],
   });
 
+  const template3 = new Workout({
+    name: 'Core and arms',
+    date: new Date('2021-11-05'),
+    template: true,
+    user: savedUser._id,
+    sets: [
+      {
+        weight: 10,
+        repetitions: 10,
+        completed: false,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 10,
+        repetitions: 10,
+        completed: false,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 10,
+        repetitions: 10,
+        completed: false,
+        exercise: curl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: false,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: false,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 20,
+        repetitions: 10,
+        completed: false,
+        exercise: barCurl._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 30,
+        repetitions: 10,
+        completed: false,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 30,
+        repetitions: 10,
+        completed: false,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 30,
+        repetitions: 10,
+        completed: false,
+        exercise: overhedPress._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 5,
+        repetitions: 15,
+        completed: false,
+        exercise: back._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 5,
+        repetitions: 15,
+        completed: false,
+        exercise: back._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 5,
+        repetitions: 15,
+        completed: false,
+        exercise: back._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: false,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: false,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+      {
+        weight: 0,
+        repetitions: 25,
+        completed: false,
+        exercise: sitUp._id,
+        uuid: uuidv4(),
+      },
+    ],
+  });
+
+  const savedTemplate1 = await template1.save();
+  const savedTemplate2 = await template2.save();
+  const savedTemplate3 = await template3.save();
   const savedWorkout1 = await workout1.save();
   const savedWorkout2 = await workout2.save();
   const savedWorkout3 = await workout3.save();
-  const savedTemplate = await template1.save();
+  const savedWorkout4 = await workout4.save();
+  const savedWorkout5 = await workout5.save();
+  const savedWorkout6 = await workout6.save();
+  const savedWorkout7 = await workout7.save();
+  const savedWorkout8 = await workout8.save();
+  const savedWorkout9 = await workout9.save();
 
+  user.workouts = user.workouts.concat(savedTemplate1._id);
+  user.workouts = user.workouts.concat(savedTemplate2._id);
+  user.workouts = user.workouts.concat(savedTemplate3._id);
   user.workouts = user.workouts.concat(savedWorkout1._id);
   user.workouts = user.workouts.concat(savedWorkout2._id);
   user.workouts = user.workouts.concat(savedWorkout3._id);
-  user.workouts = user.workouts.concat(savedTemplate._id);
+  user.workouts = user.workouts.concat(savedWorkout4._id);
+  user.workouts = user.workouts.concat(savedWorkout5._id);
+  user.workouts = user.workouts.concat(savedWorkout6._id);
+  user.workouts = user.workouts.concat(savedWorkout7._id);
+  user.workouts = user.workouts.concat(savedWorkout8._id);
+  user.workouts = user.workouts.concat(savedWorkout9._id);
   await user.save();
 };
 
