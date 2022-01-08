@@ -23,3 +23,6 @@
 `DEV_MONGODB_URI`
 `PORT`
 `SECRET`
+
+### Running application
+https://www-design-gym.herokuapp.com/
